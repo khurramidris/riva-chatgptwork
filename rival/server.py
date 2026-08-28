@@ -4,6 +4,7 @@ import json
 import mimetypes
 import os
 import traceback
+from dataclasses import asdict
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -55,6 +56,17 @@ class RivalApplication:
             "mode": "offline-ready",
             "prospective_locking_configured": self.integrity is not None,
             "outcome_reveal_exposed": False,
+            "research_components": [
+                "semantic-similarity-rating",
+                "uq-survey-intervals",
+                "syn-digits-synthetic-control",
+                "paired-srct",
+                "persona-demand-pricing",
+                "interview-grounded-personas",
+                "centauri-adapter",
+                "socrates-adapter",
+                "twin2k-mad",
+            ],
         }
 
     def qualification(self) -> dict[str, Any]:
@@ -137,10 +149,153 @@ class RivalApplication:
         ]
         return self.engine.correct(simulation, observations).model_dump(mode="json")
 
+    def research_ssr(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .elicitation import HashingTextEmbedder, SSRScale, SemanticSimilarityRater
+
+        choices = payload["choices"]
+        if not isinstance(choices, list):
+            raise ValueError("choices must be a list")
+        scale = SSRScale(
+            choice_ids=tuple(str(item["choice_id"]) for item in choices),
+            anchors=tuple(str(item["anchor"]) for item in choices),
+        )
+        rater = SemanticSimilarityRater(
+            scale,
+            HashingTextEmbedder(int(payload.get("dimensions", 512))),
+            temperature=float(payload.get("temperature", 1.0)),
+            epsilon=float(payload.get("epsilon", 1e-8)),
+        )
+        response = str(payload["response"])
+        return {
+            "response": response,
+            "probabilities": rater.rate(response),
+            "identity": rater.identity,
+            "warning": "hashing embeddings are an offline fallback, not a qualified production encoder",
+        }
+
+    def research_uncertainty(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .uncertainty import synthetic_mean_interval
+
+        interval = synthetic_mean_interval(
+            payload["values"],
+            k=payload.get("k"),
+            confidence=float(payload.get("confidence", 0.95)),
+            scale=float(payload.get("scale", 2.0)),
+            method=str(payload.get("method", "clt")),
+            minimum_k=int(payload.get("minimum_k", 2)),
+            parameter_bounds=tuple(payload.get("parameter_bounds", [0.0, 1.0])),
+        )
+        return asdict(interval)
+
+    def research_srct(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .experiments.srct import PairedPrediction, PrePeriodAnchor, estimate_paired_srct
+
+        predictions = [PairedPrediction(**item) for item in payload["pairs"]]
+        pre_period_payload = payload.get("pre_period")
+        pre_period = PrePeriodAnchor(**pre_period_payload) if pre_period_payload else None
+        return asdict(
+            estimate_paired_srct(
+                predictions,
+                confidence=float(payload.get("confidence", 0.95)),
+                pre_period=pre_period,
+            )
+        )
+
+    def research_pricing(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .pricing import fit_persona_demand, optimize_price
+
+        action = str(payload.get("action", "fit"))
+        if action == "fit":
+            model = fit_persona_demand(
+                payload["persona_probabilities"],
+                payload["observed_demand"],
+                int(payload["exposure_n"]),
+                objective=str(payload.get("objective", "truncated")),
+                calibration_iterations=int(payload.get("calibration_iterations", 6)),
+            )
+            prediction_matrix = payload.get("prediction_persona_probabilities")
+            result = {
+                "model": {
+                    "exposure_n": model.exposure_n,
+                    "persona_weights": model.persona_weights.tolist(),
+                    "no_buy_weight": model.no_buy_weight,
+                    "intercept": model.intercept,
+                    "slope": model.slope,
+                    "objective": model.objective,
+                    "objective_value": model.objective_value,
+                    "converged": model.converged,
+                    "status": model.status,
+                    "source": model.source,
+                }
+            }
+            if prediction_matrix is not None:
+                result["purchase_probabilities"] = model.purchase_probability(
+                    prediction_matrix
+                ).tolist()
+                result["mean_demand"] = model.mean_demand(prediction_matrix).tolist()
+            return result
+        if action == "optimize":
+            decision = optimize_price(
+                payload["prices"],
+                payload["purchase_probabilities"],
+                int(payload["market_size"]),
+                unit_cost=float(payload.get("unit_cost", 0.0)),
+                risk_weight=float(payload.get("risk_weight", 0.0)),
+                tail_probability=float(payload.get("tail_probability", 0.1)),
+                draws=int(payload.get("draws", 4000)),
+                seed=int(payload.get("seed", 20260828)),
+            )
+            return asdict(decision)
+        raise ValueError("pricing action must be fit or optimize")
+
+    def research_personas(self, payload: dict[str, Any]) -> dict[str, Any]:
+        from .personas import InterviewPersonaBuilder, InterviewTranscript
+
+        transcripts = [
+            InterviewTranscript.model_validate(item) for item in payload["transcripts"]
+        ]
+        builder = InterviewPersonaBuilder(
+            maximum_turns=int(payload.get("maximum_turns", 80)),
+            participant_only=bool(payload.get("participant_only", False)),
+        )
+        return {
+            "records": [
+                record.model_dump(mode="json")
+                for record in builder.build_many(transcripts)
+            ]
+        }
+
+    def research_synthetic_control_complete(self, payload: dict[str, Any]) -> dict[str, Any]:
+        import numpy as np
+
+        from .research.synthetic_control import ResearchSyntheticControl, SYN_DIGITS_COMMIT
+
+        matrix = np.asarray(
+            [
+                [np.nan if value is None else float(value) for value in row]
+                for row in payload["matrix"]
+            ],
+            dtype=float,
+        )
+        completed = ResearchSyntheticControl.complete(
+            matrix,
+            method=str(payload.get("method", "hard_svd")),
+            rank=int(payload.get("rank", 2)),
+            max_iter=int(payload.get("max_iter", 100)),
+            tolerance=float(payload.get("tolerance", 1e-4)),
+            regularization=float(payload.get("regularization", 0.1)),
+            random_state=int(payload.get("random_state", 42)),
+        )
+        return {
+            "matrix": completed.tolist(),
+            "method": str(payload.get("method", "hard_svd")),
+            "upstream_commit": SYN_DIGITS_COMMIT,
+        }
+
 
 def make_handler(application: RivalApplication):
     class RivalHandler(BaseHTTPRequestHandler):
-        server_version = "Rival/0.4"
+        server_version = "Rival/0.5"
 
         def log_message(self, format: str, *args):
             print(f"[rival] {self.address_string()} - {format % args}")
@@ -213,6 +368,18 @@ def make_handler(application: RivalApplication):
                     self._json(application.lock_study(payload))
                 elif path == "/api/hybrid":
                     self._json(application.correct(payload))
+                elif path == "/api/research/ssr":
+                    self._json(application.research_ssr(payload))
+                elif path == "/api/research/uncertainty":
+                    self._json(application.research_uncertainty(payload))
+                elif path == "/api/research/srct":
+                    self._json(application.research_srct(payload))
+                elif path == "/api/research/pricing":
+                    self._json(application.research_pricing(payload))
+                elif path == "/api/research/personas":
+                    self._json(application.research_personas(payload))
+                elif path == "/api/research/synthetic-control/complete":
+                    self._json(application.research_synthetic_control_complete(payload))
                 else:
                     self._json({"error": "not found"}, HTTPStatus.NOT_FOUND)
             except (

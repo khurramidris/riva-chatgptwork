@@ -111,6 +111,16 @@ def qualify_integrity_command(args: argparse.Namespace) -> int:
     return 0 if report["status"] == "PASS" else 1
 
 
+def qualify_research_components_command(args: argparse.Namespace) -> int:
+    from .research.integration_qualification import (
+        run_research_integration_qualification,
+    )
+
+    report = run_research_integration_qualification()
+    write_text(args.output, json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["status"] == "PASS" else 1
+
+
 def verify_release_command(args: argparse.Namespace) -> int:
     from .release import verify_release_manifest
 
@@ -170,6 +180,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     integrity_parser.add_argument("--output")
     integrity_parser.set_defaults(func=qualify_integrity_command)
+
+    components_parser = subparsers.add_parser(
+        "qualify-research-components",
+        help="verify licensed research runtimes, adapters, and numerical parity",
+    )
+    components_parser.add_argument("--output")
+    components_parser.set_defaults(func=qualify_research_components_command)
 
     release_parser = subparsers.add_parser(
         "verify-release", help="verify every file hash in RELEASE_MANIFEST.json"

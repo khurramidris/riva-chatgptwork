@@ -307,6 +307,232 @@ class OpenAICompatibleProvider(PredictionProvider):
         raise ProviderError(f"prediction failed after {self.max_retries} attempts") from last_error
 
 
+class BehavioralModelProvider(PredictionProvider):
+    """OpenAI-compatible adapter for behavior-specialized model servers.
+
+    Rival does not redistribute model weights. The adapter records the exact model
+    revision, training-corpus declaration, and model license supplied by the
+    deployment operator in every prediction context.
+    """
+
+    name = "behavioral-model"
+
+    def __init__(
+        self,
+        model: str,
+        base_url: str,
+        *,
+        model_revision: str,
+        training_corpus: str,
+        model_license: str,
+        api_key: str | None = None,
+        timeout_seconds: int = 60,
+        temperature: float = 0.2,
+        max_retries: int = 3,
+        provider_name: str | None = None,
+        behavioral_instruction: str | None = None,
+    ):
+        if not model_revision.strip():
+            raise ValueError("model_revision is required for reproducible inference")
+        if not training_corpus.strip() or not model_license.strip():
+            raise ValueError("training_corpus and model_license declarations are required")
+        self.model = model
+        self.base_url = base_url
+        self.model_revision = model_revision
+        self.training_corpus = training_corpus
+        self.model_license = model_license
+        self.api_key = api_key or os.getenv("RIVAL_BEHAVIORAL_API_KEY")
+        self.timeout_seconds = int(timeout_seconds)
+        self.temperature = float(temperature)
+        self.max_retries = int(max_retries)
+        self.name = provider_name or type(self).name
+        self.behavioral_instruction = behavioral_instruction or (
+            "Use the described person's pre-outcome evidence to predict behavior. "
+            "Return a calibrated probability distribution, not a role-play response."
+        )
+        hostname = (urllib.parse.urlsplit(base_url).hostname or "").casefold()
+        self._local_endpoint = hostname in {"localhost", "127.0.0.1", "::1"}
+        if not self.api_key and not self._local_endpoint:
+            raise ProviderError(
+                "remote behavioral endpoints require RIVAL_BEHAVIORAL_API_KEY or api_key"
+            )
+
+    def _request_payload(
+        self, person: PopulationRecord, scenario: ScenarioSpec
+    ) -> dict:
+        choice_payload = [choice.model_dump(mode="json") for choice in scenario.choices]
+        user = {
+            "person": {
+                "attributes": person.attributes,
+                "preferences": person.preferences,
+                "relevant_history": person.history[-16:],
+            },
+            "scenario": {
+                "question": scenario.question,
+                "context": scenario.context,
+                "horizon": scenario.horizon,
+                "choices": choice_payload,
+            },
+        }
+        return {
+            "model": self.model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": (
+                        f"{self.behavioral_instruction} Return one JSON object mapping "
+                        "every supplied choice_id to a numeric probability. Include no "
+                        "other keys or prose; probabilities must sum to one."
+                    ),
+                },
+                {"role": "user", "content": json.dumps(user, sort_keys=True)},
+            ],
+            "temperature": self.temperature,
+            "max_tokens": 300,
+            "response_format": {"type": "json_object"},
+        }
+
+    def identity(self) -> ProviderIdentity:
+        endpoint = urllib.parse.urlsplit(self.base_url)
+        endpoint_identity = urllib.parse.urlunsplit(
+            (endpoint.scheme, endpoint.netloc, endpoint.path, "", "")
+        )
+        configuration = {
+            "model": self.model,
+            "model_revision": self.model_revision,
+            "training_corpus": self.training_corpus,
+            "model_license": self.model_license,
+            "temperature": self.temperature,
+            "timeout_seconds": self.timeout_seconds,
+            "max_retries": self.max_retries,
+            "behavioral_instruction_sha256": canonical_hash(self.behavioral_instruction),
+        }
+        return ProviderIdentity(
+            provider_name=self.name,
+            provider_version="1",
+            model=f"{self.model}@{self.model_revision}",
+            endpoint_sha256=canonical_hash(endpoint_identity),
+            configuration_sha256=canonical_hash(configuration),
+        )
+
+    def request_sha256(
+        self, person: PopulationRecord, scenario: ScenarioSpec
+    ) -> str:
+        return canonical_hash(self._request_payload(person, scenario))
+
+    def predict(
+        self, person: PopulationRecord, scenario: ScenarioSpec
+    ) -> ProviderPrediction:
+        headers = {"Content-Type": "application/json", "X-Title": "Rival Behavioral Model"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        request = urllib.request.Request(
+            self.base_url,
+            data=json.dumps(self._request_payload(person, scenario)).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        started = time.perf_counter()
+        last_error: Exception | None = None
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+                    response_payload = json.loads(response.read().decode("utf-8"))
+                content = OpenAICompatibleProvider._extract_content(response_payload).strip()
+                if content.startswith("```"):
+                    content = content.strip("`")
+                    if content.startswith("json"):
+                        content = content[4:].lstrip()
+                parsed = json.loads(content)
+                choice_ids = [choice.choice_id for choice in scenario.choices]
+                if set(parsed) != set(choice_ids):
+                    raise ProviderError("behavioral model returned the wrong choice_id set")
+                probabilities = normalize(float(parsed[key]) for key in choice_ids)
+                return ProviderPrediction(
+                    probabilities={
+                        key: float(value)
+                        for key, value in zip(choice_ids, probabilities, strict=True)
+                    },
+                    diagnostics={"attempts": float(attempt)},
+                    provider_request_id=(
+                        str(response_payload.get("id"))
+                        if response_payload.get("id") is not None
+                        else None
+                    ),
+                    attempts=attempt,
+                    latency_ms=(time.perf_counter() - started) * 1000,
+                )
+            except (urllib.error.URLError, TimeoutError, ValueError, ProviderError) as exc:
+                last_error = exc
+                if attempt < self.max_retries:
+                    time.sleep(2 ** (attempt - 1))
+        raise ProviderError(
+            f"behavioral prediction failed after {self.max_retries} attempts"
+        ) from last_error
+
+
+class CentauriProvider(BehavioralModelProvider):
+    """Inference adapter for an operator-hosted Centauri checkpoint."""
+
+    name = "centauri"
+
+    def __init__(
+        self,
+        base_url: str = "http://127.0.0.1:8000/v1/chat/completions",
+        *,
+        model: str = "socius-org/Centauri",
+        model_revision: str = "operator-must-pin",
+        model_license: str = "operator-must-declare",
+        api_key: str | None = None,
+        **kwargs,
+    ):
+        super().__init__(
+            model=model,
+            base_url=base_url,
+            model_revision=model_revision,
+            training_corpus="Centauri behavior-specialization corpus",
+            model_license=model_license,
+            api_key=api_key,
+            provider_name=self.name,
+            behavioral_instruction=(
+                "Apply the behavior-specialized Centauri checkpoint to infer the "
+                "described person's response from pre-outcome evidence."
+            ),
+            **kwargs,
+        )
+
+
+class SocratesProvider(BehavioralModelProvider):
+    """Inference adapter for an operator-hosted Socrates/SocSci210 checkpoint."""
+
+    name = "socrates"
+
+    def __init__(
+        self,
+        base_url: str = "http://127.0.0.1:8000/v1/chat/completions",
+        *,
+        model: str = "Socrates",
+        model_revision: str = "operator-must-pin",
+        model_license: str = "operator-must-declare",
+        api_key: str | None = None,
+        **kwargs,
+    ):
+        super().__init__(
+            model=model,
+            base_url=base_url,
+            model_revision=model_revision,
+            training_corpus="SocSci210 social-science experiments",
+            model_license=model_license,
+            api_key=api_key,
+            provider_name=self.name,
+            behavioral_instruction=(
+                "Apply the Socrates social-science behavior checkpoint to infer the "
+                "described person's response from pre-outcome evidence."
+            ),
+            **kwargs,
+        )
+
+
 class EnsembleProvider(PredictionProvider):
     name = "ensemble"
 
