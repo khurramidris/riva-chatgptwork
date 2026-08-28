@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-08-28T07:47:31.887848+00:00",
+  "headline": "Two real-data qualification tracks; one strong aggregate result and one bounded individual result.",
+  "opinionqa": {
+    "calibrated_mean_tvd": 0.16949517757707122,
+    "global_history_mean_tvd": 0.22677466073935948,
+    "personas": 2058,
+    "question_win_rate": 0.8507157464212679,
+    "question_win_rate_vs_global_history": 0.7157464212678937,
+    "questions": 489,
+    "raw_mean_tvd": 0.33112460224135193,
+    "relative_mean_tvd_reduction": 0.48812266914093977,
+    "relative_mean_tvd_reduction_vs_global_history": 0.25258326029697686,
+    "report_sha256": "928b3a3752cca4685312ca72f78c05453180fbee950f3b11e3b91e94f5af669b",
+    "split_manifest_sha256": "2fae83e0f1e1e1d703ee18e670bc0c6da7fe7a909bad134ad5416d24c19521d6",
+    "status": "real-data, family-held-out"
+  },
+  "prospective_integrity": {
+    "checks_passed": 10,
+    "checks_total": 10,
+    "report_sha256": "d180127614562ab5cbd7d5e3eed01864d1b9e8e9a2cc2d0f20ac0f4e8f00d14f",
+    "scope": "deterministic engineering controls; not a prospective customer validity result",
+    "status": "PASS"
+  },
+  "release": "0.4.0",
+  "release_decision": {
+    "individual_novel-question_prediction": "research only; baseline not beaten",
+    "population_distribution_calibration": "qualified for bounded pilots",
+    "universal_human_simulation": "not claimed"
+  },
+  "schema_version": "rival.qualification.summary.v2",
+  "summary_sha256": "a5767c3cec99b03a68273193c3215092b3ed8fed557955baad48a78a5e1ff7db",
+  "twin2k": {
+    "direct_llm_categorical_accuracy": 0.5411458724329086,
+    "human_test_retest_categorical_accuracy": 0.6861023116827288,
+    "hybrid_mean_tvd": 0.07352039420340876,
+    "population_mode_categorical_accuracy": 0.5282652117717594,
+    "questions": 126,
+    "raw_mean_tvd": 0.27921943396105775,
+    "report_sha256": "11c465ee457590236347ef6500ae45cb8eca373126cc552ff789d9602088e3d4",
+    "status": "real-data, target-family-excluded transfer",
+    "transfer_categorical_accuracy": 0.43992436550115216,
+    "twins": 2058
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": 2,
+  "release": "0.2.0",
+  "authorization": {
+    "status": "user-confirmed-commercial-permission",
+    "confirmed_on": "2026-08-27",
+    "verification_required_before_external_redistribution": true
+  },
+  "incorporated": [
+    {
+      "name": "SYN-DIGITS",
+      "url": "https://github.com/yw3453/syn-digits",
+      "commit": "db891b6f821c914455b11763a96679864bf4fc48",
+      "public_license": "MIT",
+      "files": [
+        {
+          "rival_path": "vendor/syn_digits/distribution_calibration.py",
+          "upstream_path": "src/distribution_calibration.py",
+          "sha256": "c371e103c7a733d8d060d3f1c7ba0330f73486eae94eea88fb8789cea802aed2",
+          "mode": "verbatim audit snapshot"
+        },
+        {
+          "rival_path": "rival/datasets/opinionqa/questions.json",
+          "upstream_path": "data/OpinionQA/distribution_calibration/Qs_likert_scale_5_choices.json",
+          "sha256": "7e632b57e9a0767c5d7350b4fc699d528ec482f665d94d1d8d752d6162192956",
+          "mode": "verbatim data, renamed"
+        },
+        {
+          "rival_path": "rival/datasets/opinionqa/persona_answers.csv",
+          "upstream_path": "data/OpinionQA/distribution_calibration/persona_answers.csv",
+          "sha256": "6b89f71dc1f5b3a669479b88d8b4d8a51000779d2a8da27b54950f2723c215aa",
+          "mode": "verbatim data"
+        }
+      ],
+      "runtime_adaptation": "rival/research/calibration.py independently vectorizes the released KL mirror-descent objective"
+    },
+    {
+      "name": "Twin-2K-500",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500",
+      "commit": "f883165a3026fde855dfd448e0cd16443ab257b6",
+      "public_license": "CC-BY-4.0",
+      "files": [
+        {
+          "rival_path": "rival/datasets/twin2k/question_catalog.json",
+          "sha256": "e72e305f0c7c83bb990e97de4c0cf2c718ead18cc197239b7feeb354c9ac1bef"
+        },
+        {
+          "rival_path": "rival/datasets/twin2k/wave4_mapping.json",
+          "sha256": "345f7f6645f80dc23bcb423a9bb7c5ae77dbbd17fe572472fdfeb252bdcfc2c7"
+        },
+        {
+          "rival_path": "rival/datasets/twin2k/human_history.csv",
+          "sha256": "9481ceb03edeae4aac3a93079554c1e34b9e8f2ca23bd6e8e98572a14d186887"
+        },
+        {
+          "rival_path": "rival/datasets/twin2k/human_outcomes.csv",
+          "sha256": "ace9258a2029f36283a61b6066aa8c9d59458fedefaac0afcbbe7797f4a3aaea"
+        },
+        {
+          "rival_path": "rival/datasets/twin2k/llm_predictions.csv",
+          "sha256": "22937217115db30c064489125e39ceb0539c461b678400d8b3e0827962e5436c"
+        }
+      ],
+      "changes": "selected artifacts renamed; rows aligned by TWIN_ID; numeric question columns mapped to catalog metadata"
+    }
+  ],
+  "reviewed_not_bundled": [
+    {
+      "name": "PopulationSim",
+      "url": "https://github.com/ActivitySim/populationsim",
+      "commit": "cc22d25499e7c54ee5ea184a7ecd0f9ee7f20231",
+      "public_license": "BSD-3-Clause"
+    },
+    {
+      "name": "AI-Augmented Estimation",
+      "url": "https://github.com/mxw-selene/ai-augmented-estimation",
+      "commit": "b7e3f9a89690b981076498a0b4a272bbe47de2d2",
+      "public_license": "MIT-code; data-separate"
+    },
+    {
+      "name": "Adaptive Query AI Persona Priors",
+      "url": "https://github.com/yw3453/adaptive-query-ai-persona-priors",
+      "commit": "fbd8e19eed6af960b64e3afae13e3bcf4020b73f",
+      "public_license": "MIT"
+    },
+    {
+      "name": "Centauri",
+      "url": "https://github.com/socius-org/Centauri",
+      "commit": "6ef71bc4ce5661df106d31f0727497af15268914",
+      "public_license": "MIT"
+    },
+    {
+      "name": "LLM Economist",
+      "url": "https://github.com/sethkarten/LLM-Economist",
+      "commit": "8d1c9295ab69ed4b819fc58ef0684c70a8c73a53",
+      "public_license": "MIT"
+    },
+    {
+      "name": "Twin-2K-500 Mega Study",
+      "url": "https://github.com/TianyiPeng/Twin-2K-500-Mega-Study",
+      "commit": "afe2bb933fce377ed196f441a4c12962cb55a53a",
+      "public_license": "Apache-2.0"
+    }
+  ]
+}

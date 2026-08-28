@@ -1,0 +1,632 @@
+[
+  {
+    "formatted_column": "False Cons. self _1",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_1"
+  },
+  {
+    "formatted_column": "False Cons. self _2",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_2"
+  },
+  {
+    "formatted_column": "False Cons. self _3",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_3"
+  },
+  {
+    "formatted_column": "False Cons. self _4",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_4"
+  },
+  {
+    "formatted_column": "False Cons. self _5",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_5"
+  },
+  {
+    "formatted_column": "False Cons. self _6",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_6"
+  },
+  {
+    "formatted_column": "False Cons. self _7",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_7"
+  },
+  {
+    "formatted_column": "False Cons. self _8",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_10"
+  },
+  {
+    "formatted_column": "False Cons. self _9",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_11"
+  },
+  {
+    "formatted_column": "False Cons. self _10",
+    "QuestionID": "QID287",
+    "catalog_csv_column": "QID287_12"
+  },
+  {
+    "formatted_column": "Q156_1",
+    "QuestionID": "QID156",
+    "catalog_csv_column": "QID156"
+  },
+  {
+    "formatted_column": "Form A _1",
+    "QuestionID": "QID154",
+    "catalog_csv_column": "QID154"
+  },
+  {
+    "formatted_column": "Q158",
+    "QuestionID": "QID158",
+    "catalog_csv_column": "QID158"
+  },
+  {
+    "formatted_column": "Q157",
+    "QuestionID": "QID157",
+    "catalog_csv_column": "QID157"
+  },
+  {
+    "formatted_column": "Q160_1",
+    "QuestionID": "QID160",
+    "catalog_csv_column": "QID160_1"
+  },
+  {
+    "formatted_column": "Q160_2",
+    "QuestionID": "QID160",
+    "catalog_csv_column": "QID160_2"
+  },
+  {
+    "formatted_column": "Q160_3",
+    "QuestionID": "QID160",
+    "catalog_csv_column": "QID160_3"
+  },
+  {
+    "formatted_column": "Q159_1",
+    "QuestionID": "QID159",
+    "catalog_csv_column": "QID159_1"
+  },
+  {
+    "formatted_column": "Q159_2",
+    "QuestionID": "QID159",
+    "catalog_csv_column": "QID159_2"
+  },
+  {
+    "formatted_column": "Q159_3",
+    "QuestionID": "QID159",
+    "catalog_csv_column": "QID159_3"
+  },
+  {
+    "formatted_column": "Q162",
+    "QuestionID": "QID162",
+    "catalog_csv_column": "QID162"
+  },
+  {
+    "formatted_column": "Q161",
+    "QuestionID": "QID161",
+    "catalog_csv_column": "QID161"
+  },
+  {
+    "formatted_column": "Q163",
+    "QuestionID": "QID163",
+    "catalog_csv_column": "QID163"
+  },
+  {
+    "formatted_column": "Q164",
+    "QuestionID": "QID164",
+    "catalog_csv_column": "QID164_TEXT"
+  },
+  {
+    "formatted_column": "Q165",
+    "QuestionID": "QID165",
+    "catalog_csv_column": "QID165"
+  },
+  {
+    "formatted_column": "Q166",
+    "QuestionID": "QID166",
+    "catalog_csv_column": "QID166_TEXT"
+  },
+  {
+    "formatted_column": "Q167",
+    "QuestionID": "QID167",
+    "catalog_csv_column": "QID167"
+  },
+  {
+    "formatted_column": "Q168",
+    "QuestionID": "QID168",
+    "catalog_csv_column": "QID168_TEXT"
+  },
+  {
+    "formatted_column": "Q169",
+    "QuestionID": "QID169",
+    "catalog_csv_column": "QID169"
+  },
+  {
+    "formatted_column": "Q170",
+    "QuestionID": "QID170",
+    "catalog_csv_column": "QID170_TEXT"
+  },
+  {
+    "formatted_column": "Q171",
+    "QuestionID": "QID171",
+    "catalog_csv_column": "QID171"
+  },
+  {
+    "formatted_column": "Q174",
+    "QuestionID": "QID174",
+    "catalog_csv_column": "QID174"
+  },
+  {
+    "formatted_column": "Q177",
+    "QuestionID": "QID177",
+    "catalog_csv_column": "QID177"
+  },
+  {
+    "formatted_column": "Q172",
+    "QuestionID": "QID172",
+    "catalog_csv_column": "QID172"
+  },
+  {
+    "formatted_column": "Q175",
+    "QuestionID": "QID175",
+    "catalog_csv_column": "QID175"
+  },
+  {
+    "formatted_column": "Q178",
+    "QuestionID": "QID178",
+    "catalog_csv_column": "QID178"
+  },
+  {
+    "formatted_column": "Q173",
+    "QuestionID": "QID173",
+    "catalog_csv_column": "QID173"
+  },
+  {
+    "formatted_column": "Q176",
+    "QuestionID": "QID176",
+    "catalog_csv_column": "QID176"
+  },
+  {
+    "formatted_column": "Q179",
+    "QuestionID": "QID179",
+    "catalog_csv_column": "QID179"
+  },
+  {
+    "formatted_column": "Q181",
+    "QuestionID": "QID181",
+    "catalog_csv_column": "QID181_TEXT"
+  },
+  {
+    "formatted_column": "Q182",
+    "QuestionID": "QID182",
+    "catalog_csv_column": "QID182_TEXT"
+  },
+  {
+    "formatted_column": "Q183",
+    "QuestionID": "QID183",
+    "catalog_csv_column": "QID183"
+  },
+  {
+    "formatted_column": "Q184",
+    "QuestionID": "QID184",
+    "catalog_csv_column": "QID184"
+  },
+  {
+    "formatted_column": "Q189",
+    "QuestionID": "QID189",
+    "catalog_csv_column": "QID189"
+  },
+  {
+    "formatted_column": "Q190",
+    "QuestionID": "QID190",
+    "catalog_csv_column": "QID190"
+  },
+  {
+    "formatted_column": "Q191",
+    "QuestionID": "QID191",
+    "catalog_csv_column": "QID191"
+  },
+  {
+    "formatted_column": "Q192",
+    "QuestionID": "QID192",
+    "catalog_csv_column": "QID192"
+  },
+  {
+    "formatted_column": "Q193",
+    "QuestionID": "QID193",
+    "catalog_csv_column": "QID193"
+  },
+  {
+    "formatted_column": "Q194",
+    "QuestionID": "QID194",
+    "catalog_csv_column": "QID194"
+  },
+  {
+    "formatted_column": "Q195",
+    "QuestionID": "QID195",
+    "catalog_csv_column": "QID195"
+  },
+  {
+    "formatted_column": "Q198_1",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_1"
+  },
+  {
+    "formatted_column": "Q198_2",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_2"
+  },
+  {
+    "formatted_column": "Q198_3",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_3"
+  },
+  {
+    "formatted_column": "Q198_4",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_4"
+  },
+  {
+    "formatted_column": "Q198_5",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_5"
+  },
+  {
+    "formatted_column": "Q198_6",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_6"
+  },
+  {
+    "formatted_column": "Q198_7",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_7"
+  },
+  {
+    "formatted_column": "Q198_8",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_8"
+  },
+  {
+    "formatted_column": "Q198_9",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_9"
+  },
+  {
+    "formatted_column": "Q198_10",
+    "QuestionID": "QID198",
+    "catalog_csv_column": "QID198_10"
+  },
+  {
+    "formatted_column": "Q203_1",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_1"
+  },
+  {
+    "formatted_column": "Q203_2",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_2"
+  },
+  {
+    "formatted_column": "Q203_3",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_3"
+  },
+  {
+    "formatted_column": "Q203_4",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_4"
+  },
+  {
+    "formatted_column": "Q203_5",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_5"
+  },
+  {
+    "formatted_column": "Q203_6",
+    "QuestionID": "QID203",
+    "catalog_csv_column": "QID203_6"
+  },
+  {
+    "formatted_column": "nonseparabilty bene _1",
+    "QuestionID": "QID288",
+    "catalog_csv_column": "QID288_1"
+  },
+  {
+    "formatted_column": "nonseparabilty bene _2",
+    "QuestionID": "QID288",
+    "catalog_csv_column": "QID288_2"
+  },
+  {
+    "formatted_column": "nonseparabilty bene _3",
+    "QuestionID": "QID288",
+    "catalog_csv_column": "QID288_3"
+  },
+  {
+    "formatted_column": "nonseparabilty bene _4",
+    "QuestionID": "QID288",
+    "catalog_csv_column": "QID288_4"
+  },
+  {
+    "formatted_column": "nonseparability ris _1",
+    "QuestionID": "QID289",
+    "catalog_csv_column": "QID289_1"
+  },
+  {
+    "formatted_column": "nonseparability ris _2",
+    "QuestionID": "QID289",
+    "catalog_csv_column": "QID289_2"
+  },
+  {
+    "formatted_column": "nonseparability ris _3",
+    "QuestionID": "QID289",
+    "catalog_csv_column": "QID289_3"
+  },
+  {
+    "formatted_column": "nonseparability ris _4",
+    "QuestionID": "QID289",
+    "catalog_csv_column": "QID289_4"
+  },
+  {
+    "formatted_column": "Omission bias ",
+    "QuestionID": "QID291",
+    "catalog_csv_column": "QID291"
+  },
+  {
+    "formatted_column": "Denominator neglect ",
+    "QuestionID": "QID196",
+    "catalog_csv_column": "QID196"
+  },
+  {
+    "formatted_column": "False cons. others _1",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_1"
+  },
+  {
+    "formatted_column": "False cons. others _2",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_2"
+  },
+  {
+    "formatted_column": "False cons. others _3",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_3"
+  },
+  {
+    "formatted_column": "False cons. others _4",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_4"
+  },
+  {
+    "formatted_column": "False cons. others _5",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_5"
+  },
+  {
+    "formatted_column": "False cons. others _6",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_6"
+  },
+  {
+    "formatted_column": "False cons. others _7",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_7"
+  },
+  {
+    "formatted_column": "False cons. others _10",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_10"
+  },
+  {
+    "formatted_column": "False cons. others _11",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_11"
+  },
+  {
+    "formatted_column": "False cons. others _12",
+    "QuestionID": "QID290",
+    "catalog_csv_column": "QID290_12"
+  },
+  {
+    "formatted_column": "1_Q295",
+    "QuestionID": "QID9_1",
+    "catalog_csv_column": "QID9_1"
+  },
+  {
+    "formatted_column": "2_Q295",
+    "QuestionID": "QID9_2",
+    "catalog_csv_column": "QID9_2"
+  },
+  {
+    "formatted_column": "3_Q295",
+    "QuestionID": "QID9_3",
+    "catalog_csv_column": "QID9_3"
+  },
+  {
+    "formatted_column": "4_Q295",
+    "QuestionID": "QID9_4",
+    "catalog_csv_column": "QID9_4"
+  },
+  {
+    "formatted_column": "5_Q295",
+    "QuestionID": "QID9_5",
+    "catalog_csv_column": "QID9_5"
+  },
+  {
+    "formatted_column": "6_Q295",
+    "QuestionID": "QID9_6",
+    "catalog_csv_column": "QID9_6"
+  },
+  {
+    "formatted_column": "7_Q295",
+    "QuestionID": "QID9_7",
+    "catalog_csv_column": "QID9_7"
+  },
+  {
+    "formatted_column": "8_Q295",
+    "QuestionID": "QID9_8",
+    "catalog_csv_column": "QID9_8"
+  },
+  {
+    "formatted_column": "9_Q295",
+    "QuestionID": "QID9_9",
+    "catalog_csv_column": "QID9_9"
+  },
+  {
+    "formatted_column": "10_Q295",
+    "QuestionID": "QID9_10",
+    "catalog_csv_column": "QID9_10"
+  },
+  {
+    "formatted_column": "11_Q295",
+    "QuestionID": "QID9_11",
+    "catalog_csv_column": "QID9_11"
+  },
+  {
+    "formatted_column": "12_Q295",
+    "QuestionID": "QID9_12",
+    "catalog_csv_column": "QID9_12"
+  },
+  {
+    "formatted_column": "13_Q295",
+    "QuestionID": "QID9_13",
+    "catalog_csv_column": "QID9_13"
+  },
+  {
+    "formatted_column": "14_Q295",
+    "QuestionID": "QID9_14",
+    "catalog_csv_column": "QID9_14"
+  },
+  {
+    "formatted_column": "15_Q295",
+    "QuestionID": "QID9_15",
+    "catalog_csv_column": "QID9_15"
+  },
+  {
+    "formatted_column": "16_Q295",
+    "QuestionID": "QID9_16",
+    "catalog_csv_column": "QID9_16"
+  },
+  {
+    "formatted_column": "17_Q295",
+    "QuestionID": "QID9_17",
+    "catalog_csv_column": "QID9_17"
+  },
+  {
+    "formatted_column": "18_Q295",
+    "QuestionID": "QID9_18",
+    "catalog_csv_column": "QID9_18"
+  },
+  {
+    "formatted_column": "19_Q295",
+    "QuestionID": "QID9_19",
+    "catalog_csv_column": "QID9_19"
+  },
+  {
+    "formatted_column": "20_Q295",
+    "QuestionID": "QID9_20",
+    "catalog_csv_column": "QID9_20"
+  },
+  {
+    "formatted_column": "21_Q295",
+    "QuestionID": "QID9_21",
+    "catalog_csv_column": "QID9_21"
+  },
+  {
+    "formatted_column": "22_Q295",
+    "QuestionID": "QID9_22",
+    "catalog_csv_column": "QID9_22"
+  },
+  {
+    "formatted_column": "23_Q295",
+    "QuestionID": "QID9_23",
+    "catalog_csv_column": "QID9_23"
+  },
+  {
+    "formatted_column": "24_Q295",
+    "QuestionID": "QID9_24",
+    "catalog_csv_column": "QID9_24"
+  },
+  {
+    "formatted_column": "25_Q295",
+    "QuestionID": "QID9_25",
+    "catalog_csv_column": "QID9_25"
+  },
+  {
+    "formatted_column": "26_Q295",
+    "QuestionID": "QID9_26",
+    "catalog_csv_column": "QID9_26"
+  },
+  {
+    "formatted_column": "27_Q295",
+    "QuestionID": "QID9_27",
+    "catalog_csv_column": "QID9_27"
+  },
+  {
+    "formatted_column": "28_Q295",
+    "QuestionID": "QID9_28",
+    "catalog_csv_column": "QID9_28"
+  },
+  {
+    "formatted_column": "29_Q295",
+    "QuestionID": "QID9_29",
+    "catalog_csv_column": "QID9_29"
+  },
+  {
+    "formatted_column": "30_Q295",
+    "QuestionID": "QID9_30",
+    "catalog_csv_column": "QID9_30"
+  },
+  {
+    "formatted_column": "31_Q295",
+    "QuestionID": "QID9_31",
+    "catalog_csv_column": "QID9_31"
+  },
+  {
+    "formatted_column": "32_Q295",
+    "QuestionID": "QID9_32",
+    "catalog_csv_column": "QID9_32"
+  },
+  {
+    "formatted_column": "33_Q295",
+    "QuestionID": "QID9_33",
+    "catalog_csv_column": "QID9_33"
+  },
+  {
+    "formatted_column": "34_Q295",
+    "QuestionID": "QID9_34",
+    "catalog_csv_column": "QID9_34"
+  },
+  {
+    "formatted_column": "35_Q295",
+    "QuestionID": "QID9_35",
+    "catalog_csv_column": "QID9_35"
+  },
+  {
+    "formatted_column": "36_Q295",
+    "QuestionID": "QID9_36",
+    "catalog_csv_column": "QID9_36"
+  },
+  {
+    "formatted_column": "37_Q295",
+    "QuestionID": "QID9_37",
+    "catalog_csv_column": "QID9_37"
+  },
+  {
+    "formatted_column": "38_Q295",
+    "QuestionID": "QID9_38",
+    "catalog_csv_column": "QID9_38"
+  },
+  {
+    "formatted_column": "39_Q295",
+    "QuestionID": "QID9_39",
+    "catalog_csv_column": "QID9_39"
+  },
+  {
+    "formatted_column": "40_Q295",
+    "QuestionID": "QID9_40",
+    "catalog_csv_column": "QID9_40"
+  }
+]

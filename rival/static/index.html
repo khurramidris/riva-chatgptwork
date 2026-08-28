@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10130f">
+    <title>Rival — Decision Simulation</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Rival home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Rival</span>
+      </a>
+      <nav aria-label="Product navigation">
+        <button class="nav-item active" type="button" data-view="study">Studies</button>
+        <button class="nav-item" type="button" disabled>Populations</button>
+        <button class="nav-item" type="button" data-view="validation">Validation</button>
+      </nav>
+      <div class="status"><span></span> Engine ready</div>
+    </header>
+
+    <main class="shell" id="study-view">
+      <aside class="builder panel">
+        <div class="eyebrow">New study</div>
+        <h1>Test a decision before the market does.</h1>
+        <p class="intro">Simulate the population, verify the uncertain cases with real people, and receive a corrected result.</p>
+
+        <form id="study-form">
+          <label>
+            Study name
+            <input id="study-name" value="Laundry refill concept test" maxlength="120">
+          </label>
+          <label>
+            Decision question
+            <textarea id="question" rows="3">Which laundry detergent format would you purchase next month?</textarea>
+          </label>
+          <label>
+            Scenario context
+            <textarea id="context" rows="4">A familiar household-care brand is considering three formats. All options deliver the same number of washes.</textarea>
+          </label>
+
+          <div class="section-label">Population</div>
+          <div class="population-chip"><strong>National households</strong><span>4 calibrated controls</span></div>
+
+          <div class="split-inputs">
+            <label>
+              Simulated draws
+              <input id="sample-size" type="number" min="100" max="10000" step="100" value="1200">
+            </label>
+            <label>
+              Human anchor
+              <input id="anchor-size" type="number" min="0" max="2000" step="10" value="80">
+            </label>
+          </div>
+
+          <div class="section-label">Concepts</div>
+          <div class="choice-list">
+            <div class="choice"><b>A</b><span><strong>Value bottle</strong><small>$6 · conventional</small></span></div>
+            <div class="choice"><b>B</b><span><strong>Eco refill pouch</strong><small>$8 · 80% less plastic</small></span></div>
+            <div class="choice"><b>C</b><span><strong>Premium concentrate</strong><small>$10 · compact format</small></span></div>
+          </div>
+
+          <button class="run-button" id="run-button" type="submit">
+            <span>Run calibrated study</span><em>→</em>
+          </button>
+        </form>
+      </aside>
+
+      <section class="workspace">
+        <div class="workspace-head">
+          <div>
+            <div class="eyebrow">Study result</div>
+            <h2 id="result-title">Laundry refill concept test</h2>
+          </div>
+          <div class="mode-toggle" aria-label="Result mode">
+            <button class="selected" type="button">Hybrid</button>
+            <button type="button" disabled>Synthetic</button>
+          </div>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="signal" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+          <h3>Your calibrated result will appear here</h3>
+          <p>The demo locks a synthetic prediction, samples a human anchor, corrects the estimate, and scores both against a protected outcome.</p>
+        </div>
+
+        <div id="loading-state" class="loading-state hidden" aria-live="polite">
+          <div class="loader-orbit"><i></i><i></i><i></i></div>
+          <h3 id="loading-label">Compiling target population…</h3>
+          <div class="progress"><span id="progress-bar"></span></div>
+          <div class="pipeline">
+            <span class="current">Population</span><span>Simulation</span><span>Human anchor</span><span>Calibration</span>
+          </div>
+        </div>
+
+        <div id="result-state" class="results hidden">
+          <div class="summary-grid">
+            <article class="metric-card hero-metric">
+              <span>Recommended concept</span>
+              <strong id="winner">—</strong>
+              <small id="winner-share">—</small>
+            </article>
+            <article class="metric-card">
+              <span>Expected error</span>
+              <strong id="expected-error">—</strong>
+              <small>Total variation distance</small>
+            </article>
+            <article class="metric-card">
+              <span>Human anchor rate</span>
+              <strong id="anchor-rate">—</strong>
+              <small>efficiency must be proven on real studies</small>
+            </article>
+          </div>
+
+          <article class="chart-card">
+            <div class="card-head">
+              <div><span class="eyebrow">Purchase preference</span><h3>Corrected population estimate</h3></div>
+              <div class="legend"><span class="hybrid-dot"></span>Hybrid estimate <span class="synthetic-dot"></span>Synthetic prior</div>
+            </div>
+            <div id="bars" class="bars"></div>
+            <div class="demo-truth">Demo benchmark only: protected outcome is shown after the prediction is locked.</div>
+          </article>
+
+          <div class="detail-grid">
+            <article class="confidence-card">
+              <div>
+                <span class="eyebrow">Confidence policy</span>
+                <h3 id="confidence-label">—</h3>
+                <p id="confidence-reason">—</p>
+              </div>
+              <div class="confidence-gauge" id="confidence-gauge"><span id="confidence-score">—</span></div>
+            </article>
+            <article class="validation-card">
+              <span class="eyebrow">Protected benchmark</span>
+              <div class="validation-row"><span>Synthetic TVD</span><strong id="synthetic-tvd">—</strong></div>
+              <div class="validation-row"><span>Hybrid TVD</span><strong id="hybrid-tvd">—</strong></div>
+              <div class="improvement" id="improvement">—</div>
+            </article>
+          </div>
+
+          <article class="evidence-card">
+            <div class="card-head"><div><span class="eyebrow">Evidence card</span><h3>What this result knows</h3></div><span class="lineage" id="lineage">—</span></div>
+            <div class="evidence-grid">
+              <div><span>Eligible records</span><strong id="eligible-records">—</strong></div>
+              <div><span>Effective draws</span><strong id="effective-draws">—</strong></div>
+              <div><span>Human observations</span><strong id="human-observations">—</strong></div>
+              <div><span>Population error</span><strong id="population-error">—</strong></div>
+            </div>
+            <div id="warnings" class="warnings"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <main class="validation-shell hidden" id="validation-view">
+      <section class="validation-hero">
+        <div>
+          <div class="eyebrow">Qualification ledger · v0.4</div>
+          <h1>Evidence before claims.</h1>
+          <p>Every number below comes from released research data, a deterministic split manifest, and a reproducible command. Green means bounded pilot-ready. Amber means research only.</p>
+        </div>
+        <div class="release-gate"><span></span><div><strong>Population calibration</strong><small>Qualified for bounded pilots</small></div></div>
+      </section>
+
+      <section class="benchmark-grid">
+        <article class="benchmark-card opinion-card">
+          <div class="benchmark-head"><span class="dataset-tag">OpinionQA · real survey outcomes</span><span class="gate pass">Pilot gate passed</span></div>
+          <h2>Family-held-out population calibration</h2>
+          <p class="benchmark-copy">Persona weights learn from related survey history, then predict entirely held-out question families.</p>
+          <div class="benchmark-kpis">
+            <div><span>Questions</span><strong id="op-questions">—</strong></div>
+            <div><span>Released personas</span><strong id="op-personas">—</strong></div>
+            <div><span>Unweighted personas</span><strong id="op-raw">—</strong></div>
+            <div><span>Global-history baseline</span><strong id="op-global">—</strong></div>
+            <div class="accent"><span>Calibrated mean TVD</span><strong id="op-calibrated">—</strong></div>
+          </div>
+          <div class="benchmark-result"><strong id="op-reduction">—</strong><span>relative error reduction</span><i id="op-win">—</i></div>
+          <small class="scope" id="op-scope">Scope: five-choice Pew opinion distributions. This does not establish individual fidelity or universal behavior prediction.</small>
+        </article>
+
+        <article class="benchmark-card twin-card">
+          <div class="benchmark-head"><span class="dataset-tag">Twin-2K · longitudinal panel</span><span class="gate research">Research only</span></div>
+          <h2>Individual response prediction</h2>
+          <p class="benchmark-copy">Wave-4 outcomes test released model predictions, human retest reliability, a population baseline, and a target-family-excluded transfer model.</p>
+          <div class="benchmark-kpis compact-kpis">
+            <div><span>Twins</span><strong id="tw-twins">—</strong></div>
+            <div><span>Questions</span><strong id="tw-questions">—</strong></div>
+            <div><span>Direct LLM accuracy</span><strong id="tw-direct">—</strong></div>
+            <div><span>Human test–retest</span><strong id="tw-human">—</strong></div>
+            <div><span>Population mode</span><strong id="tw-population">—</strong></div>
+            <div class="warn"><span>Novel transfer</span><strong id="tw-transfer">—</strong></div>
+          </div>
+          <small class="scope">Decision: individual novel-question prediction has not beaten the classical baseline and is not launch-qualified.</small>
+        </article>
+      </section>
+
+      <section class="benchmark-card hybrid-card-wide">
+        <div>
+          <div class="benchmark-head"><span class="dataset-tag">80-person held-out anchor</span><span class="gate conditional">Bias corrected</span></div>
+          <h2>Human evidence removes released-model distribution bias</h2>
+          <p class="benchmark-copy">Prediction-powered correction is evaluated against unseen Twin-2K respondents—not against the anchor itself.</p>
+        </div>
+        <div class="error-rail">
+          <div><span>Raw released model</span><b id="hybrid-raw">—</b></div>
+          <em>→</em>
+          <div class="rail-accent"><span>Hybrid TVD</span><b id="hybrid-corrected">—</b></div>
+        </div>
+        <small class="scope">Honest caveat: the 80-person human-only anchor and prior-wave human distribution are stronger on this repeated-question panel.</small>
+      </section>
+
+      <section class="method-strip">
+        <div><span>01</span><strong>Source hashes</strong><small>Every incorporated file is SHA-256 pinned.</small></div>
+        <div><span>02</span><strong>Family firewall</strong><small>Semantic siblings stay on the same side of a split.</small></div>
+        <div><span>03</span><strong>Outcome isolation</strong><small>Wave 4 never trains the novel-transfer model.</small></div>
+        <div><span>04</span><strong>Negative-result gate</strong><small>Failed baselines remain visible in the product.</small></div>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

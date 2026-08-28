@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rival-sim"
+version = "0.4.0"
+description = "Calibrated population and behavior simulation for enterprise decisions"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "pydantic>=2.6",
+  "scikit-learn>=1.5",
+  "scipy>=1.13",
+  "cryptography>=42",
+]
+
+[project.scripts]
+rival = "rival.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rival*"]
+
+[tool.setuptools.package-data]
+rival = [
+  "static/*",
+  "datasets/opinionqa/*",
+  "datasets/twin2k/*",
+  "qualification/*",
+]
