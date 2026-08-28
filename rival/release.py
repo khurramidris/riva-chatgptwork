@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -61,14 +62,43 @@ def verify_release_manifest(
                 "reason": "present" if candidate.is_file() else "missing",
             }
         )
-    checks.append(
-        {
-            "path": "package-version",
-            "status": "PASS" if manifest.get("release") == __version__ else "FAIL",
-            "expected": manifest.get("release"),
-            "actual": __version__,
-        }
-    )
+    wheel_path = (root / wheel["path"]).resolve()
+    if wheel_path.suffix == ".whl" and wheel_path.is_file():
+        wheel_version: str | None = None
+        try:
+            with zipfile.ZipFile(wheel_path) as archive:
+                metadata_names = [
+                    name
+                    for name in archive.namelist()
+                    if name.endswith(".dist-info/METADATA")
+                ]
+                if len(metadata_names) == 1:
+                    metadata = archive.read(metadata_names[0]).decode("utf-8")
+                    for line in metadata.splitlines():
+                        if line.startswith("Version: "):
+                            wheel_version = line.removeprefix("Version: ").strip()
+                            break
+        except (OSError, UnicodeDecodeError, zipfile.BadZipFile):
+            wheel_version = None
+        checks.append(
+            {
+                "path": "wheel-metadata-version",
+                "status": "PASS" if manifest.get("release") == wheel_version else "FAIL",
+                "expected": manifest.get("release"),
+                "actual": wheel_version,
+            }
+        )
+    else:
+        # Non-wheel artifacts are supported for verifier unit tests. A real
+        # release should always take the wheel-metadata path above.
+        checks.append(
+            {
+                "path": "package-version",
+                "status": "PASS" if manifest.get("release") == __version__ else "FAIL",
+                "expected": manifest.get("release"),
+                "actual": __version__,
+            }
+        )
     return {
         "status": "PASS" if all(item["status"] == "PASS" for item in checks) else "FAIL",
         "manifest": str(path),

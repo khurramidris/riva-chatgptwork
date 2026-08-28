@@ -1,0 +1,1309 @@
+{
+  "cases": {
+    "path": "cases.jsonl",
+    "preflight": 30,
+    "sha256": "b33c651e1223e3f0e95fe77adc6f873027e4031cbac48be5abf9b414dc144f99",
+    "total": 1500
+  },
+  "claim_scope": "Retrospective live-provider qualification on public Twin-2K data; not an independent prospective customer result.",
+  "created_at": "2026-08-28T20:48:00.826548+00:00",
+  "dataset": {
+    "information_cutoff": "2025-05-31T23:59:59+00:00",
+    "information_cutoff_basis": "public-release-month upper bound; source timestamps are redacted; waves 1-3 are inputs and wave 4 is protected",
+    "license": "CC BY 4.0",
+    "name": "Twin-2K-500",
+    "prediction_input_hashes": {
+      "human_history.csv": "9481ceb03edeae4aac3a93079554c1e34b9e8f2ca23bd6e8e98572a14d186887",
+      "question_catalog.json": "e72e305f0c7c83bb990e97de4c0cf2c718ead18cc197239b7feeb354c9ac1bef",
+      "wave4_mapping.json": "345f7f6645f80dc23bcb423a9bb7c5ae77dbbd17fe572472fdfeb252bdcfc2c7"
+    },
+    "protected_outcome_sha256": "ace9258a2029f36283a61b6066aa8c9d59458fedefaac0afcbbe7797f4a3aaea"
+  },
+  "preregistration": {
+    "all_eligible_cases_retained": true,
+    "comparators": [
+      "generic_same_model",
+      "pre-wave population mode",
+      "same-person test-retest",
+      "released Twin-2K model",
+      "equal-size human anchor"
+    ],
+    "gates": [
+      "twin individual accuracy exceeds generic",
+      "twin population TVD is lower than generic",
+      "anchor-corrected twin TVD is lower than raw twin TVD"
+    ],
+    "primary_metrics": [
+      "individual_accuracy",
+      "multiclass_brier",
+      "population_tvd"
+    ]
+  },
+  "protocol_sha256": "52b2edeb3e5ff5bd6a964cf297bd70b16a1dabf203008ba1e44ecfa23f69bdda",
+  "provider_request_policy": {
+    "adapter": "OpenAICompatibleProvider",
+    "history_limit": 16,
+    "max_output_tokens": 300,
+    "prompt_messages_bound_per_case": true,
+    "temperature": 0.0,
+    "use_response_format": true
+  },
+  "request_envelopes": {
+    "pilot": {
+      "calls": 1500,
+      "estimated_input_tokens": 2764328,
+      "local_reservation_safety_factor": 1.25,
+      "max_input_tokens_per_call": 4482,
+      "maximum_output_tokens": 450000,
+      "mean_input_tokens_per_call": 1842.8853333333334,
+      "p95_input_tokens_per_call": 3847.1499999999996
+    },
+    "pilot_by_variant": {
+      "generic": {
+        "calls": 750,
+        "estimated_input_tokens": 418350,
+        "local_reservation_safety_factor": 1.25,
+        "max_input_tokens_per_call": 796,
+        "maximum_output_tokens": 225000,
+        "mean_input_tokens_per_call": 557.8,
+        "p95_input_tokens_per_call": 796.0
+      },
+      "twin": {
+        "calls": 750,
+        "estimated_input_tokens": 2345978,
+        "local_reservation_safety_factor": 1.25,
+        "max_input_tokens_per_call": 4482,
+        "maximum_output_tokens": 225000,
+        "mean_input_tokens_per_call": 3127.9706666666666,
+        "p95_input_tokens_per_call": 4135.0
+      }
+    },
+    "preflight": {
+      "calls": 30,
+      "estimated_input_tokens": 55208,
+      "local_reservation_safety_factor": 1.25,
+      "max_input_tokens_per_call": 3656,
+      "maximum_output_tokens": 9000,
+      "mean_input_tokens_per_call": 1840.2666666666667,
+      "p95_input_tokens_per_call": 3390.1999999999994
+    }
+  },
+  "schema_version": "rival.live-twin2k-pilot.v1",
+  "selection": {
+    "anchor_participant_ids": [
+      1944,
+      648,
+      595,
+      784,
+      1869,
+      1834,
+      1442,
+      230,
+      1751,
+      810
+    ],
+    "anchor_size": 10,
+    "cohort_size": 50,
+    "history_items": 16,
+    "minimum_history_items": 8,
+    "participant_ids": [
+      955,
+      973,
+      956,
+      350,
+      215,
+      1934,
+      476,
+      688,
+      810,
+      1944,
+      35,
+      595,
+      619,
+      1079,
+      1041,
+      784,
+      394,
+      1834,
+      1501,
+      405,
+      967,
+      1946,
+      734,
+      227,
+      1395,
+      411,
+      1674,
+      648,
+      1211,
+      2054,
+      1445,
+      53,
+      1751,
+      1175,
+      1659,
+      1706,
+      401,
+      885,
+      353,
+      639,
+      1442,
+      1527,
+      284,
+      1869,
+      926,
+      948,
+      957,
+      230,
+      575,
+      210
+    ],
+    "question_family_manifest_sha256": "b8ca1b54fcbf515d07ec102772573927411c791647779c6f0993a378463fedf9",
+    "seed": 20260828,
+    "target_count": 15,
+    "target_family_exclusion": true,
+    "variants": [
+      "generic",
+      "twin"
+    ]
+  },
+  "status": "FROZEN_BEFORE_LIVE_PROVIDER_CALLS",
+  "study_id": "rival-twin2k-live-provider-v1",
+  "targets": [
+    {
+      "choice_labels": [
+        "not at all risky",
+        "low risk",
+        "slightly risky",
+        "neutral",
+        "moderately risky",
+        "very risky",
+        "extremely risky"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0
+      ],
+      "column": "nonseparability ris _4",
+      "family_id": "fam_5008a3c9a38c",
+      "question": "Please rate the following technology or products from \"not at all risky\" to \"extremely risky\" pesticides",
+      "question_id": "QID289",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "not at all risky"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "low risk"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "slightly risky"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "neutral"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "moderately risky"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "very risky"
+          },
+          {
+            "choice_id": "value_7",
+            "description": "Recorded survey code 7",
+            "features": {},
+            "label": "extremely risky"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "nonseparability ris _4",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: nonseparability ris _4",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Please rate the following technology or products from \"not at all risky\" to \"extremely risky\" pesticides",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-8e7fc0be1542",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Yes, I would purchase the product",
+        "No, I would not purchase the product"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "33_Q295",
+      "family_id": "fam_4081007dcfbe",
+      "question": "Please consider the following product category: Batteries. Suppose you are in a grocery store, and you see the following product in that category: Duracell Coppertop AA Battery, Long Lasting Double A Batteries, 16 Pack. The product is priced at: $25.55. Would you or would you not purchase this product?",
+      "question_id": "QID9_33",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Yes, I would purchase the product"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "No, I would not purchase the product"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "33_Q295",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: 33_Q295",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Please consider the following product category: Batteries. Suppose you are in a grocery store, and you see the following product in that category: Duracell Coppertop AA Battery, Long Lasting Double A Batteries, 16 Pack. The product is priced at: $25.55. Would you or would you not purchase this product?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-ae45de87df01",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Extremely improbable",
+        "Very improbable",
+        "Somewhat probable",
+        "Moderately probable",
+        "Very probable",
+        "Extremely probable"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "column": "Q159_3",
+      "family_id": "fam_728239155794",
+      "question": "Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Please complete the statements below. It is ___ that Linda is a bank teller",
+      "question_id": "QID159",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Extremely improbable"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "Very improbable"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "Somewhat probable"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "Moderately probable"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "Very probable"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "Extremely probable"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q159_3",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q159_3",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Please complete the statements below. It is ___ that Linda is a bank teller",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-5635fe0f31e6",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "1",
+        "2"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "Q198_1",
+      "family_id": "fam_48f4c8006dd4",
+      "question": "Consider the following hypothetical situation: A deck with 10 cards is randomly shuffled 10 separate times. The 10 cards are composed of 7 cards with the number \u201c1\u201d on the down side and 3 cards with the number \u201c2\u201d on the down side. Each time the 10 cards are reshuffled, your task is to predict the number on the down side of the top card. Imagine that you will receive $100 for each downside number you correctly predict, and that you want to earn as much money as possible. What would you predict after ... shuffle #1",
+      "question_id": "QID198",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "1"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "2"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q198_1",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q198_1",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Consider the following hypothetical situation: A deck with 10 cards is randomly shuffled 10 separate times. The 10 cards are composed of 7 cards with the number \u201c1\u201d on the down side and 3 cards with the number \u201c2\u201d on the down side. Each time the 10 cards are reshuffled, your task is to predict the number on the down side of the top card. Imagine that you will receive $100 for each downside number you correctly predict, and that you want to earn as much money as possible. What would you predict after ... shuffle #1",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-9cb85087c745",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Strongly oppose",
+        "Somewhat oppose",
+        "Neither oppose nor support",
+        "Somewhat support",
+        "Strongly support"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ],
+      "column": "False Cons. self _3",
+      "family_id": "fam_f1b225e70016",
+      "question": "Would you support or oppose... Federal investments to ensure a carbon-pollution free electricity sector by 2035?",
+      "question_id": "QID287",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Strongly oppose"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "Somewhat oppose"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "Neither oppose nor support"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "Somewhat support"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "Strongly support"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "False Cons. self _3",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: False Cons. self _3",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Would you support or oppose... Federal investments to ensure a carbon-pollution free electricity sector by 2035?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-e608126bd21c",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "more",
+        "fewer"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "Q163",
+      "family_id": "fam_a4116cf7e42d",
+      "question": "Do you think there are more or fewer than 12 African countries in the United Nations?",
+      "question_id": "QID163",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "more"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "fewer"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q163",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q163",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Do you think there are more or fewer than 12 African countries in the United Nations?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-d3e14b7c0acd",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Disagree strongly",
+        "Disagree a little",
+        "Neither agree nor disagree",
+        "Agree a little",
+        "Agree strongly"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ],
+      "column": "Q172",
+      "family_id": "fam_3cb6a5097cb5",
+      "question": "Please rate your level of disagreement or agreement with the following statement: \"I would find a game that had a 7/36 chance of winning $9 and a 29/36 chance of losing $0.05 extremely attractive.\"",
+      "question_id": "QID172",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Disagree strongly"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "Disagree a little"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "Neither agree nor disagree"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "Agree a little"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "Agree strongly"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q172",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q172",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Please rate your level of disagreement or agreement with the following statement: \"I would find a game that had a 7/36 chance of winning $9 and a 29/36 chance of losing $0.05 extremely attractive.\"",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-fafce94f4cd1",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "definitely no",
+        "no",
+        "probably no",
+        "probably yes",
+        "yes",
+        "definitely yes"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "column": "Q194",
+      "family_id": "fam_180312ebd696",
+      "question": "According to a comprehensive study by the U.S. Department of Transportation, Ford Explorers are 8 times more likely than a typical family car to kill occupants of another car in a crash. The Department of Transportation in Germany is considering recommending a ban on the sale of the Ford Explorer in Germany. Do you think that Germany should ban the sale of the Ford Explorer?",
+      "question_id": "QID194",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "definitely no"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "no"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "probably no"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "probably yes"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "yes"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "definitely yes"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q194",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q194",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "According to a comprehensive study by the U.S. Department of Transportation, Ford Explorers are 8 times more likely than a typical family car to kill occupants of another car in a crash. The Department of Transportation in Germany is considering recommending a ban on the sale of the Ford Explorer in Germany. Do you think that Germany should ban the sale of the Ford Explorer?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-f66dd66610c2",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Disagree strongly",
+        "Disagree a little",
+        "Neither agree nor disagree",
+        "Agree a little",
+        "Agree strongly"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ],
+      "column": "Q176",
+      "family_id": "fam_0c2ad9549c36",
+      "question": "Imagine that highway safety experts have determined that a substantial number of people are at risk of dying in a type of automobile fire. A requirement that every car have a built-in fire extinguisher (estimated cost, $300) would save 95% of the 150 people who would otherwise die every year in this type of automobile fire. Rate the following statement about yourself: I would be supportive of this requirement.",
+      "question_id": "QID176",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Disagree strongly"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "Disagree a little"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "Neither agree nor disagree"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "Agree a little"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "Agree strongly"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q176",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q176",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Imagine that highway safety experts have determined that a substantial number of people are at risk of dying in a type of automobile fire. A requirement that every car have a built-in fire extinguisher (estimated cost, $300) would save 95% of the 150 people who would otherwise die every year in this type of automobile fire. Rate the following statement about yourself: I would be supportive of this requirement.",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-3523b95f913b",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Yes",
+        "No"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "Q183",
+      "family_id": "fam_270bae51eafb",
+      "question": "Imagine that you go to purchase a calculator for $30. The calculator salesperson informs you that the calculator you wish to buy is on sale for $20 at the other branch of the store which is ten minutes away by car. Would you drive to the other store?",
+      "question_id": "QID183",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Yes"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "No"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q183",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q183",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Imagine that you go to purchase a calculator for $30. The calculator salesperson informs you that the calculator you wish to buy is on sale for $20 at the other branch of the store which is ten minutes away by car. Would you drive to the other store?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-ea233207c3e8",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "more",
+        "less"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "Q167",
+      "family_id": "fam_fe933bfbe7cd",
+      "question": "Is the tallest redwood tree in the world more or less than 85 feet tall?",
+      "question_id": "QID167",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "more"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "less"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q167",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q167",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Is the tallest redwood tree in the world more or less than 85 feet tall?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-4b21eea90ad2",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "One million dollars for sure",
+        "89% probability of one million dollars 10% probablity of five miillion dollars 1% probability of nothing"
+      ],
+      "choice_values": [
+        1.0,
+        2.0
+      ],
+      "column": "Q192",
+      "family_id": "fam_442d35e8ef0f",
+      "question": "Choose between:",
+      "question_id": "QID192",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "One million dollars for sure"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "89% probability of one million dollars 10% probablity of five miillion dollars 1% probability of nothing"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q192",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q192",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Choose between:",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-1e4112dea8aa",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "very unlikely",
+        "unlikely",
+        "somewhat unlikely",
+        "somewhat likely",
+        "likely",
+        "very likely"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "column": "Q179",
+      "family_id": "fam_128473a57f2c",
+      "question": "You have recently graduated from university, obtained a good job, and are buying a new car. A newly designed seatbelt has just become available that would save the lives of 95% of the 500 drivers a year who are involved in a type of head-on-collision. (Approximately half of these fatalities involve drivers who were not at fault.) The newly designed seatbelt is not yet standard on most car models. However, it is available as a $500 option for the car model that you are ordering. How likely is it that you would order your new car with this optional seatbelt?",
+      "question_id": "QID179",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "very unlikely"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "unlikely"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "somewhat unlikely"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "somewhat likely"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "likely"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "very likely"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q179",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q179",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "You have recently graduated from university, obtained a good job, and are buying a new car. A newly designed seatbelt has just become available that would save the lives of 95% of the 500 drivers a year who are involved in a type of head-on-collision. (Approximately half of these fatalities involve drivers who were not at fault.) The newly designed seatbelt is not yet standard on most car models. However, it is available as a $500 option for the car model that you are ordering. How likely is it that you would order your new car with this optional seatbelt?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-8e70d0a0d364",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "Incorrect, a very bad decision",
+        "Incorrect, all things considered",
+        "Incorrect, but not unreasonable",
+        "The decision and its opposite are equally good",
+        "Correct, but the opposite would be reasonable too",
+        "Correct, all things considered",
+        "Clearly correct, an excellent decision"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0
+      ],
+      "column": "Q161",
+      "family_id": "fam_99382d6fccca",
+      "question": "A 55-year-old man had a heart condition. He had to stop working because of chest pain. He enjoyed his work and did not want to stop. His pain also interfered with other things, such as travel and recreation. A type of bypass operation would relieve his pain and increase his life expectancy from age 65 to age 70. However, 8% of the people who have this operation die from the operation itself. His physician decided to go ahead with the operation. The operation succeeded. Evaluate the physician's decision to go ahead with the operation.",
+      "question_id": "QID161",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "Incorrect, a very bad decision"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "Incorrect, all things considered"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "Incorrect, but not unreasonable"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "The decision and its opposite are equally good"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "Correct, but the opposite would be reasonable too"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "Correct, all things considered"
+          },
+          {
+            "choice_id": "value_7",
+            "description": "Recorded survey code 7",
+            "features": {},
+            "label": "Clearly correct, an excellent decision"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q161",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q161",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "A 55-year-old man had a heart condition. He had to stop working because of chest pain. He enjoyed his work and did not want to stop. His pain also interfered with other things, such as travel and recreation. A type of bypass operation would relieve his pain and increase his life expectancy from age 65 to age 70. However, 8% of the people who have this operation die from the operation itself. His physician decided to go ahead with the operation. The operation succeeded. Evaluate the physician's decision to go ahead with the operation.",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-22fc130ea1e3",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    },
+    {
+      "choice_labels": [
+        "I strongly favor program A",
+        "I favor program A",
+        "I slightly favor program A",
+        "I slightly favor program B",
+        "I favor program B",
+        "I strongly favor program B"
+      ],
+      "choice_values": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "column": "Q157",
+      "family_id": "fam_95c32fb084da",
+      "question": "Imagine that the U.S. is preparing for the outbreak of an unusual disease, which is expected to kill 600 people. Two alternative programs to combat the disease have been proposed. Assume that the exact scientific estimate of the consequences of the programs are as follows: If Program A is adopted, 200 people will be saved. If Program B is adopted, there is 1/3 probability that 600 people will be saved, and 2/3 probability that no people will be saved. Which of the two programs would you favor?",
+      "question_id": "QID157",
+      "scenario": {
+        "choices": [
+          {
+            "choice_id": "value_1",
+            "description": "Recorded survey code 1",
+            "features": {},
+            "label": "I strongly favor program A"
+          },
+          {
+            "choice_id": "value_2",
+            "description": "Recorded survey code 2",
+            "features": {},
+            "label": "I favor program A"
+          },
+          {
+            "choice_id": "value_3",
+            "description": "Recorded survey code 3",
+            "features": {},
+            "label": "I slightly favor program A"
+          },
+          {
+            "choice_id": "value_4",
+            "description": "Recorded survey code 4",
+            "features": {},
+            "label": "I slightly favor program B"
+          },
+          {
+            "choice_id": "value_5",
+            "description": "Recorded survey code 5",
+            "features": {},
+            "label": "I favor program B"
+          },
+          {
+            "choice_id": "value_6",
+            "description": "Recorded survey code 6",
+            "features": {},
+            "label": "I strongly favor program B"
+          }
+        ],
+        "context": "Predict this participant's answer in the next survey wave using only the supplied pre-wave behavioral history.",
+        "geography": [],
+        "horizon": "next survey wave",
+        "human_anchor_size": 10,
+        "information_cutoff": "2025-05-31T23:59:59+00:00",
+        "intended_use": "retrospective live-provider qualification",
+        "interaction_mode": "independent",
+        "metadata": {
+          "dataset": "Twin-2K-500",
+          "target_column": "Q157",
+          "target_family_excluded_from_history": true
+        },
+        "model_family": "provider-bound-at-run-time",
+        "name": "Twin-2K held-out response: Q157",
+        "novelty": 0.5,
+        "population_filter": {},
+        "prohibited_inferences": [
+          "clinical diagnosis",
+          "employment decision",
+          "credit decision",
+          "individual adverse action"
+        ],
+        "question": "Imagine that the U.S. is preparing for the outbreak of an unusual disease, which is expected to kill 600 people. Two alternative programs to combat the disease have been proposed. Assume that the exact scientific estimate of the consequences of the programs are as follows: If Program A is adopted, 200 people will be saved. If Program B is adopted, there is 1/3 probability that 600 people will be saved, and 2/3 probability that no people will be saved. Which of the two programs would you favor?",
+        "sample_size": 50,
+        "scenario_id": "rival-twin2k-live-provider-v1-b3401f56daa4",
+        "seed": 20260828,
+        "task_type": "survey"
+      }
+    }
+  ]
+}

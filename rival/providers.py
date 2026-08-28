@@ -170,6 +170,9 @@ class OpenAICompatibleProvider(PredictionProvider):
         timeout_seconds: int = 60,
         temperature: float = 0.2,
         max_retries: int = 3,
+        history_limit: int = 16,
+        max_output_tokens: int = 300,
+        use_response_format: bool = True,
     ):
         self.model = model
         self.api_key = api_key or os.getenv("RIVAL_API_KEY") or os.getenv(
@@ -180,9 +183,27 @@ class OpenAICompatibleProvider(PredictionProvider):
             or os.getenv("RIVAL_BASE_URL")
             or "https://openrouter.ai/api/v1/chat/completions"
         )
+        endpoint = urllib.parse.urlsplit(self.base_url)
+        hostname = (endpoint.hostname or "").casefold()
+        local_endpoint = hostname in {"localhost", "127.0.0.1", "::1"}
+        if endpoint.username or endpoint.password:
+            raise ProviderError("provider URL must not contain credentials")
+        if endpoint.scheme != "https" and not (
+            endpoint.scheme == "http" and local_endpoint
+        ):
+            raise ProviderError("remote provider URL must use HTTPS")
+        if not endpoint.hostname:
+            raise ProviderError("provider URL must contain a hostname")
         self.timeout_seconds = timeout_seconds
         self.temperature = temperature
         self.max_retries = max_retries
+        self.history_limit = int(history_limit)
+        self.max_output_tokens = int(max_output_tokens)
+        self.use_response_format = bool(use_response_format)
+        if self.history_limit < 0:
+            raise ValueError("history_limit must be nonnegative")
+        if self.max_output_tokens < 1:
+            raise ValueError("max_output_tokens must be positive")
         if not self.api_key:
             raise ProviderError(
                 "missing API key; set RIVAL_API_KEY or OPENROUTER_API_KEY"
@@ -202,7 +223,11 @@ class OpenAICompatibleProvider(PredictionProvider):
             "person": {
                 "attributes": person.attributes,
                 "preferences": person.preferences,
-                "relevant_history": person.history[-8:],
+                "relevant_history": (
+                    person.history[-self.history_limit :]
+                    if self.history_limit
+                    else []
+                ),
             },
             "scenario": {
                 "question": scenario.question,
@@ -211,16 +236,18 @@ class OpenAICompatibleProvider(PredictionProvider):
                 "choices": choice_payload,
             },
         }
-        return {
+        payload = {
             "model": self.model,
             "messages": [
                 {"role": "system", "content": system},
                 {"role": "user", "content": json.dumps(user, sort_keys=True)},
             ],
             "temperature": self.temperature,
-            "max_tokens": 300,
-            "response_format": {"type": "json_object"},
+            "max_tokens": self.max_output_tokens,
         }
+        if self.use_response_format:
+            payload["response_format"] = {"type": "json_object"}
+        return payload
 
     def identity(self) -> ProviderIdentity:
         endpoint = urllib.parse.urlsplit(self.base_url)
@@ -232,6 +259,9 @@ class OpenAICompatibleProvider(PredictionProvider):
             "temperature": self.temperature,
             "timeout_seconds": self.timeout_seconds,
             "max_retries": self.max_retries,
+            "history_limit": self.history_limit,
+            "max_output_tokens": self.max_output_tokens,
+            "use_response_format": self.use_response_format,
         }
         return ProviderIdentity(
             provider_name=self.name,
@@ -252,6 +282,31 @@ class OpenAICompatibleProvider(PredictionProvider):
             return str(payload["choices"][0]["message"]["content"])
         except (KeyError, IndexError, TypeError) as exc:
             raise ProviderError("provider response does not contain message content") from exc
+
+    @staticmethod
+    def _usage_diagnostics(payload: dict) -> dict[str, float]:
+        usage = payload.get("usage")
+        if not isinstance(usage, dict):
+            return {}
+        diagnostics: dict[str, float] = {}
+        aliases = {
+            "prompt_tokens": ("prompt_tokens", "input_tokens"),
+            "completion_tokens": ("completion_tokens", "output_tokens"),
+            "total_tokens": ("total_tokens",),
+            "provider_cost_usd": ("cost", "total_cost", "cost_usd"),
+        }
+        for destination, candidates in aliases.items():
+            for candidate in candidates:
+                value = usage.get(candidate)
+                if isinstance(value, (int, float)) and float(value) >= 0:
+                    diagnostics[destination] = float(value)
+                    break
+        if "total_tokens" not in diagnostics:
+            prompt = diagnostics.get("prompt_tokens")
+            completion = diagnostics.get("completion_tokens")
+            if prompt is not None and completion is not None:
+                diagnostics["total_tokens"] = prompt + completion
+        return diagnostics
 
     def predict(
         self, person: PopulationRecord, scenario: ScenarioSpec
@@ -286,12 +341,14 @@ class OpenAICompatibleProvider(PredictionProvider):
                 if set(parsed) != set(choice_ids):
                     raise ProviderError("provider returned the wrong choice_id set")
                 probabilities = normalize(float(parsed[key]) for key in choice_ids)
+                diagnostics = {"attempts": float(attempt + 1)}
+                diagnostics.update(self._usage_diagnostics(response_payload))
                 return ProviderPrediction(
                     probabilities={
                         key: float(value)
                         for key, value in zip(choice_ids, probabilities, strict=True)
                     },
-                    diagnostics={"attempts": float(attempt + 1)},
+                    diagnostics=diagnostics,
                     provider_request_id=(
                         str(response_payload.get("id"))
                         if response_payload.get("id") is not None

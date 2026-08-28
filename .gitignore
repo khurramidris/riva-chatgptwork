@@ -7,6 +7,6 @@ dist/
 build/
 reports/*.json
 reports/*.md
+reports/*.jsonl
 *.sqlite3
 .env
-

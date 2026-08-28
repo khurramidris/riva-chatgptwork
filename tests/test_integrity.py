@@ -31,6 +31,7 @@ from rival.research.integrity_qualification import run_integrity_qualification
 from rival.release import verify_release_manifest
 from rival.schemas import OutcomeRevealReceipt, PopulationRecord, PreregistrationSpec, utc_now
 from rival.server import RivalApplication
+from rival.version import __version__
 
 
 class CountingProvider(PredictionProvider):
@@ -260,7 +261,7 @@ class IntegritySurfaceTests(unittest.TestCase):
             artifact.write_bytes(b"verified")
             digest = hashlib.sha256(b"verified").hexdigest()
             manifest = {
-                "release": "0.5.0",
+                "release": __version__,
                 "wheel": {"path": "artifact.bin", "sha256": digest},
                 "qualification_artifacts": {},
             }

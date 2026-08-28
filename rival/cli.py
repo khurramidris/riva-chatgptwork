@@ -11,6 +11,9 @@ from .schemas import EvaluationResult, HybridResult, SimulationResult
 from .server import serve
 
 
+_LIVE_STUDY_DIR = Path(__file__).resolve().parent / "studies" / "twin2k_live_v1"
+
+
 def write_text(path: str | None, content: str) -> None:
     if path:
         destination = Path(path)
@@ -129,6 +132,122 @@ def verify_release_command(args: argparse.Namespace) -> int:
     return 0 if report["status"] == "PASS" else 1
 
 
+def prepare_live_pilot_command(args: argparse.Namespace) -> int:
+    from .live_pilot import prepare_twin2k_live_pilot
+
+    report = prepare_twin2k_live_pilot(
+        args.output_dir,
+        dataset_root=args.dataset_root,
+        cohort_size=args.cohort_size,
+        target_count=args.target_count,
+        anchor_size=args.anchor_size,
+        history_items=args.history_items,
+        minimum_history_items=args.minimum_history_items,
+        seed=args.seed,
+    )
+    print(
+        json.dumps(
+            {
+                "protocol": str(Path(args.output_dir, "protocol.json").resolve()),
+                "cases": str(Path(args.output_dir, "cases.jsonl").resolve()),
+                "protocol_sha256": report["protocol_sha256"],
+                "total_cases": report["cases"]["total"],
+                "preflight_cases": report["cases"]["preflight"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def rehearse_live_pilot_command(args: argparse.Namespace) -> int:
+    from .live_pilot import (
+        BudgetGuard,
+        DeterministicRehearsalProvider,
+        evaluate_live_pilot,
+        load_and_verify_protocol,
+        run_live_pilot,
+    )
+
+    protocol, _, _ = load_and_verify_protocol(
+        args.protocol, cases_path=args.cases, dataset_root=args.dataset_root
+    )
+    guard = BudgetGuard(
+        budget_usd=1.0,
+        input_cost_per_million=0.0,
+        output_cost_per_million=0.0,
+        max_calls=int(protocol["cases"]["total"]),
+    )
+    summary = run_live_pilot(
+        args.protocol,
+        args.results,
+        DeterministicRehearsalProvider(),
+        guard,
+        phase="pilot",
+        cases_path=args.cases,
+        dataset_root=args.dataset_root,
+        summary_path=args.summary,
+    )
+    evaluation = evaluate_live_pilot(
+        args.protocol,
+        args.results,
+        cases_path=args.cases,
+        dataset_root=args.dataset_root,
+    )
+    write_text(args.evaluation, json.dumps(evaluation, indent=2, sort_keys=True))
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    return 0 if summary["status"] == "COMPLETE" else 1
+
+
+def run_live_pilot_command(args: argparse.Namespace) -> int:
+    from .live_pilot import BudgetGuard, make_openai_provider, parse_not_after, run_live_pilot
+
+    provider = make_openai_provider(
+        model=args.model,
+        base_url=args.base_url,
+        timeout_seconds=args.timeout_seconds,
+        temperature=args.temperature,
+        max_retries=args.max_retries,
+        history_limit=args.history_limit,
+        max_output_tokens=args.max_output_tokens,
+        use_response_format=not args.no_response_format,
+    )
+    guard = BudgetGuard(
+        budget_usd=args.budget_usd,
+        input_cost_per_million=args.input_cost_per_million,
+        output_cost_per_million=args.output_cost_per_million,
+        max_calls=args.max_calls,
+        not_after=parse_not_after(args.not_after),
+    )
+    summary = run_live_pilot(
+        args.protocol,
+        args.results,
+        provider,
+        guard,
+        phase=args.phase,
+        cases_path=args.cases,
+        dataset_root=args.dataset_root,
+        max_errors=args.max_errors,
+        summary_path=args.summary,
+    )
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    return 0 if summary["status"] == "COMPLETE" else 2
+
+
+def evaluate_live_pilot_command(args: argparse.Namespace) -> int:
+    from .live_pilot import evaluate_live_pilot
+
+    report = evaluate_live_pilot(
+        args.protocol,
+        args.results,
+        cases_path=args.cases,
+        dataset_root=args.dataset_root,
+    )
+    write_text(args.output, json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["status"] != "PARTIAL_UNEVALUABLE" else 2
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="rival")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -193,6 +312,69 @@ def build_parser() -> argparse.ArgumentParser:
     )
     release_parser.add_argument("--manifest", default="RELEASE_MANIFEST.json")
     release_parser.set_defaults(func=verify_release_command)
+
+    live_prepare = subparsers.add_parser(
+        "prepare-live-pilot",
+        help="freeze the outcome-free Twin-2K live-provider pilot",
+    )
+    live_prepare.add_argument("--output-dir", default=str(_LIVE_STUDY_DIR))
+    live_prepare.add_argument("--dataset-root")
+    live_prepare.add_argument("--cohort-size", type=int, default=50)
+    live_prepare.add_argument("--target-count", type=int, default=15)
+    live_prepare.add_argument("--anchor-size", type=int, default=10)
+    live_prepare.add_argument("--history-items", type=int, default=16)
+    live_prepare.add_argument("--minimum-history-items", type=int, default=8)
+    live_prepare.add_argument("--seed", type=int, default=20260828)
+    live_prepare.set_defaults(func=prepare_live_pilot_command)
+
+    rehearsal = subparsers.add_parser(
+        "rehearse-live-pilot",
+        help="run the frozen pilot end to end without network calls",
+    )
+    rehearsal.add_argument("--protocol", default=str(_LIVE_STUDY_DIR / "protocol.json"))
+    rehearsal.add_argument("--cases")
+    rehearsal.add_argument("--dataset-root")
+    rehearsal.add_argument("--results", default="reports/live_pilot_rehearsal.jsonl")
+    rehearsal.add_argument("--summary", default="reports/live_pilot_rehearsal_summary.json")
+    rehearsal.add_argument("--evaluation", default="reports/live_pilot_rehearsal_evaluation.json")
+    rehearsal.set_defaults(func=rehearse_live_pilot_command)
+
+    live_run = subparsers.add_parser(
+        "run-live-pilot",
+        help="run or resume the frozen pilot against an OpenAI-compatible model",
+    )
+    live_run.add_argument("--protocol", default=str(_LIVE_STUDY_DIR / "protocol.json"))
+    live_run.add_argument("--cases")
+    live_run.add_argument("--dataset-root")
+    live_run.add_argument("--results", default="reports/live_pilot_results.jsonl")
+    live_run.add_argument("--summary", default="reports/live_pilot_summary.json")
+    live_run.add_argument("--phase", choices=["preflight", "pilot"], default="preflight")
+    live_run.add_argument("--model", required=True)
+    live_run.add_argument("--base-url")
+    live_run.add_argument("--budget-usd", type=float, required=True)
+    live_run.add_argument("--input-cost-per-million", type=float, required=True)
+    live_run.add_argument("--output-cost-per-million", type=float, required=True)
+    live_run.add_argument("--max-calls", type=int, required=True)
+    live_run.add_argument("--not-after", required=True, help="ISO-8601 UTC run expiry")
+    live_run.add_argument("--timeout-seconds", type=int, default=60)
+    live_run.add_argument("--temperature", type=float, default=0.0)
+    live_run.add_argument("--max-retries", type=int, default=1)
+    live_run.add_argument("--history-limit", type=int, default=16)
+    live_run.add_argument("--max-output-tokens", type=int, default=300)
+    live_run.add_argument("--max-errors", type=int, default=3)
+    live_run.add_argument("--no-response-format", action="store_true")
+    live_run.set_defaults(func=run_live_pilot_command)
+
+    live_evaluate = subparsers.add_parser(
+        "evaluate-live-pilot",
+        help="reveal Twin-2K outcomes only after calls and evaluate the frozen run",
+    )
+    live_evaluate.add_argument("--protocol", default=str(_LIVE_STUDY_DIR / "protocol.json"))
+    live_evaluate.add_argument("--cases")
+    live_evaluate.add_argument("--dataset-root")
+    live_evaluate.add_argument("--results", default="reports/live_pilot_results.jsonl")
+    live_evaluate.add_argument("--output", default="reports/live_pilot_evaluation.json")
+    live_evaluate.set_defaults(func=evaluate_live_pilot_command)
 
     server_parser = subparsers.add_parser("serve", help="start the API and study interface")
     server_parser.add_argument("--host", default="127.0.0.1")

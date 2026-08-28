@@ -6,6 +6,13 @@ Rival v0.5 completes the planned research-component development layer. It has a 
 
 The remaining gap is empirical, not another round of repository assembly. No component test can establish transfer to a prospective customer's product, population, time period, decision, or outcome.
 
+The `0.6.0.dev1` preparation commit freezes the first live-provider bridge:
+50 people, all 15 eligible independent categorical Twin-2K families, paired
+generic/twin prompts, 10 prespecified anchors, 1,500 total cases and a 30-call
+preflight. The entire path has completed with the no-network rehearsal provider;
+the paid model result remains pending. This is a retrospective model
+qualification and does not satisfy the customer-study exit criteria below.
+
 ## Required pilot input
 
 For each design partner:

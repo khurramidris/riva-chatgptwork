@@ -1,0 +1,114 @@
+name: Manual live-model pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Preflight runs 30 calls; pilot runs all 1500 in a fresh workflow
+        required: true
+        default: preflight
+        type: choice
+        options:
+          - preflight
+          - pilot
+      model:
+        description: Exact provider model ID
+        required: true
+        type: string
+      base_url:
+        description: OpenAI-compatible chat-completions URL
+        required: true
+        default: https://openrouter.ai/api/v1/chat/completions
+        type: string
+      budget_usd:
+        description: Local USD ceiling (provider key must also have its own hard cap)
+        required: true
+        type: string
+      input_cost_per_million:
+        description: Current model input price per million tokens in USD
+        required: true
+        type: string
+      output_cost_per_million:
+        description: Current model output price per million tokens in USD
+        required: true
+        type: string
+      max_calls:
+        description: Maximum successful calls; use 30 for preflight and 1500 for the complete pilot
+        required: true
+        default: "30"
+        type: string
+      not_after:
+        description: ISO-8601 UTC expiry, for example 2026-08-29T18:00:00Z
+        required: true
+        type: string
+      pilot_confirmation:
+        description: For a full pilot, enter I_HAVE_REVIEWED_PREFLIGHT; leave NO for preflight
+        required: true
+        default: "NO"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rival-live-pilot
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      RIVAL_API_KEY: ${{ secrets.RIVAL_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Require restricted provider key
+        shell: bash
+        run: |
+          if [ -z "$RIVAL_API_KEY" ]; then
+            echo "Repository secret RIVAL_API_KEY is not configured."
+            exit 1
+          fi
+          if [ "${{ inputs.phase }}" = "pilot" ] && [ "${{ inputs.pilot_confirmation }}" != "I_HAVE_REVIEWED_PREFLIGHT" ]; then
+            echo "Full pilot blocked: preflight review confirmation is missing."
+            exit 1
+          fi
+      - name: Install Rival
+        run: python -m pip install .
+      - name: Verify live-pilot controls
+        run: python -m unittest tests.test_live_pilot -v
+      - name: Run frozen live-model phase
+        run: |
+          python -m rival run-live-pilot \
+            --phase "${{ inputs.phase }}" \
+            --model "${{ inputs.model }}" \
+            --base-url "${{ inputs.base_url }}" \
+            --budget-usd "${{ inputs.budget_usd }}" \
+            --input-cost-per-million "${{ inputs.input_cost_per_million }}" \
+            --output-cost-per-million "${{ inputs.output_cost_per_million }}" \
+            --max-calls "${{ inputs.max_calls }}" \
+            --not-after "${{ inputs.not_after }}" \
+            --results reports/live_pilot_results.jsonl \
+            --summary reports/live_pilot_summary.json
+      - name: Evaluate complete pilot
+        if: ${{ inputs.phase == 'pilot' }}
+        continue-on-error: true
+        run: |
+          python -m rival evaluate-live-pilot \
+            --results reports/live_pilot_results.jsonl \
+            --output reports/live_pilot_evaluation.json
+      - name: Upload immutable run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rival-live-pilot-${{ github.run_id }}
+          path: |
+            reports/live_pilot_results.jsonl
+            reports/live_pilot_summary.json
+            reports/live_pilot_evaluation.json
+          if-no-files-found: warn
+          retention-days: 30

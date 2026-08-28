@@ -4,6 +4,11 @@ Rival is an evidence-gated population and behavior simulation product. It combin
 
 Version 0.5 keeps the real-data qualification and prospective-integrity kernel from v0.4, then completes the planned research-component integration layer: semantic-similarity response rating, survey uncertainty intervals, the full SYN-DIGITS synthetic-control runtime, paired S-RCT estimation, calibrated persona-mixture demand/pricing, interview-grounded personas, official Twin-2K MAD evaluation, and revision-bound Centauri/Socrates inference adapters. This completes component development, not external validation: population-distribution calibration is ready for controlled pilots; universal or reliable individual prediction is not claimed.
 
+The current `0.6.0.dev1` tree adds the frozen first live-model qualification:
+1,500 paired generic/twin cases, prompt and dataset hashing, append-and-resume
+execution, provider-usage accounting, local call/USD/expiry guards, and a
+separate post-prediction evaluator. No paid live-model result is claimed yet.
+
 ## Real-data results
 
 | Track | Data | Baseline | Rival result | Decision |
@@ -42,6 +47,7 @@ OpinionQA is evaluated with five out-of-fold splits at the canonical/TF-IDF ques
 - interview-transcript ingestion with protected-outcome rejection;
 - revision-, corpus-, endpoint-, and license-bound Centauri/Socrates inference adapters (no weights bundled);
 - official Twin-2K MAD evaluation wrappers;
+- frozen and resumable Twin-2K live-provider pilot with two-layer spending controls;
 - complete CLI qualification pipeline and machine-readable reports.
 
 ## Install and run
@@ -105,6 +111,26 @@ engine.register_provider(
 ```
 
 Set `scenario.model_family` to `behavior-api`. Credentials are read from the environment and are never stored in identities, contexts, runs, manifests, or reports. The public qualification numbers use released upstream model outputs because no external provider credential was configured during that benchmark.
+
+The first pinned live-provider qualification is frozen under
+`rival/studies/twin2k_live_v1/`. Rehearse it without network access, then run the
+small preflight after configuring a restricted environment key:
+
+```bash
+python3 -m rival rehearse-live-pilot
+
+# No API key is accepted as a command argument.
+python3 -m rival run-live-pilot \
+  --phase preflight --model PROVIDER_MODEL_ID \
+  --budget-usd LOCAL_CAP \
+  --input-cost-per-million INPUT_PRICE \
+  --output-cost-per-million OUTPUT_PRICE \
+  --max-calls 30 --not-after 2026-08-29T18:00:00Z
+```
+
+The result ledger is resumable and provider-bound. See
+[`docs/FIRST_LIVE_TEST.md`](docs/FIRST_LIVE_TEST.md) for the frozen design,
+spending controls, baselines and interpretation rules.
 
 ## Prospective study workflow
 
