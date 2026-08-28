@@ -2,7 +2,7 @@
 
 Rival is an evidence-gated population and behavior simulation product. It combines calibrated synthetic responses with a small human anchor, exposes the result through a study API and interface, and keeps prediction claims tied to reproducible qualification artifacts.
 
-Version 0.4 keeps the real-data qualification from v0.2 and adds the prospective-integrity kernel needed to run a defensible customer study: an outcome-free prediction boundary, deterministic provider/request identity, sealed preregistration manifests, an append-only phase chain, and a separate encrypted outcome vault. It makes a bounded launch claim: population-distribution calibration is ready for controlled pilots; universal or reliable individual prediction is not claimed.
+Version 0.5 keeps the real-data qualification and prospective-integrity kernel from v0.4, then completes the planned research-component integration layer: semantic-similarity response rating, survey uncertainty intervals, the full SYN-DIGITS synthetic-control runtime, paired S-RCT estimation, calibrated persona-mixture demand/pricing, interview-grounded personas, official Twin-2K MAD evaluation, and revision-bound Centauri/Socrates inference adapters. This completes component development, not external validation: population-distribution calibration is ready for controlled pilots; universal or reliable individual prediction is not claimed.
 
 ## Real-data results
 
@@ -34,6 +34,14 @@ OpinionQA is evaluated with five out-of-fold splits at the canonical/TF-IDF ques
 - explicit `draft → prediction_locked → outcomes_revealed → evaluated` hash chain;
 - AES-GCM outcome vault in a separate database, with manifest binding, time-gated reveal, authenticated decryption, and access events;
 - local REST API, study workflow, and evidence/validation dashboard;
+- natural-language elicitation mapped to choice PMFs with licensed Semantic Similarity Rating code;
+- CLT, Hoeffding, and Bernstein synthetic-survey intervals with licensed numerical-parity tests;
+- full licensed SYN-DIGITS matrix completion and row/column synthetic-control evaluation;
+- paired surrogate-RCT estimation with pre-period residual calibration;
+- calibrated persona/no-buy demand mixtures, revenue CVaR, and price selection;
+- interview-transcript ingestion with protected-outcome rejection;
+- revision-, corpus-, endpoint-, and license-bound Centauri/Socrates inference adapters (no weights bundled);
+- official Twin-2K MAD evaluation wrappers;
 - complete CLI qualification pipeline and machine-readable reports.
 
 ## Install and run
@@ -45,6 +53,7 @@ cd rival
 python3 -m pip install -e .
 python3 -m unittest discover -s tests -v
 python3 -m rival qualify-integrity
+python3 -m rival qualify-research-components
 python3 -m rival qualify-all --output-dir reports
 python3 -m rival verify-release
 python3 -m rival serve --port 8080
@@ -119,6 +128,12 @@ The manifest seal is a symmetric deployment seal, not a public-key signature or 
 | POST | `/api/simulate` | Run a supplied population, targets, and scenario |
 | POST | `/api/studies/lock` | Seal a ledger-backed run and preregistration; requires `RIVAL_MANIFEST_KEY` |
 | POST | `/api/hybrid` | Correct a simulation with human observations |
+| POST | `/api/research/ssr` | Map a natural-language response to a scale PMF |
+| POST | `/api/research/uncertainty` | Compute a synthetic-survey confidence interval |
+| POST | `/api/research/srct` | Estimate a weighted paired surrogate-RCT effect |
+| POST | `/api/research/pricing` | Fit persona demand or optimize price/revenue risk |
+| POST | `/api/research/personas` | Build outcome-free person state from interviews |
+| POST | `/api/research/synthetic-control/complete` | Complete a missing-value matrix with SYN-DIGITS |
 | GET | `/api/runs` | Recent immutable run records |
 
 ## Architecture
@@ -134,10 +149,10 @@ flowchart TD
     F --> H["Evaluation and release gate"]
 ```
 
-See `docs/ARCHITECTURE.md`, `docs/PROSPECTIVE_STUDIES.md`, `docs/VALIDATION_PROTOCOL.md`, and `docs/UPSTREAM_INTEGRATION.md`. Source and data attribution is in `THIRD_PARTY_NOTICES.md`; exact incorporated file hashes are in `upstreams.lock.json`.
+See `docs/ARCHITECTURE.md`, `docs/RESEARCH_COMPONENTS.md`, `docs/PROSPECTIVE_STUDIES.md`, `docs/VALIDATION_PROTOCOL.md`, and `docs/UPSTREAM_INTEGRATION.md`. Source and data attribution is in `THIRD_PARTY_NOTICES.md`; exact incorporated file hashes are in `upstreams.lock.json`.
 
 ## Honest release scope
 
-Rival v0.4 has a reproducible aggregate-distribution result on one five-choice survey domain and verified engineering controls for running a prospective study. Those controls prevent common leakage and tampering paths; they do not themselves establish predictive validity. Rival still does not prove transfer to customer concepts, future behavior, open-ended responses, interventions, or interactive multi-agent settings. The Twin-2K negative transfer result is intentionally shipped: a plausible research method failed to beat a classical population baseline, so individual novel-question prediction stays behind the research gate.
+Rival v0.5 has a reproducible aggregate-distribution result on one five-choice survey domain, verified engineering controls for a prospective study, and verified integration/parity checks for the planned research components. These controls and component tests do not themselves establish customer-domain predictive or causal validity. Rival still does not prove transfer to customer concepts, future behavior, open-ended responses, interventions, or interactive multi-agent settings. The Twin-2K negative transfer result is intentionally shipped: a plausible research method failed to beat a classical population baseline, so individual novel-question prediction stays behind the research gate.
 
 The next commercial milestone is a protected, prospective pilot with customer-owned outcomes, a relevant classical model, an equal-cost human baseline, preregistered thresholds, and misses retained.

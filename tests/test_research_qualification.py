@@ -98,7 +98,7 @@ class QualificationReportTests(unittest.TestCase):
         self.assertEqual(report["dataset"]["evaluated_questions"], 2)
         self.assertFalse(report["protocol"]["wave4_used_for_training"])
         summary = load_bundled_summary()
-        self.assertEqual(summary["release"], "0.4.0")
+        self.assertEqual(summary["release"], "0.5.0")
         self.assertEqual(summary["prospective_integrity"]["status"], "PASS")
         self.assertEqual(
             summary["release_decision"]["individual_novel-question_prediction"],

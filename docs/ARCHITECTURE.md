@@ -1,4 +1,4 @@
-# Rival v0.4 Architecture
+# Rival v0.5 Architecture
 
 ## Design rule
 
@@ -39,7 +39,12 @@ It does not treat a plausible agent transcript as validation. Every quantitative
 |---|---|---|
 | `schemas.py` | Strict product/data contracts | Version schemas; never hide unknown fields |
 | `population.py` | Filtering, raking, support checks, sampling, ESS | Add PopulationSim adapter or learned joint generator |
-| `providers.py` | Offline and OpenAI-compatible behavior probability providers | Add Socrates/Centaur/Centauri/domain models |
+| `providers.py` | Offline, general OpenAI-compatible, Centauri, and Socrates probability providers | Qualify operator-hosted checkpoints and add domain models |
+| `elicitation.py` | Natural-language generation and licensed SSR probability elicitation | Qualify a pinned production embedding model by domain/language |
+| `uncertainty.py` | Licensed synthetic-survey interval formulas and residual intervals | Add survey-design and simultaneous-coverage methods |
+| `experiments/srct.py` | Weighted paired surrogate experiments and pre-period adjustment | Add multi-arm randomization inference after protected validation |
+| `pricing.py` | Calibrated persona/no-buy demand and risk-aware price choice | Add inventory, competition, elasticity, and temporal constraints |
+| `personas.py` | Outcome-free interview transcript ingestion | Add consent/deletion and customer-specific redaction policies |
 | `behavior.py` | Model registry/router | Route by domain, policy, evidence and cost |
 | `adaptive.py` | Anchor selection | Replace with authorized CAT/MIRT implementation while logging propensities |
 | `hybrid.py` | Prediction-powered residual correction and intervals | Add cross-fitting, complex survey weights and multi-arm treatment effects |
@@ -53,6 +58,9 @@ It does not treat a plausible agent transcript as validation. Every quantitative
 | `research/datasets.py` | OpinionQA/Twin-2K validation and alignment | Add customer survey connectors with the same typed checks |
 | `research/firewall.py` | Semantic families, deterministic folds and split hashes | Add embedding review and human adjudication |
 | `research/calibration.py` | Vectorized SYN-DIGITS KL persona calibration | Add constrained/subgroup and incremental variants |
+| `research/synthetic_control.py` | Lazy boundary around the full licensed SYN-DIGITS runtime | Qualify method selection and rank tuning per workload |
+| `research/mad.py` | Official Twin-2K MAD evaluation wrapper | Add protocol-versioned task mappings |
+| `research/integration_qualification.py` | Parity/wiring gate for research components | Add deployment-specific latency/cost/model checks |
 | `research/opinionqa.py` | Aggregate distribution qualification | Extend to other choice formats and temporal holdouts |
 | `research/twin2k.py` | Longitudinal individual/anchor baselines | Replace failed research transfer only after protected evidence |
 
@@ -70,4 +78,4 @@ It does not treat a plausible agent transcript as validation. Every quantitative
 
 ## Multi-agent extension
 
-Interaction remains deliberately absent from the qualified v0.4 scope. A future world runtime must declare state, clock, information visibility, network edges, action effects and termination. It should ship only when an interaction-dependent benchmark beats an independent-agent and classical dynamic baseline.
+Interaction remains deliberately absent from the qualified v0.5 scope. A future world runtime must declare state, clock, information visibility, network edges, action effects and termination. It should ship only when an interaction-dependent benchmark beats an independent-agent and classical dynamic baseline.

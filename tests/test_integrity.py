@@ -260,7 +260,7 @@ class IntegritySurfaceTests(unittest.TestCase):
             artifact.write_bytes(b"verified")
             digest = hashlib.sha256(b"verified").hexdigest()
             manifest = {
-                "release": "0.4.0",
+                "release": "0.5.0",
                 "wheel": {"path": "artifact.bin", "sha256": digest},
                 "qualification_artifacts": {},
             }

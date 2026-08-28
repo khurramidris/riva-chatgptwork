@@ -1,46 +1,66 @@
 # Authorized Upstream Integration
 
-## Incorporation decision
+## v0.5 integration map
 
-Rival now incorporates research components where the data contract and benchmark are clear, while keeping product runtime interfaces Rival-owned.
+Rival uses a narrow product boundary around each research component. Vendor snapshots remain auditable; Rival-owned adapters validate inputs, record identities, and expose stable APIs.
 
-| Upstream | Incorporated component | Product boundary | Evidence produced |
+| Research line | Integration class | Product component | Qualification evidence |
 |---|---|---|---|
-| SYN-DIGITS | Full calibration source snapshot; OpinionQA human counts and released persona answers | Memory-safe vectorized calibrator in `rival/research/calibration.py` | Five family-held-out folds, per-question TVD/JS, source and split hashes |
-| Twin-2K-500 | Question catalog, mapping, three aligned wave/model response tables | Typed loader, family firewall, baselines, ridge-transfer and anchor evaluator | Individual accuracy/NMAE/correlation plus aggregate TVD and explicit failure gate |
-| PopulationSim | Method/QA reference | Existing support-checked raking compiler | Margin error and effective sample size |
-| AI-Augmented Estimation | Estimator reference | Existing categorical human-residual correction | Held-out anchor evaluation on Twin-2K |
-| Adaptive Query | Selection reference | Existing uncertainty/coverage selector | Awaiting prospective propensity-aware validation |
+| PyMC Labs Semantic Similarity Rating | Verbatim source + adapter | `elicitation.py`: free text → embeddings → SSR PMF → temperature scaling | Valid-PMF and denominator-zero tests; pinned implementation identity |
+| SYN-DIGITS distribution calibration | Verbatim audit snapshot + independently vectorized runtime | `research/calibration.py` | Five family-held-out OpinionQA folds and per-question metrics |
+| SYN-DIGITS synthetic control | Full vendored class with portability patches | `research/synthetic_control.py` | Hard/soft/ALS completion invariants plus full ridge evaluation path |
+| UQ Survey Simulation | Patched vendor source + formula-level wrapper | `uncertainty.py` | Numerical parity with upstream CLT, Hoeffding, and Bernstein functions |
+| Twin-2K-500 | Licensed data/protocol | Typed loader, leakage firewall, baselines, anchor correction | Individual and aggregate retrospective qualification; negative transfer result retained |
+| Twin-2K Mega Study | Verbatim MAD evaluator + lazy wrapper | `research/mad.py` | Official MAD summary smoke test |
+| H&M demand/pricing | Verbatim source snapshot + adapted runtime | `pricing.py` | Simplex persona/no-buy fit, calibrated probabilities, revenue/CVaR price test |
+| S-RCT | Paper-derived Rival implementation | `experiments/srct.py` | Weighted paired effect and pre-period residual invariants |
+| 1,000-person interview study | Conceptual design, Rival implementation | `personas.py` | Typed JSONL/CSV ingestion, deterministic provenance, protected-outcome rejection |
+| Centauri | Adapter only | `CentauriProvider` | Revision/endpoint/corpus/license-bound identity; no credential serialization |
+| Socrates / SocSci210 | Adapter only | `SocratesProvider` | Same identity controls; no code or weights claimed |
 
-## Source isolation
+The machine-readable source of truth is `upstreams.lock.json`. `THIRD_PARTY_NOTICES.md` records the public terms and the one repository where use relies on separate permission because no public LICENSE file was present.
 
-The upstream SYN-DIGITS module is retained unmodified under `vendor/syn_digits/` with its license and README. Rival does not import it at runtime because it constructs a dense mapping matrix per question and brings notebook/plotting dependencies into the server. `VectorizedPersonaCalibrator` implements the same documented KL objective using indexed accumulation and is covered by a golden synthetic-mixture test.
+## Portability modifications
 
-Research datasets live under `rival/datasets/` so editable installs and built wheels reproduce the qualification command. Loaders validate identifiers, code ranges, duplicate participants, common-person intersections, mapped columns, and exact source hashes.
+The full SYN-DIGITS `SyntheticControl` file is kept intact except for documented product-runtime patches:
 
-## Leakage firewall
+1. replace `causaltensor.matlib.SVD` with a local NumPy rank-k reconstruction;
+2. replace interactive `plt.show()` calls with headless figure closing;
+3. redirect diagnostic output to a temporary or `RIVAL_SYN_DIGITS_OUTPUT_DIR` directory;
+4. bound two expensive evaluation imputation call sites at 100 iterations.
 
-Question splitting is a first-class component, not a notebook convention:
+The UQ source has one import-only patch: CI helpers remain usable when `tqdm` is absent. The scientific formulas are unchanged and parity-tested.
 
-1. normalize text, numbers, bracketed options, and experimental condition labels;
-2. union exact canonical duplicates;
-3. union high-similarity TF-IDF documents;
-4. collapse repeated QuestionIDs and normalized experimental blocks;
-5. explicitly bind known counterbalanced Twin-2K sibling sets;
-6. assign whole families to deterministic, balanced folds;
-7. hash the item/family/fold manifest and assert that no family crosses folds.
+The H&M demand source snapshot is retained for audit. Its product runtime is adapted in Rival-owned code because the upstream execution path depends on CVXPY/solver selection and notebook-oriented progress tooling. Rival preserves the substantive structure—monotone logit calibration, a simplex over personas plus a dummy no-buy mass, binomial or zero-truncated likelihood—and uses SciPy for deployment.
 
-For Twin-2K novel transfer, the same family map removes target siblings from the donor matrix. Wave-4 outcomes are evaluation-only.
+## Runtime sequence
 
-## Import procedure for the next component
+1. Strict product schemas validate scenarios, populations, transcripts, matrices, and numeric bounds.
+2. The outcome firewall removes post-cutoff history and rejects protected outcomes before model access.
+3. A provider or research adapter executes against a pinned component/model identity.
+4. Results cross a finite/probability/shape invariant before entering the engine or API.
+5. Prediction contexts, request identities, manifests, and qualification reports bind the implementation version.
 
-1. Pin the commit and signed permission/license reference.
-2. Inventory source, data, weights, and hosted-service terms separately.
-3. Copy the smallest coherent component under `vendor/` with original notices.
+## Leakage and evidence rules
+
+Question splitting remains a first-class component:
+
+1. normalize text, numbers, bracketed options, and condition labels;
+2. union exact canonical duplicates and high-similarity documents;
+3. collapse repeated QuestionIDs, experiment blocks, and known counterbalanced siblings;
+4. assign complete families to deterministic folds and hash the manifest;
+5. remove target families from Twin-2K donor matrices;
+6. keep wave-4 outcomes evaluation-only.
+
+Component parity is not predictive validity. The v0.5 integration qualification proves that code is wired, licensed snapshots are hash-stable, and bounded numerical invariants hold. Only protected customer studies can establish accuracy, causal usefulness, cost advantage, subgroup behavior, and transfer.
+
+## Procedure for future upstream changes
+
+1. Pin the exact commit and permission/license reference.
+2. Inventory code, data, weights, hosted-service terms, and transitive assets separately.
+3. Copy the smallest coherent component and preserve its notices.
 4. Record every incorporated file and SHA-256 in `upstreams.lock.json`.
-5. Write a narrow Rival adapter and schema validator.
+5. Document every patch and keep research logic distinct from transport/UI code.
 6. Add parity, leakage, accuracy, latency, cost, and failure tests.
-7. Produce a protected baseline comparison before enabling the component in customer studies.
-8. Deploy behind a feature flag and retain the previous qualified version.
-
-Copying code accelerates implementation; it does not transfer the upstream paper's empirical claim to Rival. The release gate remains attached to Rival's own data, split, model, and outcome hashes.
+7. Run a protected baseline comparison before enabling a new claim.
+8. Ship behind a revision-bound interface and retain the previous qualified release.

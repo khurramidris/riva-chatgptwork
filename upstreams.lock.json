@@ -1,15 +1,17 @@
 {
-  "schema_version": 2,
-  "release": "0.2.0",
+  "schema_version": 3,
+  "release": "0.5.0",
   "authorization": {
-    "status": "user-confirmed-commercial-permission",
-    "confirmed_on": "2026-08-27",
-    "verification_required_before_external_redistribution": true
+    "status": "user-confirmed-commercial-permission-and-licenses",
+    "confirmed_on": "2026-08-28",
+    "verification_required_before_external_redistribution": true,
+    "note": "Public repository licenses are recorded where present. The H&M demand repository had no LICENSE file at the pinned revision; incorporation relies on the user's separate permission."
   },
   "incorporated": [
     {
       "name": "SYN-DIGITS",
       "url": "https://github.com/yw3453/syn-digits",
+      "paper": "https://arxiv.org/abs/2604.07513",
       "commit": "db891b6f821c914455b11763a96679864bf4fc48",
       "public_license": "MIT",
       "files": [
@@ -18,6 +20,18 @@
           "upstream_path": "src/distribution_calibration.py",
           "sha256": "c371e103c7a733d8d060d3f1c7ba0330f73486eae94eea88fb8789cea802aed2",
           "mode": "verbatim audit snapshot"
+        },
+        {
+          "rival_path": "rival/vendor/syn_digits/synthetic_control.py",
+          "upstream_path": "src/synthetic_control.py",
+          "sha256": "7ea158a122b00d9f46f42eb13a2339807bae5b135703db3e72875f6d6f450ccf",
+          "mode": "full source with documented portability patches"
+        },
+        {
+          "rival_path": "rival/vendor/syn_digits/LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "67546a8946bd72f283c5667c75406afbb8d679ac46a1f3c07a786e83e6398269",
+          "mode": "verbatim license"
         },
         {
           "rival_path": "rival/datasets/opinionqa/questions.json",
@@ -32,11 +46,90 @@
           "mode": "verbatim data"
         }
       ],
-      "runtime_adaptation": "rival/research/calibration.py independently vectorizes the released KL mirror-descent objective"
+      "runtime_adaptation": "rival/research/synthetic_control.py exposes the full component lazily; rival/research/calibration.py independently vectorizes the distribution-calibration objective"
+    },
+    {
+      "name": "Semantic Similarity Rating",
+      "url": "https://github.com/pymc-labs/semantic-similarity-rating",
+      "commit": "86dcd2597c7824e4fd6546b884c5500c43a4b022",
+      "public_license": "Apache-2.0",
+      "files": [
+        {
+          "rival_path": "rival/vendor/semantic_similarity_rating/compute.py",
+          "upstream_path": "semantic_similarity_rating/compute.py",
+          "sha256": "164929b1769b546b7232b4aa51798cc0c446544b2d7316fcc41f89afad217862",
+          "mode": "verbatim source"
+        },
+        {
+          "rival_path": "rival/vendor/semantic_similarity_rating/response_rater.py",
+          "upstream_path": "semantic_similarity_rating/response_rater.py",
+          "sha256": "3ebaf9b5ded7b308e81435c37623586edb21abea74641640a75949751d5a4ee0",
+          "mode": "verbatim source"
+        },
+        {
+          "rival_path": "rival/vendor/semantic_similarity_rating/LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c",
+          "mode": "verbatim license"
+        }
+      ],
+      "runtime_adaptation": "rival/elicitation.py wraps the licensed PMF computation with pluggable embeddings, text generation, identity binding, and finite/degenerate guards"
+    },
+    {
+      "name": "UQ LLM Survey Simulation",
+      "url": "https://github.com/yw3453/uq-llm-survey-simulation",
+      "paper": "https://arxiv.org/abs/2502.17773",
+      "commit": "fe3eb19111a2d9327e9ec051bd96f68750a7895d",
+      "public_license": "MIT",
+      "files": [
+        {
+          "rival_path": "rival/vendor/uq_survey/evaluations.py",
+          "upstream_path": "src/evaluations.py",
+          "sha256": "677c9fa868058f64151c0b5c6676e96d5d6919a0e938f45c1f713e05112d0349",
+          "mode": "source with optional-tqdm portability patch"
+        },
+        {
+          "rival_path": "rival/vendor/uq_survey/LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "e6a42107d8e283772b26b43df303f3f186ef97ba44ea1bd8d4d4288b127bce4b",
+          "mode": "verbatim license"
+        }
+      ],
+      "runtime_adaptation": "rival/uncertainty.py exposes CLT, Hoeffding, and Bernstein intervals and is parity-tested against CI() and synthetic_CI()"
+    },
+    {
+      "name": "LLM-Powered Virtual Population for Demand Simulation and Pricing",
+      "url": "https://github.com/khurramidris/LLM-demand-simulator",
+      "paper": "https://arxiv.org/abs/2606.16183",
+      "commit": "b56a7c0acad7406bff81b7cdf179314894b2fa97",
+      "public_license": null,
+      "authorization": "user-confirmed separate commercial permission; no LICENSE file found at pinned revision",
+      "files": [
+        {
+          "rival_path": "rival/vendor/llm_demand/llm_mix.py",
+          "upstream_path": "demand_sim/models/llm_mix.py",
+          "sha256": "6ea93c9a74f9e33955569b9d81f7c8431f3c0fb9044cefff8890ca6722089930",
+          "mode": "verbatim source"
+        },
+        {
+          "rival_path": "rival/vendor/llm_demand/llm_mix_cal.py",
+          "upstream_path": "demand_sim/models/llm_mix_cal.py",
+          "sha256": "3f1f2cb7e769293398336af87038baaf8f4256bb932e10a0a5617bf775da6595",
+          "mode": "verbatim source"
+        },
+        {
+          "rival_path": "rival/vendor/llm_demand/metrics.py",
+          "upstream_path": "demand_sim/metrics.py",
+          "sha256": "d3053a2f20080418f1bf2c79e09bb3c1ba1e75d33a387f75e121a0140446f5df",
+          "mode": "verbatim source"
+        }
+      ],
+      "runtime_adaptation": "rival/pricing.py adapts the calibrated persona/no-buy mixture to a SciPy-only production path and adds expected-revenue/CVaR price selection"
     },
     {
       "name": "Twin-2K-500",
       "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500",
+      "paper": "https://arxiv.org/abs/2505.17479",
       "commit": "f883165a3026fde855dfd448e0cd16443ab257b6",
       "public_license": "CC-BY-4.0",
       "files": [
@@ -62,6 +155,51 @@
         }
       ],
       "changes": "selected artifacts renamed; rows aligned by TWIN_ID; numeric question columns mapped to catalog metadata"
+    },
+    {
+      "name": "Twin-2K-500 Mega Study",
+      "url": "https://github.com/TianyiPeng/Twin-2K-500-Mega-Study",
+      "commit": "afe2bb933fce377ed196f441a4c12962cb55a53a",
+      "public_license": "Apache-2.0",
+      "files": [
+        {
+          "rival_path": "rival/vendor/twin2k_mega/mad_accuracy_evaluation.py",
+          "upstream_path": "evaluation/specialized_evaluation/mad_accuracy_evaluation.py",
+          "sha256": "0e371edbb40347ec3a106a6da4fc0ae9b596603eba644da1b1df1019187e81dc",
+          "mode": "verbatim source"
+        },
+        {
+          "rival_path": "rival/vendor/twin2k_mega/LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c",
+          "mode": "verbatim license"
+        }
+      ],
+      "runtime_adaptation": "rival/research/mad.py provides lazy wrappers around the official column/task MAD implementation"
+    }
+  ],
+  "paper_derived_or_adapter_only": [
+    {
+      "name": "S-RCT",
+      "paper": "https://arxiv.org/abs/2608.02345",
+      "integration": "paper-derived paired estimator and pre-period residual calibration in rival/experiments/srct.py; no repository code copied"
+    },
+    {
+      "name": "1,000-person interview-grounded agents study",
+      "paper": "https://arxiv.org/abs/2411.10109",
+      "integration": "conceptual interview-grounding translated into Rival-owned typed ingestion in rival/personas.py; no code copied"
+    },
+    {
+      "name": "Centauri",
+      "url": "https://github.com/socius-org/Centauri",
+      "commit": "6ef71bc4ce5661df106d31f0727497af15268914",
+      "public_license": "MIT",
+      "integration": "revision-bound inference adapter only; no repository code or model weights bundled"
+    },
+    {
+      "name": "Socrates / SocSci210",
+      "paper": "https://arxiv.org/abs/2509.05830",
+      "integration": "inference adapter only; no public repository code or model weights bundled"
     }
   ],
   "reviewed_not_bundled": [
@@ -84,22 +222,10 @@
       "public_license": "MIT"
     },
     {
-      "name": "Centauri",
-      "url": "https://github.com/socius-org/Centauri",
-      "commit": "6ef71bc4ce5661df106d31f0727497af15268914",
-      "public_license": "MIT"
-    },
-    {
       "name": "LLM Economist",
       "url": "https://github.com/sethkarten/LLM-Economist",
       "commit": "8d1c9295ab69ed4b819fc58ef0684c70a8c73a53",
       "public_license": "MIT"
-    },
-    {
-      "name": "Twin-2K-500 Mega Study",
-      "url": "https://github.com/TianyiPeng/Twin-2K-500-Mega-Study",
-      "commit": "afe2bb933fce377ed196f441a4c12962cb55a53a",
-      "public_license": "Apache-2.0"
     }
   ]
 }

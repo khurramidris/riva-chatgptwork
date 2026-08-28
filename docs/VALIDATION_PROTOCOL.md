@@ -32,7 +32,7 @@ The model team must not possess outcome access until the run artifact is committ
 
 Use simultaneous temporal, entity/brand, question-family, semantic-near-duplicate, geography and intervention splits. A question that is paraphrased from training is not held out.
 
-The public qualification implements the question-family layer: canonical normalization, TF-IDF similarity, experimental-block collapse, explicit counterbalanced sibling sets, deterministic group folds, a manifest hash, and a programmatic no-crossing assertion. Rival v0.4 additionally enforces the declared information cutoff at the runtime retrieval boundary. It does not yet prove customer/entity or geographic isolation because the incorporated public tracks do not support a customer-prospective test.
+The public qualification implements the question-family layer: canonical normalization, TF-IDF similarity, experimental-block collapse, explicit counterbalanced sibling sets, deterministic group folds, a manifest hash, and a programmatic no-crossing assertion. Rival v0.5 additionally enforces the declared information cutoff at the runtime retrieval boundary and qualifies the research-component wiring separately from predictive evidence. It does not yet prove customer/entity or geographic isolation because the incorporated public tracks do not support a customer-prospective test.
 
 ## Metrics
 
@@ -54,7 +54,7 @@ The public qualification implements the question-family layer: canonical normali
 - Results remain within a sensitivity band across seeds, prompt versions and two eligible model backends.
 - At least three prospective design-partner studies are complete, with misses retained.
 
-## v0.4 evidence decision
+## v0.5 evidence decision
 
 | Claim | Evidence | Decision |
 |---|---|---|
@@ -63,6 +63,7 @@ The public qualification implements the question-family layer: canonical normali
 | Novel individual question prediction | Twin-2K transfer accuracy 44.0% vs 52.8% population-mode baseline | Failed; research only |
 | Universal human simulation | No qualifying benchmark | Not claimed |
 | Prospective integrity controls | 10 deterministic checks covering context, firewall, sealing, vault, reveal and phase chain | Engineering-qualified; not predictive evidence |
+| Research-component integration | 8 checks covering SSR, UQ, SYN-DIGITS, S-RCT, pricing, personas, adapters, and MAD | Component-qualified; not predictive or causal evidence |
 
 The OpinionQA result is retrospective public-data evidence, not a prospective customer result. “Bounded pilots” means a controlled evaluation with human review, not autonomous production decisions.
 

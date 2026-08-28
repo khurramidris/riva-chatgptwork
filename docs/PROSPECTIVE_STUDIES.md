@@ -66,8 +66,8 @@ vault.deposit(
 
 Do not put `manifest_key`, `outcome_key`, provider API keys, or plaintext outcomes in source control. `RIVAL_MANIFEST_KEY` configures API locking, but the API intentionally exposes no reveal route.
 
-## What v0.4 proves
+## What v0.5 proves
 
-The deterministic qualification verifies that contexts reproduce, outcome fields fail closed, input changes are rejected before provider calls, manifest tampering is detected, plaintext is absent from vault files, early and unauthenticated reveal fail, and phase chains verify.
+The deterministic qualification verifies that contexts reproduce, outcome fields fail closed, input changes are rejected before provider calls, manifest tampering is detected, plaintext is absent from vault files, early and unauthenticated reveal fail, and phase chains verify. A separate eight-check gate verifies the v0.5 research-component wiring and numerical parity.
 
 It does not prove independent key custody, trusted external timestamping, customer-domain accuracy, interval coverage, subgroup safety, or superiority to classical and equal-cost human baselines. Those require the locked customer study described in `VALIDATION_PROTOCOL.md`.

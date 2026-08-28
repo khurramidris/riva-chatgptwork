@@ -1,23 +1,25 @@
 {
-  "release": "0.4.0",
+  "release": "0.5.0",
   "built_on": "2026-08-28",
-  "git_tag": "v0.4.0",
+  "git_tag": "v0.5.0",
   "wheel": {
-    "path": "dist/rival_sim-0.4.0-py3-none-any.whl",
-    "sha256": "3c7c70270e029e4fa72c2d52d840134d598663d54420ad58769090cdf51b9590"
+    "path": "dist/rival_sim-0.5.0-py3-none-any.whl",
+    "sha256": "426e22297dcc79125ef60b16472837a0a2ff369a7933581c2497887d5130cbaf"
   },
   "qualification_artifacts": {
-    "reports/opinionqa_qualification.json": "601611273c3fb50cda9fb410e2615139af5faadf9b4afa042a98efd1d98c7342",
-    "reports/twin2k_qualification.json": "f6b2cc78e2ab2084437298fbcd9c4a1b714ff8246873955a41db27adf3e30f45",
-    "reports/integrity_qualification.json": "5c9ac91e8c90e85526d2e3f9632daf581b610bed584ce5e2b2a13dbbcaaa8f50",
-    "reports/qualification_summary.json": "f4eaf3733cf935347e89fb067ba3161171d2375b4900a7fa2d3e855a517f10b7",
-    "rival/qualification/summary.json": "f4eaf3733cf935347e89fb067ba3161171d2375b4900a7fa2d3e855a517f10b7"
+    "reports/opinionqa_qualification.json": "a9087854bf511df2030e1f08f54455f5feef79e057ea081ad490cac63113da6f",
+    "reports/twin2k_qualification.json": "a641b4c1df9f9d77ecbc07d33ae45e8a44e96d2ee0c11bef334fdb1c134e26cf",
+    "reports/integrity_qualification.json": "5901869576e0980151d3f481a1f2b10e8d7684129de02336f24bb933ebfff26c",
+    "reports/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "reports/qualification_summary.json": "9afd1421f7fe67f80e2198a33c1c38874111500733f5fba25271ec650aef11ab",
+    "rival/qualification/summary.json": "9afd1421f7fe67f80e2198a33c1c38874111500733f5fba25271ec650aef11ab"
   },
   "internal_content_hashes": {
-    "opinionqa_report": "928b3a3752cca4685312ca72f78c05453180fbee950f3b11e3b91e94f5af669b",
-    "twin2k_report": "11c465ee457590236347ef6500ae45cb8eca373126cc552ff789d9602088e3d4",
-    "integrity_report": "d180127614562ab5cbd7d5e3eed01864d1b9e8e9a2cc2d0f20ac0f4e8f00d14f",
-    "qualification_summary": "a5767c3cec99b03a68273193c3215092b3ed8fed557955baad48a78a5e1ff7db",
+    "opinionqa_report": "fc00bf34b832596da5e75d17e591d04f87228ccc03c1a1faa0b7c695c75f2189",
+    "twin2k_report": "0bfa5f70af98192831753614773746a607a523e9cfc7fe548c5127347504944b",
+    "integrity_report": "4841cd1bdb07d70ea18aa1140027af71d3ef4bb1ff520c0f74a0c6ffd3540709",
+    "research_components_report": "5ed1f2226de185d04d2e269bee7108046e5afce25a92646b91b4fb80e7fc481d",
+    "qualification_summary": "ae3c1dcb969b69de278e93cc3a3ed8c630d0fa43f3c9ba052c4a9f30c4c0d536",
     "opinionqa_split_manifest": "2fae83e0f1e1e1d703ee18e670bc0c6da7fe7a909bad134ad5416d24c19521d6"
   },
   "prospective_integrity": {
@@ -26,6 +28,12 @@
     "checks_total": 10,
     "predictive_validity_claim": false
   },
+  "research_component_integration": {
+    "status": "PASS",
+    "checks_passed": 8,
+    "checks_total": 8,
+    "external_predictive_or_causal_validity_claim": false
+  },
   "source_inventory": "upstreams.lock.json",
-  "tests_passed": 36
+  "tests_passed": 54
 }

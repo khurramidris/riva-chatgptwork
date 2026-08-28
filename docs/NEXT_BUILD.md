@@ -1,8 +1,10 @@
-# Next Build: v0.5 Protected Customer Pilot
+# Next Phase: v0.6 Protected Customer Qualification
 
 ## Current gate
 
-Rival v0.4 qualifies population-distribution calibration for bounded pilots on OpinionQA and supplies the local technical controls for a locked prospective study. It does not qualify novel individual prediction: the Twin-2K target-family-excluded transfer baseline underperforms the population-mode baseline. The next build must use the integrity kernel with an independent outcome custodian and deepen the proven aggregate wedge rather than market the failed individual claim.
+Rival v0.5 completes the planned research-component development layer. It has a strong retrospective aggregate result on OpinionQA, a deliberately retained negative individual-transfer result on Twin-2K, ten passing prospective-integrity controls, and eight passing research integration/parity checks.
+
+The remaining gap is empirical, not another round of repository assembly. No component test can establish transfer to a prospective customer's product, population, time period, decision, or outcome.
 
 ## Required pilot input
 
@@ -16,21 +18,32 @@ For each design partner:
 
 ## Engineering sequence
 
-1. **Customer ingestion:** Qualtrics/CSV mapping wizard, survey weights, codebooks, missingness report, and source hashes.
-2. **Independent custody:** move the implemented vault and manifest secrets to custodian-owned KMS/HSM credentials; add external timestamp/notary evidence.
-3. **Classical baselines:** weighted history, hierarchical multinomial/logit model, and an equal-cost human-only estimate.
-4. **Live provider qualification:** two authorized model backends, schema-constrained output, batching, cache, cost, and retry ledger.
+1. **Customer ingestion:** Qualtrics/CSV mapping, survey weights, codebooks, missingness report, consent/rights records, and source hashes.
+2. **Independent custody:** move outcome and manifest keys to custodian-owned KMS/HSM credentials; add external timestamp/notary evidence.
+3. **Classical baselines:** weighted history, hierarchical multinomial/logit model, and equal-cost human-only estimate.
+4. **Live model qualification:** operator-host pinned Centauri/Socrates or other authorized checkpoints; measure schema failures, retries, latency, cost, and stability.
 5. **Cross-fitted hybrid estimator:** learned shrinkage, complex-survey variance, subgroup estimates, and simultaneous intervals.
 6. **Selective prediction:** calibrate expected error and prove monotonic risk as Rival abstains on unfamiliar studies.
-7. **Enterprise shell:** authentication, tenant isolation, Postgres/object storage, queues, audit export, and deletion workflows.
+7. **Enterprise shell:** authentication, tenant isolation, Postgres/object storage, queues, audit export, deletion, and incident workflows.
+
+## Locked study design
+
+Each customer study should have a retrospective rehearsal and a truly prospective phase:
+
+1. preregister the target population, information cutoff, primary metric, thresholds, baselines, subgroup checks, cost accounting, and failure policy;
+2. prepare and seal the exact outcome-free prediction context;
+3. export the sealed manifest to a party without model-development credentials;
+4. collect/deposit outcomes into independently controlled storage;
+5. reveal after the declared time and evaluate every eligible case, including misses and abstentions;
+6. publish PASS, FAIL, or UNEVALUABLE without changing the locked metric.
 
 ## Exit criteria
 
-- Three locked historical studies and one untouched prospective result.
-- Rival hybrid beats synthetic-only, weighted history, relevant classical model, and equal-cost human-only baselines under the preregistered decision metric.
+- Three locked historical studies and at least one untouched prospective result.
+- Rival hybrid beats synthetic-only, weighted history, a relevant classical model, and an equal-cost human-only baseline under preregistered criteria.
 - Interval coverage and abstention curves meet locked tolerances.
 - No priority subgroup breaches its declared error threshold.
 - Results reproduce from source/model/prompt/split hashes and include cost and latency.
-- Every eligible miss is retained in the qualification ledger.
+- Every eligible miss remains in the qualification ledger.
 
-Interactive multi-agent simulation stays deferred until a benchmark requires interaction and beats an independent-agent dynamic baseline.
+Interactive multi-agent simulation stays deferred until a benchmark requires interaction and beats independent-agent and classical dynamic baselines.

@@ -10,17 +10,21 @@ from .opinionqa import benchmark_opinionqa
 from .integrity_qualification import run_integrity_qualification
 from .provenance import stable_hash
 from .twin2k import benchmark_twin2k
+from ..version import __version__
 
 
 def build_summary(
-    opinionqa: dict[str, Any], twin2k: dict[str, Any], integrity: dict[str, Any]
+    opinionqa: dict[str, Any],
+    twin2k: dict[str, Any],
+    integrity: dict[str, Any],
+    research_components: dict[str, Any],
 ) -> dict[str, Any]:
     opinion_metrics = opinionqa["metrics"]
     twin_metrics = twin2k["metrics"]
     summary = {
-        "schema_version": "rival.qualification.summary.v2",
+        "schema_version": "rival.qualification.summary.v3",
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "release": "0.4.0",
+        "release": __version__,
         "headline": "Two real-data qualification tracks; one strong aggregate result and one bounded individual result.",
         "opinionqa": {
             "status": opinionqa["status"],
@@ -79,6 +83,15 @@ def build_summary(
             "scope": integrity["scope"],
             "report_sha256": integrity["report_sha256"],
         },
+        "research_components": {
+            "status": research_components["status"],
+            "checks_passed": sum(
+                item["status"] == "PASS" for item in research_components["checks"]
+            ),
+            "checks_total": len(research_components["checks"]),
+            "scope": research_components["scope"],
+            "report_sha256": research_components["report_sha256"],
+        },
         "release_decision": {
             "population_distribution_calibration": "qualified for bounded pilots",
             "individual_novel-question_prediction": "research only; baseline not beaten",
@@ -94,16 +107,20 @@ def run_all(
     *,
     compact: bool = False,
 ) -> dict[str, Any]:
+    from .integration_qualification import run_research_integration_qualification
+
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
     opinionqa = benchmark_opinionqa(include_question_results=not compact)
     twin2k = benchmark_twin2k(include_question_results=not compact)
     integrity = run_integrity_qualification()
-    summary = build_summary(opinionqa, twin2k, integrity)
+    research_components = run_research_integration_qualification()
+    summary = build_summary(opinionqa, twin2k, integrity, research_components)
     for name, value in (
         ("opinionqa_qualification.json", opinionqa),
         ("twin2k_qualification.json", twin2k),
         ("integrity_qualification.json", integrity),
+        ("research_components_qualification.json", research_components),
         ("qualification_summary.json", summary),
     ):
         (destination / name).write_text(
@@ -119,6 +136,6 @@ def load_bundled_summary() -> dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
         return {
-            "release": "0.4.0",
+            "release": __version__,
             "status": "qualification artifact not bundled",
         }
