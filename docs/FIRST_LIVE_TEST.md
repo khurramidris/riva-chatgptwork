@@ -113,6 +113,14 @@ configured API-key cap above that estimate but below the account-wide balance.
    Continue with targets 600, 900, 1200 and 1500. Each invocation skips all
    successful rows already in the append-only ledger. Calls are sequential,
    and progress is printed every 10 new successes.
+   At any checkpoint, audit operational and prediction behavior without opening
+   protected outcomes:
+
+   ```bash
+   python scripts/audit_live_checkpoint.py
+   ```
+
+   Partial accuracy must not be evaluated or used to change the frozen study.
 8. Run `evaluate-live-pilot` only after all eligible calls finish.
 9. Commit the outcome-free protocol and the redacted scientific report. Never
    commit the API key or raw provider headers.
