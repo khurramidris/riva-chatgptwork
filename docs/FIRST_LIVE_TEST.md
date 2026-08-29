@@ -15,7 +15,7 @@ prospective customer study. The repository binds and retains that limitation.
 
 ## Frozen design
 
-The committed `rival/studies/twin2k_live_v1/protocol.json` fixes:
+The committed `rival/studies/twin2k_live_v2/protocol.json` fixes:
 
 - 50 participants selected by a deterministic seed;
 - all 15 eligible independent categorical target-question families;
@@ -27,6 +27,14 @@ The committed `rival/studies/twin2k_live_v1/protocol.json` fixes:
   population TVD;
 - generic-model, population-mode, human test-retest, released-model and
   equal-size human-anchor comparators.
+
+V2 supersedes the V1 provider contract. V1 made compatibility calls but
+produced zero parseable study predictions and was never evaluated against
+outcomes. Before any successful prediction, V2 replaced generic JSON mode with
+a strict per-choice JSON Schema, disabled reasoning for the probability-only
+response and required a provider endpoint supporting those parameters. The
+cohort, targets, outcome firewall, comparators and evaluation gates were not
+changed.
 
 `cases.jsonl` contains identifiers, donor-column selections and provider-input
 hashes. It contains no Wave-4 outcomes. The preparation path hashes the
@@ -57,27 +65,42 @@ The frozen price-independent envelope is:
 
 | Phase | Calls | Conservative input-token estimate | Maximum configured output tokens |
 |---|---:|---:|---:|
-| Preflight | 30 | 55,208 | 9,000 |
-| Complete paired pilot | 1,500 | 2,764,328 | 450,000 |
+| Preflight | 30 | 60,642 | 9,000 |
+| Complete paired pilot | 1,500 | 3,015,526 | 450,000 |
 
 The output figure is a ceiling, not expected usage; a small JSON probability
 object should normally use far fewer tokens. Once the model is named, calculate
 the local USD cap from its current provider prices and keep the separately
 configured API-key cap above that estimate but below the account-wide balance.
 
-## Tomorrow's sequence
+## Live sequence
 
 1. Record the provider, exact model ID, current input/output prices, key cap and
    key expiry.
-2. Set the key as an environment variable.
-3. Run `preflight` only. This is normally 30 paired generic/twin calls.
-4. Inspect schema validity, error rate, latency, provider-reported usage and
+2. Run `scripts/probe_openrouter.py` once. It prompts for the key without echoing
+   or storing it and validates the exact strict-output contract with one call.
+3. After the probe passes, run one actual frozen study case. The secure launcher
+   again prompts without echoing the key and does not retain it:
+
+   ```bash
+   python scripts/run_live_preflight.py --max-calls 1
+   ```
+
+4. If it reports `ONE_FROZEN_CASE_PASS`, resume the same ledger and complete
+   the 30-call preflight:
+
+   ```bash
+   python scripts/run_live_preflight.py --max-calls 30
+   ```
+
+   The second command skips the successful first case, so it makes 29 new calls.
+5. Inspect schema validity, error rate, latency, provider-reported usage and
    projected full-pilot cost.
-5. Authorize the full call count only if the preflight is clean and its cost
+6. Authorize the full call count only if the preflight is clean and its cost
    projection fits the remaining provider-side cap.
-6. Resume with `--phase pilot` using the same model identity and result file.
-7. Run `evaluate-live-pilot` only after all eligible calls finish.
-8. Commit the outcome-free protocol and the redacted scientific report. Never
+7. Resume with `--phase pilot` using the same model identity and result file.
+8. Run `evaluate-live-pilot` only after all eligible calls finish.
+9. Commit the outcome-free protocol and the redacted scientific report. Never
    commit the API key or raw provider headers.
 
 Example command shape (placeholder values only):
@@ -93,7 +116,10 @@ rival run-live-pilot \
   --not-after 2026-08-29T18:00:00Z
 ```
 
-The command deliberately has no `--api-key` option.
+The commands deliberately have no `--api-key` option. The secure launcher is
+preconfigured for `dots-studio/dots-3-note-preview:free`, zero per-token price,
+a $0.01 local ceiling and a two-hour authorization window. Override those
+defaults only if the provider or model changes.
 
 ### GitHub execution fallback
 

@@ -29,7 +29,7 @@ from .schemas import ChoiceSpec, PopulationRecord, ProviderIdentity, ScenarioSpe
 
 
 SCHEMA_VERSION = "rival.live-twin2k-pilot.v1"
-DEFAULT_STUDY_ID = "rival-twin2k-live-provider-v1"
+DEFAULT_STUDY_ID = "rival-twin2k-live-provider-v2"
 
 
 class PilotProtocolError(RuntimeError):
@@ -599,7 +599,21 @@ def prepare_twin2k_live_pilot(
             "history_limit": history_items,
             "max_output_tokens": 300,
             "use_response_format": True,
+            "response_format_type": "json_schema",
+            "reasoning_effort": "none",
+            "exclude_reasoning": True,
+            "require_parameters": True,
+            "provider_host": "openrouter.ai",
             "prompt_messages_bound_per_case": True,
+        },
+        "revision": {
+            "supersedes_study_id": "rival-twin2k-live-provider-v1",
+            "reason": (
+                "V1 compatibility calls produced zero parseable predictions. "
+                "Before outcome evaluation or any successful study prediction, V2 "
+                "replaced generic JSON mode with strict per-choice JSON Schema and "
+                "disabled reasoning for the probability-only response."
+            ),
         },
         "request_envelopes": request_envelopes,
         "preregistration": {
@@ -808,12 +822,7 @@ def run_live_pilot(
     provider_identity = provider.identity().model_dump(mode="json")
     policy = protocol["provider_request_policy"]
     if isinstance(provider, OpenAICompatibleProvider):
-        observed_policy = {
-            "temperature": provider.temperature,
-            "history_limit": provider.history_limit,
-            "max_output_tokens": provider.max_output_tokens,
-            "use_response_format": provider.use_response_format,
-        }
+        observed_policy = provider.request_policy()
         expected_policy = {
             key: policy[key]
             for key in (
@@ -821,6 +830,11 @@ def run_live_pilot(
                 "history_limit",
                 "max_output_tokens",
                 "use_response_format",
+                "response_format_type",
+                "reasoning_effort",
+                "exclude_reasoning",
+                "require_parameters",
+                "provider_host",
             )
         }
         if observed_policy != expected_policy:

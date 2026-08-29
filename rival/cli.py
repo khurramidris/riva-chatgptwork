@@ -11,7 +11,7 @@ from .schemas import EvaluationResult, HybridResult, SimulationResult
 from .server import serve
 
 
-_LIVE_STUDY_DIR = Path(__file__).resolve().parent / "studies" / "twin2k_live_v1"
+_LIVE_STUDY_DIR = Path(__file__).resolve().parent / "studies" / "twin2k_live_v2"
 
 
 def write_text(path: str | None, content: str) -> None:

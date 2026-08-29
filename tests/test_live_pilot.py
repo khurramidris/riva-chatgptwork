@@ -71,8 +71,20 @@ class ProviderAccountingTests(unittest.TestCase):
         provider = OpenAICompatibleProvider(
             model="test-model", api_key="super-secret", max_retries=1
         )
-        with patch("urllib.request.urlopen", return_value=_Response(response)):
+        with patch("urllib.request.urlopen", return_value=_Response(response)) as request_call:
             output = provider.predict(person, scenario)
+        request = request_call.call_args.args[0]
+        request_payload = json.loads(request.data.decode("utf-8"))
+        choice_ids = [choice.choice_id for choice in scenario.choices]
+        self.assertEqual(request_payload["response_format"]["type"], "json_schema")
+        schema = request_payload["response_format"]["json_schema"]["schema"]
+        self.assertTrue(request_payload["response_format"]["json_schema"]["strict"])
+        self.assertEqual(schema["required"], choice_ids)
+        self.assertEqual(set(schema["properties"]), set(choice_ids))
+        self.assertEqual(
+            request_payload["reasoning"], {"effort": "none", "exclude": True}
+        )
+        self.assertEqual(request_payload["provider"], {"require_parameters": True})
         self.assertEqual(output.diagnostics["prompt_tokens"], 123)
         self.assertEqual(output.diagnostics["completion_tokens"], 17)
         self.assertEqual(output.diagnostics["provider_cost_usd"], 0.0042)
@@ -207,6 +219,51 @@ class FrozenPilotTests(unittest.TestCase):
             self.assertEqual(report["successful_cases"], protocol["cases"]["total"])
             self.assertIn("generic", report["variants"])
             self.assertIn("twin", report["variants"])
+
+    def test_v2_strict_openrouter_contract_runs_one_frozen_case(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._prepare(root)
+            results = root / "results.jsonl"
+            provider = OpenAICompatibleProvider(
+                model="dots-studio/dots-3-note-preview:free",
+                api_key="test-secret",
+                max_retries=1,
+                temperature=0.0,
+                history_limit=8,
+                max_output_tokens=300,
+            )
+
+            def response_for(request, timeout):
+                del timeout
+                payload = json.loads(request.data.decode("utf-8"))
+                schema = payload["response_format"]["json_schema"]["schema"]
+                keys = list(schema["required"])
+                probabilities = {key: 1.0 / len(keys) for key in keys}
+                return _Response(
+                    {
+                        "id": "frozen-case-1",
+                        "choices": [
+                            {
+                                "finish_reason": "stop",
+                                "message": {"content": json.dumps(probabilities)},
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 100, "completion_tokens": 20},
+                    }
+                )
+
+            with patch("urllib.request.urlopen", side_effect=response_for):
+                summary = run_live_pilot(
+                    root / "protocol.json",
+                    results,
+                    provider,
+                    BudgetGuard(1, 0, 0, 1),
+                    phase="preflight",
+                )
+            self.assertEqual(summary["successful_cases"], 1)
+            self.assertEqual(summary["errors_this_run"], 0)
+            self.assertNotIn("test-secret", results.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

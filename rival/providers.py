@@ -9,6 +9,7 @@ import urllib.parse
 import urllib.request
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from typing import Any
 
 import numpy as np
 
@@ -233,6 +234,7 @@ class OpenAICompatibleProvider(PredictionProvider):
         )
         endpoint = urllib.parse.urlsplit(self.base_url)
         hostname = (endpoint.hostname or "").casefold()
+        self.is_openrouter = hostname == "openrouter.ai"
         local_endpoint = hostname in {"localhost", "127.0.0.1", "::1"}
         if endpoint.username or endpoint.password:
             raise ProviderError("provider URL must not contain credentials")
@@ -294,8 +296,46 @@ class OpenAICompatibleProvider(PredictionProvider):
             "max_tokens": self.max_output_tokens,
         }
         if self.use_response_format:
-            payload["response_format"] = {"type": "json_object"}
+            choice_ids = [choice.choice_id for choice in scenario.choices]
+            payload["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "rival_choice_probabilities",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            choice_id: {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1,
+                            }
+                            for choice_id in choice_ids
+                        },
+                        "required": choice_ids,
+                        "additionalProperties": False,
+                    },
+                },
+            }
+        if self.is_openrouter:
+            payload["reasoning"] = {"effort": "none", "exclude": True}
+            payload["provider"] = {"require_parameters": True}
         return payload
+
+    def request_policy(self) -> dict[str, Any]:
+        return {
+            "temperature": self.temperature,
+            "history_limit": self.history_limit,
+            "max_output_tokens": self.max_output_tokens,
+            "use_response_format": self.use_response_format,
+            "response_format_type": (
+                "json_schema" if self.use_response_format else None
+            ),
+            "reasoning_effort": "none" if self.is_openrouter else None,
+            "exclude_reasoning": self.is_openrouter,
+            "require_parameters": self.is_openrouter,
+            "provider_host": "openrouter.ai" if self.is_openrouter else None,
+        }
 
     def identity(self) -> ProviderIdentity:
         endpoint = urllib.parse.urlsplit(self.base_url)
@@ -304,16 +344,13 @@ class OpenAICompatibleProvider(PredictionProvider):
         )
         configuration = {
             "model": self.model,
-            "temperature": self.temperature,
             "timeout_seconds": self.timeout_seconds,
             "max_retries": self.max_retries,
-            "history_limit": self.history_limit,
-            "max_output_tokens": self.max_output_tokens,
-            "use_response_format": self.use_response_format,
+            "request_policy": self.request_policy(),
         }
         return ProviderIdentity(
             provider_name=self.name,
-            provider_version="1",
+            provider_version="2",
             model=self.model,
             endpoint_sha256=canonical_hash(endpoint_identity),
             configuration_sha256=canonical_hash(configuration),
@@ -335,9 +372,20 @@ class OpenAICompatibleProvider(PredictionProvider):
         if error is not None:
             raise ProviderError(_redact_provider_detail(error))
         try:
-            return str(payload["choices"][0]["message"]["content"])
+            content = payload["choices"][0]["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:
             raise ProviderError("provider response does not contain message content") from exc
+        if isinstance(content, str) and content.strip():
+            return content
+        if isinstance(content, list):
+            text = "".join(
+                str(part.get("text", ""))
+                for part in content
+                if isinstance(part, dict) and part.get("type") == "text"
+            ).strip()
+            if text:
+                return text
+        raise ProviderError("provider response contains empty assistant content")
 
     @staticmethod
     def _usage_diagnostics(payload: dict) -> dict[str, float]:

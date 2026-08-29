@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rival-sim"
-version = "0.6.0.dev1"
+version = "0.6.0.dev2"
 description = "Calibrated population and behavior simulation for enterprise decisions"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -38,5 +38,6 @@ rival = [
   "datasets/twin2k/*",
   "qualification/*",
   "studies/twin2k_live_v1/*",
+  "studies/twin2k_live_v2/*",
   "vendor/*/LICENSE",
 ]

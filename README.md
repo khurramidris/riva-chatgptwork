@@ -112,20 +112,18 @@ engine.register_provider(
 
 Set `scenario.model_family` to `behavior-api`. Credentials are read from the environment and are never stored in identities, contexts, runs, manifests, or reports. The public qualification numbers use released upstream model outputs because no external provider credential was configured during that benchmark.
 
-The first pinned live-provider qualification is frozen under
-`rival/studies/twin2k_live_v1/`. Rehearse it without network access, then run the
-small preflight after configuring a restricted environment key:
+The active pinned live-provider qualification is frozen under
+`rival/studies/twin2k_live_v2/`. Rehearse it without network access, then run the
+one frozen case with a hidden key prompt, then resume the small preflight:
 
 ```bash
 python3 -m rival rehearse-live-pilot
 
+# One actual frozen study case; the key is prompted for without echoing.
+python scripts/run_live_preflight.py --max-calls 1
+
 # No API key is accepted as a command argument.
-python3 -m rival run-live-pilot \
-  --phase preflight --model PROVIDER_MODEL_ID \
-  --budget-usd LOCAL_CAP \
-  --input-cost-per-million INPUT_PRICE \
-  --output-cost-per-million OUTPUT_PRICE \
-  --max-calls 30 --not-after 2026-08-29T18:00:00Z
+python scripts/run_live_preflight.py --max-calls 30
 ```
 
 The result ledger is resumable and provider-bound. See
