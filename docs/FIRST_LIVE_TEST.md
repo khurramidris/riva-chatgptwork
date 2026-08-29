@@ -98,7 +98,21 @@ configured API-key cap above that estimate but below the account-wide balance.
    projected full-pilot cost.
 6. Authorize the full call count only if the preflight is clean and its cost
    projection fits the remaining provider-side cap.
-7. Resume with `--phase pilot` using the same model identity and result file.
+7. Resume the same ledger in cumulative checkpoints. For example, the first
+   full-pilot checkpoint is:
+
+   ```bash
+   python scripts/run_live_pilot_secure.py \
+     --target-total 300 \
+     --model PROVIDER_MODEL_ID \
+     --budget-usd LOCAL_HARD_CAP \
+     --input-cost-per-million INPUT_PRICE \
+     --output-cost-per-million OUTPUT_PRICE
+   ```
+
+   Continue with targets 600, 900, 1200 and 1500. Each invocation skips all
+   successful rows already in the append-only ledger. Calls are sequential,
+   and progress is printed every 10 new successes.
 8. Run `evaluate-live-pilot` only after all eligible calls finish.
 9. Commit the outcome-free protocol and the redacted scientific report. Never
    commit the API key or raw provider headers.

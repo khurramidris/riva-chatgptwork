@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from importlib.resources import files
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 import numpy as np
 import pandas as pd
@@ -825,6 +825,20 @@ def _successful_by_case(rows: Iterable[dict[str, Any]]) -> dict[str, dict[str, A
     return successful
 
 
+def _notify_progress(
+    callback: Callable[[dict[str, Any]], None] | None,
+    event: dict[str, Any],
+) -> None:
+    if callback is None:
+        return
+    try:
+        callback(event)
+    except Exception:
+        # Console/progress reporting is observational and must never corrupt or
+        # duplicate a successfully persisted scientific result.
+        return
+
+
 def run_live_pilot(
     protocol_path: str | Path,
     results_path: str | Path,
@@ -836,6 +850,7 @@ def run_live_pilot(
     dataset_root: str | Path | None = None,
     max_errors: int = 3,
     summary_path: str | Path | None = None,
+    progress_callback: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     if phase not in {"preflight", "pilot"}:
         raise ValueError("phase must be 'preflight' or 'pilot'")
@@ -931,6 +946,17 @@ def run_live_pilot(
             _append_jsonl(destination, result)
             successful[str(case["case_id"])] = result
             new_successes += 1
+            _notify_progress(
+                progress_callback,
+                {
+                    "event": "success",
+                    "case_id": case["case_id"],
+                    "successful_cases": len(successful),
+                    "new_successes": new_successes,
+                    "spent_usd": budget.spent_usd,
+                    "latency_ms": output.latency_ms,
+                },
+            )
         except Exception as exc:  # retain failures without hiding eligible cases
             errors += 1
             failure = {
@@ -949,6 +975,17 @@ def run_live_pilot(
             }
             failure["result_sha256"] = canonical_hash(failure)
             _append_jsonl(destination, failure)
+            _notify_progress(
+                progress_callback,
+                {
+                    "event": "error",
+                    "case_id": case["case_id"],
+                    "successful_cases": len(successful),
+                    "new_successes": new_successes,
+                    "errors_this_run": errors,
+                    "error_type": type(exc).__name__,
+                },
+            )
             if errors >= max_errors:
                 stop_reason = f"stopped after {errors} provider errors"
                 break

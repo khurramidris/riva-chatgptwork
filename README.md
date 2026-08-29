@@ -124,6 +124,13 @@ python scripts/run_live_preflight.py --max-calls 1
 
 # No API key is accepted as a command argument.
 python scripts/run_live_preflight.py --max-calls 30
+
+# After reviewing the preflight, resume the same ledger to 300 total successes.
+python scripts/run_live_pilot_secure.py \
+  --target-total 300 --model PROVIDER_MODEL_ID \
+  --budget-usd LOCAL_CAP \
+  --input-cost-per-million INPUT_PRICE \
+  --output-cost-per-million OUTPUT_PRICE
 ```
 
 The result ledger is resumable and provider-bound. See

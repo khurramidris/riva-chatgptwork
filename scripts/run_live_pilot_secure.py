@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Run one frozen Rival case or the complete 30-call preflight securely.
-
-The API key is read from the process environment or requested with hidden
-input. It is never accepted as a command-line argument and is removed from the
-environment before this process exits. This launcher never evaluates outcomes.
-"""
+"""Run or resume the frozen 1,500-case Rival pilot in safe checkpoints."""
 
 from __future__ import annotations
 
@@ -17,7 +12,6 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-DEFAULT_MODEL = "dots-studio/dots-3-note-preview:free"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 if str(REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(REPOSITORY_ROOT))
@@ -28,6 +22,7 @@ from rival.live_pilot import BudgetGuard, make_openai_provider, run_live_pilot
 DEFAULT_PROTOCOL = (
     REPOSITORY_ROOT / "rival" / "studies" / "twin2k_live_v2" / "protocol.json"
 )
+CHECKPOINTS = (300, 600, 900, 1200, 1500)
 
 
 def _safe_error(value: object, api_key: str) -> str:
@@ -39,34 +34,32 @@ def _safe_error(value: object, api_key: str) -> str:
     return text[:1_000]
 
 
-def _expected_success(summary: dict[str, object], max_calls: int) -> bool:
-    target = min(max_calls, int(summary["selected_cases"]))
-    return (
-        int(summary["successful_cases"]) >= target
-        and int(summary["errors_this_run"]) == 0
-    )
+def _checkpoint_status(summary: dict[str, object], target: int) -> str:
+    successes = int(summary["successful_cases"])
+    errors = int(summary["errors_this_run"])
+    if errors:
+        return "PILOT_PAUSED_PROVIDER_ERROR"
+    if successes < target:
+        return "PILOT_CHECKPOINT_INCOMPLETE"
+    if target == 1500 and summary["status"] == "COMPLETE":
+        return "PILOT_COMPLETE"
+    return "PILOT_CHECKPOINT_COMPLETE"
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--max-calls",
-        type=int,
-        choices=(1, 30),
-        default=1,
-        help="1 validates one frozen case; 30 completes/resumes the preflight",
-    )
-    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--target-total", type=int, choices=CHECKPOINTS, required=True)
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--budget-usd", type=float, required=True)
+    parser.add_argument("--input-cost-per-million", type=float, required=True)
+    parser.add_argument("--output-cost-per-million", type=float, required=True)
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
     parser.add_argument(
         "--results", type=Path, default=Path("reports/live_pilot_v2_results.jsonl")
     )
     parser.add_argument(
-        "--summary", type=Path, default=Path("reports/live_pilot_v2_summary.json")
+        "--summary", type=Path, default=Path("reports/live_pilot_v2_pilot_summary.json")
     )
-    parser.add_argument("--budget-usd", type=float, default=0.01)
-    parser.add_argument("--input-cost-per-million", type=float, default=0.0)
-    parser.add_argument("--output-cost-per-million", type=float, default=0.0)
     parser.add_argument("--timeout-seconds", type=int, default=90)
     parser.add_argument("--expiry-minutes", type=int, default=120)
     args = parser.parse_args(argv)
@@ -89,9 +82,28 @@ def main(argv: list[str] | None = None) -> int:
         print("FAIL: no API key supplied", file=sys.stderr)
         return 2
 
+    def progress(event: dict[str, object]) -> None:
+        if event["event"] == "error":
+            print(
+                f"PAUSED after {event['successful_cases']} successes: "
+                f"{event['error_type']}",
+                flush=True,
+            )
+            return
+        new_successes = int(event["new_successes"])
+        successful_cases = int(event["successful_cases"])
+        if new_successes % 10 == 0 or successful_cases == args.target_total:
+            print(
+                f"Progress: {successful_cases}/{args.target_total} successes; "
+                f"spent ${float(event['spent_usd']):.6f}",
+                flush=True,
+            )
+
     prior_rival_key = os.environ.get("RIVAL_API_KEY")
     os.environ["RIVAL_API_KEY"] = api_key
     try:
+        # These transport settings intentionally match the completed preflight's
+        # provider identity so its 30 successful rows remain resumable.
         provider = make_openai_provider(
             model=args.model,
             base_url=None,
@@ -106,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
             budget_usd=args.budget_usd,
             input_cost_per_million=args.input_cost_per_million,
             output_cost_per_million=args.output_cost_per_million,
-            max_calls=args.max_calls,
+            max_calls=args.target_total,
             not_after=datetime.now(timezone.utc)
             + timedelta(minutes=args.expiry_minutes),
         )
@@ -115,9 +127,10 @@ def main(argv: list[str] | None = None) -> int:
             args.results,
             provider,
             guard,
-            phase="preflight",
+            phase="pilot",
             max_errors=1,
             summary_path=args.summary,
+            progress_callback=progress,
         )
     except Exception as exc:
         print(
@@ -132,16 +145,14 @@ def main(argv: list[str] | None = None) -> int:
             os.environ["RIVAL_API_KEY"] = prior_rival_key
         api_key = ""
 
-    passed = _expected_success(summary, args.max_calls)
-    summary["verification_status"] = (
-        "ONE_FROZEN_CASE_PASS"
-        if passed and args.max_calls == 1
-        else "PREFLIGHT_COMPLETE"
-        if passed
-        else "FAIL"
-    )
+    verification_status = _checkpoint_status(summary, args.target_total)
+    summary["verification_status"] = verification_status
+    summary["checkpoint_target"] = args.target_total
     print(json.dumps(summary, indent=2, sort_keys=True))
-    return 0 if passed else 2
+    return 0 if verification_status in {
+        "PILOT_CHECKPOINT_COMPLETE",
+        "PILOT_COMPLETE",
+    } else 2
 
 
 if __name__ == "__main__":
