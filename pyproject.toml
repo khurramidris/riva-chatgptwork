@@ -17,6 +17,7 @@ dependencies = [
   "cryptography>=42",
   "matplotlib>=3.9",
   "PyYAML>=6.0",
+  "pyarrow>=18.0",
 ]
 
 [project.optional-dependencies]
@@ -39,5 +40,6 @@ rival = [
   "qualification/*",
   "studies/twin2k_live_v1/*",
   "studies/twin2k_live_v2/*",
+  "studies/mega_study_v1/*",
   "vendor/*/LICENSE",
 ]

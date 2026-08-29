@@ -10,7 +10,7 @@ The user confirmed commercial permission for the research papers, repositories, 
 | [SYN-DIGITS](https://github.com/yw3453/syn-digits) | `db891b6f821c914455b11763a96679864bf4fc48` | MIT | Distribution calibration snapshot, full `SyntheticControl`, license, OpinionQA research artifacts | Full component retained with four portability changes: local NumPy truncated SVD, headless plot closing, temporary/configurable diagnostics directory, and bounded evaluation imputation iterations. |
 | [UQ LLM Survey Simulation](https://github.com/yw3453/uq-llm-survey-simulation) | `fe3eb19111a2d9327e9ec051bd96f68750a7895d` | MIT | `evaluations.py`, license | Optional-`tqdm` import patch; Rival exposes CLT, Hoeffding, and Bernstein intervals and tests them against upstream `CI()`/`synthetic_CI()`. |
 | [LLM Demand Simulator](https://github.com/khurramidris/LLM-demand-simulator) | `b56a7c0acad7406bff81b7cdf179314894b2fa97` | No LICENSE file found | `llm_mix.py`, `llm_mix_cal.py`, `metrics.py` | Incorporation relies on the user's separate permission. `rival/pricing.py` adapts the calibrated persona/no-buy mixture to a SciPy-only runtime and adds revenue/CVaR price selection. Do not describe this repository as MIT or another public license without an authoritative license grant. |
-| [Twin-2K-500 Mega Study](https://github.com/TianyiPeng/Twin-2K-500-Mega-Study) | `afe2bb933fce377ed196f441a4c12962cb55a53a` | Apache-2.0 | Official MAD evaluation module, license | `rival/research/mad.py` provides lazy column/task/summary wrappers. |
+| [Twin-2K-500 Mega Study](https://github.com/TianyiPeng/Twin-2K-500-Mega-Study) | `afe2bb933fce377ed196f441a4c12962cb55a53a` | Apache-2.0 | Official MAD evaluation module, license | `rival/research/mad.py` provides lazy column/task/summary wrappers. The parallel Mega-Study benchmark also follows the authors' survey and outcome conventions in Rival-written code. |
 
 ## Data incorporated
 
@@ -27,6 +27,19 @@ Rival bundles the 489-question five-choice artifact and 2,058-persona response m
 - Paper: [Twin-2K-500: A Dataset for Building Digital Twins of 2,000 People](https://arxiv.org/abs/2505.17479)
 
 Rival bundles a question catalog, wave-4 mapping, aligned wave-1/3 human history, wave-4 outcomes, and released GPT-4.1-mini predictions. Files were renamed and aligned by `TWIN_ID`; numeric response codes were not semantically altered. No endorsement by the authors is implied.
+
+### Twin-2K-500 Mega-Study
+
+- Dataset: [Twin-2K-500 Mega-Study](https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study)
+- Snapshot: `0401b715a341ac4b5f98b4424b4aecf9d29570d0`
+- License: Apache-2.0
+- Paper: [Twin-2K-500 Mega-Study](https://arxiv.org/abs/2509.19088)
+
+The development benchmark downloads, but does not redistribute, the three
+official study Parquet files and seven original full-persona shards. Exact
+source URLs, sizes, SHA-256 hashes, prompt identities, and reference-output
+files are recorded in `rival/studies/mega_study_v1/MEGA_STUDY_MANIFEST.json`.
+Selected human target answers are not committed to the repository.
 
 ## Paper-derived or adapter-only integrations
 

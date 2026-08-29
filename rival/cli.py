@@ -12,6 +12,9 @@ from .server import serve
 
 
 _LIVE_STUDY_DIR = Path(__file__).resolve().parent / "studies" / "twin2k_live_v2"
+_MEGA_STAGE = Path(".rival-data/mega-study-v1")
+_MEGA_CACHE = Path(".rival-data/mega-study-source")
+_MEGA_REPORTS = Path("reports/mega_study")
 
 
 def write_text(path: str | None, content: str) -> None:
@@ -248,6 +251,77 @@ def evaluate_live_pilot_command(args: argparse.Namespace) -> int:
     return 0 if report["status"] != "PARTIAL_UNEVALUABLE" else 2
 
 
+def mega_prepare_command(args: argparse.Namespace) -> int:
+    from .mega_study.audit import audit_readiness
+    from .mega_study.stage import prepare_stage
+    from .mega_study.utils import atomic_json
+
+    stage = prepare_stage(
+        args.stage_root,
+        source_cache=args.source_cache,
+        allow_download=not args.no_download,
+    )
+    audit = audit_readiness(args.stage_root, args.source_cache)
+    atomic_json(args.report, {"stage": stage, "readiness_audit": audit})
+    print(json.dumps(audit, indent=2, sort_keys=True))
+    return 0 if audit["status"] == "PASS" else 2
+
+
+def mega_audit_command(args: argparse.Namespace) -> int:
+    from .mega_study.audit import audit_readiness
+    from .mega_study.utils import atomic_json
+
+    audit = audit_readiness(args.stage_root, args.source_cache)
+    if args.report:
+        atomic_json(args.report, audit)
+    print(json.dumps(audit, indent=2, sort_keys=True))
+    return 0 if audit["status"] == "PASS" else 2
+
+
+def mega_run_command(args: argparse.Namespace) -> int:
+    from .mega_study.runner import run_benchmark
+
+    summary = run_benchmark(
+        args.stage_root,
+        args.results,
+        phase=args.phase,
+        budget_usd=args.budget_usd,
+        not_after=args.not_after,
+        max_new_calls=args.max_new_calls,
+        max_errors=args.max_errors,
+        summary_path=args.summary,
+    )
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    return 0 if summary["status"] == "COMPLETE" else 2
+
+
+def mega_freeze_command(args: argparse.Namespace) -> int:
+    from .mega_study.runner import freeze_predictions
+
+    marker = freeze_predictions(args.stage_root, args.results, args.marker)
+    print(json.dumps(marker, indent=2, sort_keys=True))
+    return 0
+
+
+def mega_evaluate_command(args: argparse.Namespace) -> int:
+    from .mega_study.evaluation import evaluate_benchmark, markdown_report as mega_markdown
+    from .mega_study.stage import materialize_outcomes
+    from .mega_study.utils import atomic_json
+
+    materialize_outcomes(
+        args.stage_root,
+        args.results,
+        args.marker,
+        source_cache=args.source_cache,
+        allow_download=not args.no_download,
+    )
+    report = evaluate_benchmark(args.stage_root, args.results, args.marker)
+    atomic_json(args.json_report, report)
+    write_text(str(args.markdown_report), mega_markdown(report))
+    print(json.dumps(report["summary_table"], indent=2, sort_keys=True))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="rival")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -375,6 +449,80 @@ def build_parser() -> argparse.ArgumentParser:
     live_evaluate.add_argument("--results", default="reports/live_pilot_results.jsonl")
     live_evaluate.add_argument("--output", default="reports/live_pilot_evaluation.json")
     live_evaluate.set_defaults(func=evaluate_live_pilot_command)
+
+    mega = subparsers.add_parser(
+        "mega-study",
+        help="prepare, run, freeze, and evaluate the parallel Mega-Study benchmark",
+    )
+    mega_commands = mega.add_subparsers(dest="mega_command", required=True)
+
+    mega_prepare = mega_commands.add_parser(
+        "prepare", help="download and audit prediction-only benchmark inputs"
+    )
+    mega_prepare.add_argument("--stage-root", type=Path, default=_MEGA_STAGE)
+    mega_prepare.add_argument("--source-cache", type=Path, default=_MEGA_CACHE)
+    mega_prepare.add_argument(
+        "--report", type=Path, default=_MEGA_REPORTS / "preparation_audit.json"
+    )
+    mega_prepare.add_argument("--no-download", action="store_true")
+    mega_prepare.set_defaults(func=mega_prepare_command)
+
+    mega_audit = mega_commands.add_parser(
+        "audit", help="repeat the no-API replication and leakage audit"
+    )
+    mega_audit.add_argument("--stage-root", type=Path, default=_MEGA_STAGE)
+    mega_audit.add_argument("--source-cache", type=Path, default=_MEGA_CACHE)
+    mega_audit.add_argument("--report", type=Path)
+    mega_audit.set_defaults(func=mega_audit_command)
+
+    mega_run = mega_commands.add_parser(
+        "run", help="run or resume the frozen model/provider benchmark"
+    )
+    mega_run.add_argument("--stage-root", type=Path, default=_MEGA_STAGE)
+    mega_run.add_argument(
+        "--results", type=Path, default=_MEGA_REPORTS / "results.jsonl"
+    )
+    mega_run.add_argument(
+        "--summary", type=Path, default=_MEGA_REPORTS / "run_summary.json"
+    )
+    mega_run.add_argument("--phase", choices=("preflight", "pilot"), required=True)
+    mega_run.add_argument("--budget-usd", type=float, required=True)
+    mega_run.add_argument("--not-after", required=True, help="ISO-8601 expiry")
+    mega_run.add_argument("--max-new-calls", type=int)
+    mega_run.add_argument("--max-errors", type=int, default=1)
+    mega_run.set_defaults(func=mega_run_command)
+
+    mega_freeze = mega_commands.add_parser(
+        "freeze", help="freeze all predictions before opening human outcomes"
+    )
+    mega_freeze.add_argument("--stage-root", type=Path, default=_MEGA_STAGE)
+    mega_freeze.add_argument(
+        "--results", type=Path, default=_MEGA_REPORTS / "results.jsonl"
+    )
+    mega_freeze.add_argument(
+        "--marker", type=Path, default=_MEGA_REPORTS / "prediction_freeze.json"
+    )
+    mega_freeze.set_defaults(func=mega_freeze_command)
+
+    mega_evaluate = mega_commands.add_parser(
+        "evaluate", help="open outcomes after freeze and produce the baseline report"
+    )
+    mega_evaluate.add_argument("--stage-root", type=Path, default=_MEGA_STAGE)
+    mega_evaluate.add_argument("--source-cache", type=Path, default=_MEGA_CACHE)
+    mega_evaluate.add_argument(
+        "--results", type=Path, default=_MEGA_REPORTS / "results.jsonl"
+    )
+    mega_evaluate.add_argument(
+        "--marker", type=Path, default=_MEGA_REPORTS / "prediction_freeze.json"
+    )
+    mega_evaluate.add_argument(
+        "--json-report", type=Path, default=_MEGA_REPORTS / "baseline_report.json"
+    )
+    mega_evaluate.add_argument(
+        "--markdown-report", type=Path, default=_MEGA_REPORTS / "baseline_report.md"
+    )
+    mega_evaluate.add_argument("--no-download", action="store_true")
+    mega_evaluate.set_defaults(func=mega_evaluate_command)
 
     server_parser = subparsers.add_parser("serve", help="start the API and study interface")
     server_parser.add_argument("--host", default="127.0.0.1")

@@ -1,0 +1,82 @@
+{
+  "schema_version": "rival.mega-study.outcomes.v1",
+  "official_repository_commit": "afe2bb933fce377ed196f441a4c12962cb55a53a",
+  "primary_metric": "1 - absolute_error / natural_range",
+  "studies": {
+    "junk_fees": {
+      "answer_map": "Identify six comprehension items, six fairness items, one government-regulation item, and one ban-support item from frozen answer-free question wording.",
+      "outcomes": {
+        "percent_correct": {
+          "formula": "100 * count(position == 1 across six comprehension items) / 6",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "type": "continuous_derived"
+        },
+        "fairness_average": {
+          "formula": "mean(selected position across six fairness items)",
+          "minimum": 1.0,
+          "maximum": 7.0,
+          "type": "rating_derived"
+        },
+        "reg_support": {
+          "formula": "mean(government-regulation position, ban-support position)",
+          "minimum": 1.0,
+          "maximum": 7.0,
+          "type": "rating_derived"
+        }
+      }
+    },
+    "hiring_algorithms": {
+      "direct_prompt_to_outcome": {
+        "Q2": "Q6",
+        "Q3": "Q8",
+        "Q4": "Q9",
+        "Q5": "Q10",
+        "Q6": "Q13",
+        "Q7": "Q14",
+        "Q8": "Q15",
+        "Q9": "Q16"
+      },
+      "recodes": {
+        "Q9": {"1": 4, "2": 3, "3": 1, "4": 2},
+        "Q14": {"1": 1, "2": 4, "3": 2, "4": 3}
+      },
+      "direct_ranges": {
+        "Q6": [1.0, 5.0],
+        "Q8": [1.0, 5.0],
+        "Q9": [1.0, 4.0],
+        "Q10": [1.0, 5.0],
+        "Q13": [1.0, 5.0],
+        "Q14": [1.0, 4.0],
+        "Q15": [1.0, 5.0],
+        "Q16": [1.0, 5.0]
+      },
+      "job_profiles": {
+        "prompt_questions": ["Q19", "Q20", "Q21", "Q22"],
+        "mapping": "Each prompt is one job profile; its eight selected positions map in order to job{1..4}_item{1..8}.",
+        "minimum": 1.0,
+        "maximum": 7.0,
+        "type": "ordinal_rating"
+      }
+    },
+    "privacy": {
+      "outcomes": {
+        "PPV": {
+          "prompt_question": "Q1",
+          "formula": "single selected position for the assigned privacy scenario",
+          "minimum": 1.0,
+          "maximum": 7.0,
+          "type": "ordinal_rating"
+        }
+      }
+    }
+  },
+  "aggregation": {
+    "outcome": "across participants",
+    "study": "unweighted macro average across preregistered outcomes",
+    "overall": "unweighted macro average across the three development studies",
+    "correlation": "Pearson per outcome with Fisher-z macro averaging",
+    "paired_ci": "10000 participant-cluster bootstrap resamples; 95% percentile interval"
+  },
+  "failure_denominator": "Every frozen participant-study-variant-outcome cell remains eligible. Valid coverage and failure counts are mandatory."
+}

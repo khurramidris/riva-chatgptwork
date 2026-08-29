@@ -1,0 +1,292 @@
+{
+  "schema_version": "rival.mega-study.v1",
+  "study_id": "rival-twin2k-500-mega-development-v1",
+  "status": "FROZEN_BEFORE_FIRST_API_CALL",
+  "frozen_at": "2026-08-29T00:00:00Z",
+  "official_resources": {
+    "paper": "https://arxiv.org/abs/2509.19088",
+    "repository": "https://github.com/TianyiPeng/Twin-2K-500-Mega-Study",
+    "repository_commit": "afe2bb933fce377ed196f441a4c12962cb55a53a",
+    "repository_license": "Apache-2.0",
+    "mega_dataset": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study",
+    "mega_dataset_revision": "0401b715a341ac4b5f98b4424b4aecf9d29570d0",
+    "mega_dataset_license": "Apache-2.0",
+    "persona_dataset": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500",
+    "persona_dataset_revision": "f883165a3026fde855dfd448e0cd16443ab257b6",
+    "persona_dataset_license": "CC-BY-4.0",
+    "official_temperature_zero_config_blob_sha1": {
+      "junk_fees": "4923e18701f5d4fa2155455c38c3b78e0ddd3a67",
+      "hiring_algorithms": "5cbe7fd5cb7a26e8ecff84991e8aef1c3d6cc50f",
+      "privacy": "0b0901eac7b9f0a502558ab54079a59b1504fd2d"
+    }
+  },
+  "development_studies": [
+    "junk_fees",
+    "hiring_algorithms",
+    "privacy"
+  ],
+  "confirmation_studies": [
+    "accuracy_nudges",
+    "context_effects",
+    "preference_redistribution",
+    "quantitative_intuition"
+  ],
+  "confirmation_lock": "Entire studies selected before development outcomes or results are used for tuning. Their outcomes are unavailable to development decisions.",
+  "variants": [
+    "generic",
+    "demographics",
+    "full_persona",
+    "rival_retrieval"
+  ],
+  "cohort": {
+    "path": "cohort.jsonl",
+    "sha256": "3021eb5a428575c2b3dd15d1256d2c8386a257ffbfc0d55004cdf2411f72c439",
+    "total_cases": 300,
+    "unique_participants": 273,
+    "cases_per_study": {
+      "junk_fees": 100,
+      "hiring_algorithms": 100,
+      "privacy": 100
+    },
+    "selection_seed": 20260829,
+    "selection_rule": "For each development study, retain rows with nonempty answer-free survey_text and a matching original Twin-2K full persona; rank by SHA-256(seed|study_id|pid), then take the first 100. Human outcome values are not consulted.",
+    "variant_order_rule": "Within each study, start from SHA-256(seed|variant-order|study_id) and rotate A/B/C/D by selection rank. Exactly 25 of 100 cases begin with each variant."
+  },
+  "model_config": {
+    "api_provider": "OpenRouter",
+    "base_url": "https://openrouter.ai/api/v1/chat/completions",
+    "model": "deepseek/deepseek-v4-flash-0731",
+    "upstream_provider": "DeepInfra",
+    "allow_provider_fallbacks": false,
+    "temperature": 0.0,
+    "seed": 20260829,
+    "max_output_tokens": 16384,
+    "reasoning_enabled": false,
+    "response_format": "json_object",
+    "input_cost_per_million_usd": 0.08,
+    "output_cost_per_million_usd": 0.18,
+    "max_attempts": 3,
+    "timeout_seconds": 180
+  },
+  "provider_identity": {
+    "provider_name": "OpenRouter",
+    "provider_version": "rival-mega-openrouter-v1",
+    "model": "deepseek/deepseek-v4-flash-0731",
+    "upstream_provider": "DeepInfra",
+    "configuration_sha256": "58b3eab066a924dc69314de8548990bdefebeca0a971f5c08bcc71f727a030b0",
+    "endpoint_sha256": "c82ae1d6c3df7074f75a0a54b6d823dc479180db13e5e7fc1e4345bd97c6f38f"
+  },
+  "prompt_template_sha256": {
+    "generic": "e92e367884553b8f1c07df67653f9b4cfa6e1a36bb4c506dc8fec40b0dd55d1f",
+    "demographics": "301cd804c0caf4e1397d2d1595226b585db22bd8468736d74bd8ac0e1b8da9f9",
+    "full_persona": "0f78dba4f3ef452c0551ff5f99265cd68a8567b5be37346e63e79d6f71de015d",
+    "rival_retrieval": "50430f3603289811cef3d3e5022275d94ca5aab9fea41ab585b3fbcc5da72f9a"
+  },
+  "retrieval_config": {
+    "algorithm": "bm25-mmr-v1",
+    "token_pattern": "[a-z0-9]+",
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "mmr_lambda": 0.82,
+    "top_k": 24,
+    "max_evidence_chars": 16000,
+    "always_include_demographics": true,
+    "tie_break": "sha256-evidence-id"
+  },
+  "model_context_policy": {
+    "policy": "No truncation for any frozen A/B/C/D prompt. Fail before the API call if a rendered prompt exceeds 180000 characters.",
+    "max_chars": 180000,
+    "provider_context_tokens": 1048576,
+    "provider_metadata_observed_at": "2026-08-29",
+    "audited_cases": 300,
+    "audited_prompts": 1200,
+    "observed_context_chars": {
+      "generic": {"min": 5793, "median": 23730.0, "mean": 24489.316666666666, "p95": 44425, "max": 44986},
+      "demographics": {"min": 6849, "median": 24828.5, "mean": 25583.43666666667, "p95": 45512, "max": 46072},
+      "full_persona": {"min": 133658, "median": 152337.0, "mean": 153249.09666666668, "p95": 173319, "max": 174453},
+      "rival_retrieval": {"min": 21091, "median": 40594.5, "mean": 41099.72666666667, "p95": 61196, "max": 61909}
+    },
+    "rival_retrieved_items": {"min": 19, "median": 23.0, "max": 24}
+  },
+  "outcome_ids": {
+    "junk_fees": ["percent_correct", "fairness_average", "reg_support"],
+    "hiring_algorithms": [
+      "Q6", "Q8", "Q9", "Q10", "Q13", "Q14", "Q15", "Q16",
+      "job1_item1", "job1_item2", "job1_item3", "job1_item4", "job1_item5", "job1_item6", "job1_item7", "job1_item8",
+      "job2_item1", "job2_item2", "job2_item3", "job2_item4", "job2_item5", "job2_item6", "job2_item7", "job2_item8",
+      "job3_item1", "job3_item2", "job3_item3", "job3_item4", "job3_item5", "job3_item6", "job3_item7", "job3_item8",
+      "job4_item1", "job4_item2", "job4_item3", "job4_item4", "job4_item5", "job4_item6", "job4_item7", "job4_item8"
+    ],
+    "privacy": ["PPV"]
+  },
+  "evaluation_policy": {
+    "primary_individual_metric": "normalized accuracy = 1 - absolute error / preregistered natural range, macro-averaged over outcomes then studies",
+    "person_level_correlation": "Pearson per outcome across participants, Fisher-z macro average; Spearman also reported",
+    "population_metrics": ["population mean absolute and normalized error", "absolute Glass delta", "SD ratio", "discrete distribution TVD"],
+    "additional_metrics": ["exact accuracy", "balanced accuracy where at least two observed classes exist", "MAE", "RMSE"],
+    "paired_contrasts": ["demographics-generic", "full_persona-generic", "rival_retrieval-generic", "full_persona-demographics", "rival_retrieval-demographics", "rival_retrieval-full_persona"],
+    "paired_uncertainty": "10000 participant-cluster bootstrap resamples, 95% percentile interval",
+    "coverage": "All frozen cells stay in the denominator; matched valid cells are used for paired lift and coverage/failures are reported separately.",
+    "probabilistic_score": "not collected in phase 1 because the official full-survey output is a structured point response"
+  },
+  "leakage_firewall": {
+    "prediction_source_projection": ["PID", "survey_text"],
+    "protected_source_field": "survey_json_with_human_response",
+    "protected_data_policy": "Prediction preparation reads only PID and survey_text and does not materialize protected answers. Prompt, retrieval, provider, runner, prediction cache, and model-selection APIs do not accept outcomes. After the complete result ledger is frozen, a separate command reads the protected source column into a sealed directory for evaluation.",
+    "fatal_on_failure": true
+  },
+  "replication_check": {
+    "reference": "official results/digital_certification/full_persona_without_reasoning_2025-06-23",
+    "expected_rows": 600,
+    "target_study_overlap": false,
+    "confirmation_study_overlap": false,
+    "required_status": "PASS_BEFORE_REAL_API_RUN",
+    "validated_metrics": ["TWIN_ID pairing", "invalid-WTP matched exclusion", "DV1 construction", "log-WTP construction", "normalized accuracy", "Pearson correlation", "population mean", "population standard deviation"]
+  },
+  "call_and_cost_plan": {
+    "cases": 300,
+    "variants_per_case": 4,
+    "planned_calls": 1200,
+    "preflight_calls": 4,
+    "input_token_guard": "ceil(context characters / 3)",
+    "mean_context_plus_max_output_estimate_usd": 5.494368,
+    "all_calls_max_context_and_max_output_bound_usd": 6.158352,
+    "recommended_hard_budget_usd": 7.0,
+    "notes": "The runtime is resumable, checks budget and expiry before each call, stops on error thresholds, and charges provider-reported cost when available."
+  },
+  "preserved_wave4_witness": {
+    "rival/studies/twin2k_live_v2/protocol.json": "f724845ad4028aca265391e5ae1d63fb3ec9afcf2e75a6221a181468de24bee6",
+    "rival/studies/twin2k_live_v2/cases.jsonl": "0b74fd7452f5da9ff6519d4a15f712b378fc999abe4aa318fb0fb205781f1559"
+  },
+  "implementation_witness": {
+    "rival/mega_study/__init__.py": "e6d2adbe19caaa56c040abab978475b7e76d0292cc2c0321b3e9b15eaabe987f",
+    "rival/mega_study/audit.py": "a3c1da8feee094c3614fe637d9117a090fe86212c62e7cc8e432e16bad074a9a",
+    "rival/mega_study/constants.py": "25a441ae3d09b09b8f4e60ab990808dc0eb743d207aac66d3b40d5cae013e072",
+    "rival/mega_study/evaluation.py": "9ad3009d3da40e6f756a498e5718c739c0118aa1e9cdfecbb46030e31f2a770e",
+    "rival/mega_study/outcomes.py": "6c90591090295ed965644ca6b676aabde7780a0e341b47e92d6ef12a899372d5",
+    "rival/mega_study/prompts.py": "d78324e8fa18bd997714b10c08ab70bdeaf74cfe7d1a594bca3a2fccafa5cb9c",
+    "rival/mega_study/protocol.py": "1ec08e01c5efb73a2bbaeed10b08e1d5338b84c4d8239d3711a158cad6578acb",
+    "rival/mega_study/provider.py": "a39303e966a9a3e52869dd1154ba4c42378a1835325e7a4be8ed1520f0ff602d",
+    "rival/mega_study/replication.py": "eadf14efc95b9c9d6c636c828948e6b391d26eec8374d85067e54b10848d23da",
+    "rival/mega_study/retrieval.py": "5b8d3fc854bc4dc19c866e663886b4cc9c376c2f522221b5ca2c49d29e012010",
+    "rival/mega_study/runner.py": "d6cea9c499a626aa6750e80a0dbdf05dcfc4e5e6c59155adb1d9b781e6a9f0cf",
+    "rival/mega_study/stage.py": "85f761c4ad49843522cd88dcd737459f0431933313ac8ce20e89a4535b6ce9d1",
+    "rival/mega_study/utils.py": "ac3a23088a010ed70903745c8fb7063fd2d6cb08690a3f0a95bb0ce289d67633",
+    "scripts/prepare_mega_study.py": "ed50c382915e6a37f068043dd3890716884a2a23c9982f640ecfc02b55c9c717",
+    "scripts/run_mega_study_secure.py": "be63cb91c9b7be71ff0e56b7254d0f9d601f7e535144fbe64da656ea01fb8727",
+    "scripts/freeze_mega_study.py": "fb13d191775bc1969656d1d5922234372ec799f1cb9abe2b4461a631d2f08622",
+    "scripts/evaluate_mega_study.py": "1b62441aa9f0e984761b6d70d06c3c2fbef0bd0efc1f1fd7ad8be5125fd88c45",
+    "rival/cli.py": "81b82405a484be85d2d6b9c1014ea08305fc3f7447d48d93552453b3c681f2e7",
+    "rival/studies/mega_study_v1/OUTCOME_MAPPING.json": "24b8bdadaaed0d7fa1e4c92ff615605b549720cf9cb4ef54067814708496c714",
+    "rival/studies/mega_study_v1/MEGA_STUDY_PROTOCOL.md": "f534598413daf924913dd88c8c8faf0d96ba31c4703b084442af4bad8c418b6c",
+    "rival/studies/mega_study_v1/MEGA_STUDY_PRE_REGISTRATION.md": "a2f8cb941056a9ccefc642e7e067fcbad5dd9e8b409022ffc5d516e595239723",
+    "rival/studies/mega_study_v1/LEAKAGE_FIREWALL.md": "3b3a58a98c46136401f83316ec87bf5ccecb5e7af9c2f887b553c1667c361aa6"
+  },
+  "sources": [
+    {
+      "source_id": "mega:junk_fees",
+      "kind": "mega_study_split",
+      "local_name": "mega/junk_fees.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study/resolve/refs%2Fconvert%2Fparquet/default/junk_fees/0000.parquet",
+      "size_bytes": 5646115,
+      "sha256": "c83bde30534a99594ab7eaf210295fd9fe632a0e6fbe7cbea817d50586f5291a"
+    },
+    {
+      "source_id": "mega:hiring_algorithms",
+      "kind": "mega_study_split",
+      "local_name": "mega/hiring_algorithms.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study/resolve/refs%2Fconvert%2Fparquet/default/hiring_algorithms/0000.parquet",
+      "size_bytes": 3515008,
+      "sha256": "5de893bfb4d335d9c92b6b1902ef1b3266a40d71e8226d80c093234f52074d34"
+    },
+    {
+      "source_id": "mega:privacy",
+      "kind": "mega_study_split",
+      "local_name": "mega/privacy.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study/resolve/refs%2Fconvert%2Fparquet/default/privacy/0000.parquet",
+      "size_bytes": 633431,
+      "sha256": "22b02cb6bc73f81e7e6671c71030b35781815290ca5a2a9be267527afb6aeb33"
+    },
+    {
+      "source_id": "persona:0000",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0000.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0000.parquet",
+      "size_bytes": 29024339,
+      "sha256": "e80886dbbafa5062915c0b6f0172b99bfb638815943c503582b51de444e734fa"
+    },
+    {
+      "source_id": "persona:0001",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0001.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0001.parquet",
+      "size_bytes": 29023986,
+      "sha256": "ab867169ec8726c10fccafea034e8946b1235ef578761d299eb60a481437605f"
+    },
+    {
+      "source_id": "persona:0002",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0002.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0002.parquet",
+      "size_bytes": 29036432,
+      "sha256": "7ca07c0d638a2ea4d9b009f152b8c1eff1a30e1c1730eb21c41e3a14e2702da2"
+    },
+    {
+      "source_id": "persona:0003",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0003.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0003.parquet",
+      "size_bytes": 29022600,
+      "sha256": "9e7bd6a0c583a6eabea317e5a1add8d2b3556bb0e3d3e0d7d47775888f9f4787"
+    },
+    {
+      "source_id": "persona:0004",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0004.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0004.parquet",
+      "size_bytes": 29056530,
+      "sha256": "0e2ca75cbc7be66cac80358295512e91ad973cfd6852be46ac5f9fc502541774"
+    },
+    {
+      "source_id": "persona:0005",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0005.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0005.parquet",
+      "size_bytes": 29041177,
+      "sha256": "1d890ded9e9cd4451663fd2df4993b19041b6a9fec669723c06a8fea21be9abd"
+    },
+    {
+      "source_id": "persona:0006",
+      "kind": "original_twin2k_full_persona",
+      "local_name": "personas/0006.parquet",
+      "url": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/refs%2Fconvert%2Fparquet/full_persona/data/0006.parquet",
+      "size_bytes": 29045944,
+      "sha256": "20bb4236e53de14ffe53ce648fb0528a0832de6fff694e6299399f7afc74a0ac"
+    },
+    {
+      "source_id": "reference:digital_certification:twin",
+      "kind": "official_reference_output",
+      "local_name": "reference/digital_certification/consolidated_llm_values.csv.gz",
+      "url": "https://raw.githubusercontent.com/TianyiPeng/Twin-2K-500-Mega-Study/afe2bb933fce377ed196f441a4c12962cb55a53a/results/digital_certification/full_persona_without_reasoning_2025-06-23/consolidated_llm_values.csv.gz",
+      "size_bytes": 138348,
+      "sha256": "3e565e6da7892acf62e407c1e495c4e02ac1ad800dadf95544a0f451779d43a6"
+    },
+    {
+      "source_id": "reference:digital_certification:human",
+      "kind": "official_reference_output",
+      "local_name": "reference/digital_certification/consolidated_original_answers_values.csv.gz",
+      "url": "https://raw.githubusercontent.com/TianyiPeng/Twin-2K-500-Mega-Study/afe2bb933fce377ed196f441a4c12962cb55a53a/results/digital_certification/full_persona_without_reasoning_2025-06-23/consolidated_original_answers_values.csv.gz",
+      "size_bytes": 100413,
+      "sha256": "938a65e01d59eaf3dcf27450f7467c75e6f4145c6780cecee4b0fee4f3d23468"
+    },
+    {
+      "source_id": "reference:digital_certification:meta",
+      "kind": "official_reference_output",
+      "local_name": "reference/digital_certification/meta analysis.csv.gz",
+      "url": "https://raw.githubusercontent.com/TianyiPeng/Twin-2K-500-Mega-Study/afe2bb933fce377ed196f441a4c12962cb55a53a/results/digital_certification/full_persona_without_reasoning_2025-06-23/meta%20analysis.csv.gz",
+      "size_bytes": 741,
+      "sha256": "35183c98f2b476d725ba15662dc800cab56cc5ffcff3c79e1c0095d18c075081"
+    }
+  ],
+  "manifest_sha256": "508f1eea145c0d1b7a06cfeb7cfb7c9f526ea522118ecffecfa3dfc5c6e47b60"
+}

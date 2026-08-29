@@ -4,10 +4,16 @@ Rival is an evidence-gated population and behavior simulation product. It combin
 
 Version 0.5 keeps the real-data qualification and prospective-integrity kernel from v0.4, then completes the planned research-component integration layer: semantic-similarity response rating, survey uncertainty intervals, the full SYN-DIGITS synthetic-control runtime, paired S-RCT estimation, calibrated persona-mixture demand/pricing, interview-grounded personas, official Twin-2K MAD evaluation, and revision-bound Centauri/Socrates inference adapters. This completes component development, not external validation: population-distribution calibration is ready for controlled pilots; universal or reliable individual prediction is not claimed.
 
-The current `0.6.0.dev1` tree adds the frozen first live-model qualification:
+The current `0.6.0.dev2` tree adds the frozen first live-model qualification:
 1,500 paired generic/twin cases, prompt and dataset hashing, append-and-resume
 execution, provider-usage accounting, local call/USD/expiry guards, and a
 separate post-prediction evaluator. No paid live-model result is claimed yet.
+
+It also adds a separate, preregistered Twin-2K-500 Mega-Study benchmark for
+genuinely new situations. The new track freezes 300 participant-study cases
+across Junk Fees, Hiring Algorithms, and Privacy and compares Generic,
+Demographics, Full Persona, and target-specific Rival Retrieval using one exact
+model route. No Mega-Study model result is claimed yet.
 
 ## Real-data results
 
@@ -48,6 +54,7 @@ OpinionQA is evaluated with five out-of-fold splits at the canonical/TF-IDF ques
 - revision-, corpus-, endpoint-, and license-bound Centauri/Socrates inference adapters (no weights bundled);
 - official Twin-2K MAD evaluation wrappers;
 - frozen and resumable Twin-2K live-provider pilot with two-layer spending controls;
+- parallel Twin-2K-500 Mega-Study A/B/C/D benchmark with outcome-gated evaluation;
 - complete CLI qualification pipeline and machine-readable reports.
 
 ## Install and run
@@ -136,6 +143,41 @@ python scripts/run_live_pilot_secure.py \
 The result ledger is resumable and provider-bound. See
 [`docs/FIRST_LIVE_TEST.md`](docs/FIRST_LIVE_TEST.md) for the frozen design,
 spending controls, baselines and interpretation rules.
+
+## New-situation Mega-Study benchmark
+
+The Mega-Study track is isolated from the Wave-4 pilot and starts with no API
+spending. Preparation downloads checksum-pinned official files, creates an
+answer-free prediction package, reproduces the authors' published non-target
+Digital Certification metrics, and audits all 1,200 prompts:
+
+```bash
+python scripts/prepare_mega_study.py
+```
+
+After it reports `PASS`, use the hidden-key secure runner for the four-call
+preflight and resumable checkpoints:
+
+```bash
+python scripts/run_mega_study_secure.py \
+  --phase preflight --budget-usd 0.10 --expiry-minutes 30
+
+python scripts/run_mega_study_secure.py \
+  --phase pilot --max-new-calls 100 \
+  --budget-usd 7.00 --expiry-minutes 120
+```
+
+Only after all 1,200 predictions are terminal may the ledger be frozen and
+human outcomes opened:
+
+```bash
+python scripts/freeze_mega_study.py
+python scripts/evaluate_mega_study.py --no-download
+```
+
+See [`rival/studies/mega_study_v1/MEGA_STUDY_PROTOCOL.md`](rival/studies/mega_study_v1/MEGA_STUDY_PROTOCOL.md)
+and the adjacent preregistration, manifest, leakage audit, outcome mapping, and
+official-resource audit. These are development studies, not confirmation proof.
 
 ## Prospective study workflow
 
