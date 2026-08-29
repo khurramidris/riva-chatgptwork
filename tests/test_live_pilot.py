@@ -181,6 +181,20 @@ class FrozenPilotTests(unittest.TestCase):
             with self.assertRaises(PilotProtocolError):
                 load_and_verify_protocol(root / "protocol.json")
 
+    def test_windows_crlf_checkout_preserves_cases_integrity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = self._prepare(root)
+            cases = root / "cases.jsonl"
+            lf_content = cases.read_bytes()
+            self.assertNotIn(b"\r\n", lf_content)
+            cases.write_bytes(lf_content.replace(b"\n", b"\r\n"))
+
+            loaded, loaded_cases, _ = load_and_verify_protocol(root / "protocol.json")
+
+            self.assertEqual(loaded["protocol_sha256"], protocol["protocol_sha256"])
+            self.assertEqual(len(loaded_cases), protocol["cases"]["total"])
+
     def test_budget_stop_resume_and_full_rehearsal_evaluation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

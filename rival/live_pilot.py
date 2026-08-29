@@ -65,6 +65,21 @@ def _stable_key(seed: int, *parts: Any) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _sha256_portable_text(path: Path) -> str:
+    """Hash UTF-8 text with line endings normalized to LF.
+
+    Git may check text files out as CRLF on Windows. JSONL semantics do not
+    depend on the line-ending convention, so the integrity hash binds the
+    normalized text while all other byte changes remain detectable.
+    """
+
+    digest = hashlib.sha256()
+    with path.open("r", encoding="utf-8", newline=None) as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), ""):
+            digest.update(chunk.encode("utf-8"))
+    return digest.hexdigest()
+
+
 def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -589,7 +604,7 @@ def prepare_twin2k_live_pilot(
         "targets": target_payloads,
         "cases": {
             "path": "cases.jsonl",
-            "sha256": sha256_file(cases_path),
+            "sha256": _sha256_portable_text(cases_path),
             "total": len(cases),
             "preflight": sum(bool(case["preflight"]) for case in cases),
         },
@@ -657,7 +672,7 @@ def load_and_verify_protocol(
     if protocol.get("schema_version") != SCHEMA_VERSION:
         raise PilotProtocolError("unsupported live-pilot schema")
     resolved_cases_path = Path(cases_path) if cases_path else path.parent / "cases.jsonl"
-    if sha256_file(resolved_cases_path) != protocol["cases"]["sha256"]:
+    if _sha256_portable_text(resolved_cases_path) != protocol["cases"]["sha256"]:
         raise PilotProtocolError("cases file hash does not verify")
     cases = _read_jsonl(resolved_cases_path)
     if len(cases) != int(protocol["cases"]["total"]):
