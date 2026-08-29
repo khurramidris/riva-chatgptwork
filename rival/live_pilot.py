@@ -30,6 +30,7 @@ from .schemas import ChoiceSpec, PopulationRecord, ProviderIdentity, ScenarioSpe
 
 SCHEMA_VERSION = "rival.live-twin2k-pilot.v1"
 DEFAULT_STUDY_ID = "rival-twin2k-live-provider-v2"
+TEXT_HASH_POLICY = "sha256-utf8-lf-normalized-v1"
 
 
 class PilotProtocolError(RuntimeError):
@@ -214,8 +215,10 @@ def _load_prediction_inputs(root: str | Path | None = None) -> _PredictionInputs
         history=history,
         questions=tuple(questions),
         metadata=metadata,
-        source_hashes={name: sha256_file(path) for name, path in paths.items()},
-        protected_outcome_sha256=sha256_file(outcome_path),
+        source_hashes={
+            name: _sha256_portable_text(path) for name, path in paths.items()
+        },
+        protected_outcome_sha256=_sha256_portable_text(outcome_path),
         information_cutoff=information_cutoff,
         information_cutoff_basis=information_cutoff_basis,
     )
@@ -583,6 +586,7 @@ def prepare_twin2k_live_pilot(
         "dataset": {
             "name": "Twin-2K-500",
             "license": "CC BY 4.0",
+            "integrity_hash_policy": TEXT_HASH_POLICY,
             "prediction_input_hashes": inputs.source_hashes,
             "protected_outcome_sha256": inputs.protected_outcome_sha256,
             "information_cutoff": inputs.information_cutoff,
@@ -629,6 +633,12 @@ def prepare_twin2k_live_pilot(
                 "replaced generic JSON mode with strict per-choice JSON Schema and "
                 "disabled reasoning for the probability-only response."
             ),
+            "integrity_hash_revision": (
+                "Before any successful study prediction or outcome evaluation, "
+                "text-file integrity hashes were made invariant to LF/CRLF "
+                "checkout conversion. Dataset content, cohort, cases, prompts, "
+                "outcomes, comparators and gates did not change."
+            ),
         },
         "request_envelopes": request_envelopes,
         "preregistration": {
@@ -671,6 +681,8 @@ def load_and_verify_protocol(
         raise PilotProtocolError("protocol hash does not verify")
     if protocol.get("schema_version") != SCHEMA_VERSION:
         raise PilotProtocolError("unsupported live-pilot schema")
+    if protocol.get("dataset", {}).get("integrity_hash_policy") != TEXT_HASH_POLICY:
+        raise PilotProtocolError("unsupported dataset integrity hash policy")
     resolved_cases_path = Path(cases_path) if cases_path else path.parent / "cases.jsonl"
     if _sha256_portable_text(resolved_cases_path) != protocol["cases"]["sha256"]:
         raise PilotProtocolError("cases file hash does not verify")

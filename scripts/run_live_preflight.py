@@ -62,12 +62,16 @@ def main(argv: list[str] | None = None) -> int:
         "--summary", type=Path, default=Path("reports/live_pilot_v2_summary.json")
     )
     parser.add_argument("--budget-usd", type=float, default=0.01)
+    parser.add_argument("--input-cost-per-million", type=float, default=0.0)
+    parser.add_argument("--output-cost-per-million", type=float, default=0.0)
     parser.add_argument("--timeout-seconds", type=int, default=90)
     parser.add_argument("--expiry-minutes", type=int, default=120)
     args = parser.parse_args(argv)
 
     if args.budget_usd <= 0:
         parser.error("--budget-usd must be positive")
+    if args.input_cost_per_million < 0 or args.output_cost_per_million < 0:
+        parser.error("model prices must be nonnegative")
     if args.expiry_minutes < 1:
         parser.error("--expiry-minutes must be positive")
 
@@ -97,8 +101,8 @@ def main(argv: list[str] | None = None) -> int:
         )
         guard = BudgetGuard(
             budget_usd=args.budget_usd,
-            input_cost_per_million=0.0,
-            output_cost_per_million=0.0,
+            input_cost_per_million=args.input_cost_per_million,
+            output_cost_per_million=args.output_cost_per_million,
             max_calls=args.max_calls,
             not_after=datetime.now(timezone.utc)
             + timedelta(minutes=args.expiry_minutes),

@@ -195,6 +195,53 @@ class FrozenPilotTests(unittest.TestCase):
             self.assertEqual(loaded["protocol_sha256"], protocol["protocol_sha256"])
             self.assertEqual(len(loaded_cases), protocol["cases"]["total"])
 
+    def test_windows_crlf_dataset_checkout_preserves_input_hashes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = self._prepare(root)
+            source = Path(__file__).parents[1] / "rival" / "datasets" / "twin2k"
+            dataset = root / "windows-dataset"
+            dataset.mkdir()
+            for name in (
+                "human_history.csv",
+                "human_outcomes.csv",
+                "question_catalog.json",
+                "wave4_mapping.json",
+            ):
+                content = (source / name).read_text(encoding="utf-8")
+                (dataset / name).write_bytes(
+                    content.replace("\n", "\r\n").encode("utf-8")
+                )
+
+            loaded, loaded_cases, _ = load_and_verify_protocol(
+                root / "protocol.json", dataset_root=dataset
+            )
+
+            self.assertEqual(loaded["protocol_sha256"], protocol["protocol_sha256"])
+            self.assertEqual(len(loaded_cases), protocol["cases"]["total"])
+
+    def test_substantive_dataset_tampering_is_still_detected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._prepare(root)
+            source = Path(__file__).parents[1] / "rival" / "datasets" / "twin2k"
+            dataset = root / "tampered-dataset"
+            dataset.mkdir()
+            for name in (
+                "human_history.csv",
+                "human_outcomes.csv",
+                "question_catalog.json",
+                "wave4_mapping.json",
+            ):
+                (dataset / name).write_bytes((source / name).read_bytes())
+            mapping = dataset / "wave4_mapping.json"
+            mapping.write_text(
+                mapping.read_text(encoding="utf-8") + " ", encoding="utf-8"
+            )
+
+            with self.assertRaises(PilotProtocolError):
+                load_and_verify_protocol(root / "protocol.json", dataset_root=dataset)
+
     def test_budget_stop_resume_and_full_rehearsal_evaluation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

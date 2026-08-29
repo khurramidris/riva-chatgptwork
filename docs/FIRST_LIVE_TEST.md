@@ -118,8 +118,9 @@ rival run-live-pilot \
 
 The commands deliberately have no `--api-key` option. The secure launcher is
 preconfigured for `dots-studio/dots-3-note-preview:free`, zero per-token price,
-a $0.01 local ceiling and a two-hour authorization window. Override those
-defaults only if the provider or model changes.
+a $0.01 local ceiling and a two-hour authorization window. When using a paid
+model, pass its current prices with `--input-cost-per-million` and
+`--output-cost-per-million`; never leave them at zero.
 
 ### GitHub execution fallback
 
