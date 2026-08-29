@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -22,6 +23,53 @@ from .schemas import (
 
 class ProviderError(RuntimeError):
     pass
+
+
+def _redact_provider_detail(value: object, *, limit: int = 600) -> str:
+    """Return a compact provider error that is safe to persist in run evidence."""
+
+    detail = " ".join(str(value).split())
+    detail = re.sub(
+        r"(?i)\b(bearer\s+)[^\s\"']+",
+        r"\1[REDACTED]",
+        detail,
+    )
+    detail = re.sub(r"\bsk-[A-Za-z0-9_-]{8,}\b", "[REDACTED]", detail)
+    return detail[:limit]
+
+
+def _http_error_detail(exc: urllib.error.HTTPError) -> str:
+    """Extract only the status, provider code and message from an HTTP failure."""
+
+    provider_code: object | None = None
+    provider_message: object | None = None
+    try:
+        raw = exc.read(16_384).decode("utf-8", errors="replace")
+    except Exception:  # pragma: no cover - unusual transport defensive path
+        raw = ""
+    if raw:
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError:
+            provider_message = raw
+        else:
+            error = payload.get("error") if isinstance(payload, dict) else None
+            if isinstance(error, dict):
+                provider_code = error.get("code")
+                provider_message = error.get("message")
+            elif error is not None:
+                provider_message = error
+            elif isinstance(payload, dict):
+                provider_code = payload.get("code")
+                provider_message = payload.get("message")
+    parts = [f"HTTP {exc.code}"]
+    if provider_code not in (None, ""):
+        parts.append(f"code={_redact_provider_detail(provider_code, limit=100)}")
+    if provider_message not in (None, ""):
+        parts.append(_redact_provider_detail(provider_message))
+    elif exc.reason:
+        parts.append(_redact_provider_detail(exc.reason))
+    return ": ".join(parts)
 
 
 @dataclass(slots=True)
@@ -278,6 +326,14 @@ class OpenAICompatibleProvider(PredictionProvider):
 
     @staticmethod
     def _extract_content(payload: dict) -> str:
+        error = payload.get("error")
+        if isinstance(error, dict):
+            message = error.get("message", "provider returned an error payload")
+            code = error.get("code")
+            detail = f"code={code}: {message}" if code is not None else message
+            raise ProviderError(_redact_provider_detail(detail))
+        if error is not None:
+            raise ProviderError(_redact_provider_detail(error))
         try:
             return str(payload["choices"][0]["message"]["content"])
         except (KeyError, IndexError, TypeError) as exc:
@@ -357,11 +413,24 @@ class OpenAICompatibleProvider(PredictionProvider):
                     attempts=attempt + 1,
                     latency_ms=(time.perf_counter() - started) * 1000,
                 )
-            except (urllib.error.URLError, TimeoutError, ValueError, ProviderError) as exc:
+            except urllib.error.HTTPError as exc:
+                last_error = ProviderError(_http_error_detail(exc))
+                if attempt + 1 < self.max_retries:
+                    time.sleep(2**attempt)
+            except urllib.error.URLError as exc:
+                last_error = ProviderError(
+                    "network error: " + _redact_provider_detail(exc.reason)
+                )
+                if attempt + 1 < self.max_retries:
+                    time.sleep(2**attempt)
+            except (TimeoutError, ValueError, ProviderError) as exc:
                 last_error = exc
                 if attempt + 1 < self.max_retries:
                     time.sleep(2**attempt)
-        raise ProviderError(f"prediction failed after {self.max_retries} attempts") from last_error
+        detail = _redact_provider_detail(last_error or "unknown provider failure")
+        raise ProviderError(
+            f"prediction failed after {self.max_retries} attempts: {detail}"
+        ) from last_error
 
 
 class BehavioralModelProvider(PredictionProvider):

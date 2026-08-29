@@ -1,6 +1,8 @@
+import io
 import json
 import tempfile
 import unittest
+import urllib.error
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
@@ -75,6 +77,39 @@ class ProviderAccountingTests(unittest.TestCase):
         self.assertEqual(output.diagnostics["completion_tokens"], 17)
         self.assertEqual(output.diagnostics["provider_cost_usd"], 0.0042)
         self.assertNotIn("super-secret", str(provider.identity().model_dump()))
+
+    def test_openai_provider_persists_sanitized_http_error_detail(self):
+        person = demo_population(20)[0]
+        scenario = demo_scenario(20, 0)
+        fake_key = "sk-or-v1-example-secret-value"
+        response = io.BytesIO(
+            json.dumps(
+                {
+                    "error": {
+                        "code": 403,
+                        "message": f"Access denied for Bearer {fake_key}",
+                    }
+                }
+            ).encode("utf-8")
+        )
+        failure = urllib.error.HTTPError(
+            "https://openrouter.ai/api/v1/chat/completions",
+            403,
+            "Forbidden",
+            None,
+            response,
+        )
+        provider = OpenAICompatibleProvider(
+            model="test-model", api_key=fake_key, max_retries=1
+        )
+        with patch("urllib.request.urlopen", side_effect=failure):
+            with self.assertRaises(ProviderError) as captured:
+                provider.predict(person, scenario)
+        detail = str(captured.exception)
+        self.assertIn("HTTP 403", detail)
+        self.assertIn("Access denied", detail)
+        self.assertIn("[REDACTED]", detail)
+        self.assertNotIn(fake_key, detail)
 
     def test_expired_budget_fails_before_a_call(self):
         guard = BudgetGuard(
