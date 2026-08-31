@@ -88,19 +88,20 @@ def atomic_json(path: str | Path, value: dict[str, Any]) -> None:
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = destination.with_suffix(destination.suffix + ".tmp")
-    temporary.write_text(
-        json.dumps(
+    # Flush and fsync the writable descriptor before closing it.  Reopening the
+    # completed temporary file read-only and calling fsync works on POSIX, but
+    # Windows rejects fsync on a read-only CRT descriptor with EBADF.
+    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(
             value,
+            handle,
             indent=2,
             sort_keys=True,
             ensure_ascii=False,
             allow_nan=False,
         )
-        + "\n",
-        encoding="utf-8",
-        newline="\n",
-    )
-    with temporary.open("rb") as handle:
+        handle.write("\n")
+        handle.flush()
         os.fsync(handle.fileno())
     temporary.replace(destination)
 

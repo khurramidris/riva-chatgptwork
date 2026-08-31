@@ -3,6 +3,29 @@
   "study_id": "rival-twin2k-500-mega-development-v1",
   "status": "FROZEN_BEFORE_FIRST_API_CALL",
   "frozen_at": "2026-08-29T00:00:00Z",
+  "pre_call_revisions": [
+    {
+      "revision_id": "windows-atomic-json-fsync-v1",
+      "applied_at": "2026-08-31T10:41:34Z",
+      "reason": "Preparation on Windows exposed EBADF when atomic_json reopened a completed temporary file read-only and called fsync on that descriptor.",
+      "scope": "Write, flush, and fsync the same writable temporary-file descriptor before atomic replacement; add a cross-platform regression test.",
+      "previous_manifest_sha256": "508f1eea145c0d1b7a06cfeb7cfb7c9f526ea522118ecffecfa3dfc5c6e47b60",
+      "previous_implementation_sha256": "ac3a23088a010ed70903745c8fb7063fd2d6cb08690a3f0a95bb0ce289d67633",
+      "new_implementation_sha256": "d6da4928db0764e5f7c88b25e128c233389043735d1cb42e763ef8226c89ff35",
+      "real_mega_study_api_calls_before_revision": 0,
+      "scientific_artifacts_changed": false,
+      "unchanged": [
+        "dataset revisions and source hashes",
+        "development and confirmation studies",
+        "cohort and variant order",
+        "model and provider configuration",
+        "prompt templates",
+        "retrieval configuration",
+        "outcome mapping and evaluation policy",
+        "leakage firewall"
+      ]
+    }
+  ],
   "official_resources": {
     "paper": "https://arxiv.org/abs/2509.19088",
     "repository": "https://github.com/TianyiPeng/Twin-2K-500-Mega-Study",
@@ -171,7 +194,7 @@
     "rival/mega_study/retrieval.py": "5b8d3fc854bc4dc19c866e663886b4cc9c376c2f522221b5ca2c49d29e012010",
     "rival/mega_study/runner.py": "d6cea9c499a626aa6750e80a0dbdf05dcfc4e5e6c59155adb1d9b781e6a9f0cf",
     "rival/mega_study/stage.py": "85f761c4ad49843522cd88dcd737459f0431933313ac8ce20e89a4535b6ce9d1",
-    "rival/mega_study/utils.py": "ac3a23088a010ed70903745c8fb7063fd2d6cb08690a3f0a95bb0ce289d67633",
+    "rival/mega_study/utils.py": "d6da4928db0764e5f7c88b25e128c233389043735d1cb42e763ef8226c89ff35",
     "scripts/prepare_mega_study.py": "ed50c382915e6a37f068043dd3890716884a2a23c9982f640ecfc02b55c9c717",
     "scripts/run_mega_study_secure.py": "be63cb91c9b7be71ff0e56b7254d0f9d601f7e535144fbe64da656ea01fb8727",
     "scripts/freeze_mega_study.py": "fb13d191775bc1969656d1d5922234372ec799f1cb9abe2b4461a631d2f08622",
@@ -288,5 +311,5 @@
       "sha256": "35183c98f2b476d725ba15662dc800cab56cc5ffcff3c79e1c0095d18c075081"
     }
   ],
-  "manifest_sha256": "508f1eea145c0d1b7a06cfeb7cfb7c9f526ea522118ecffecfa3dfc5c6e47b60"
+  "manifest_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0"
 }
