@@ -68,16 +68,19 @@ class ServerApplicationTests(unittest.TestCase):
     def test_health_and_demo(self):
         with tempfile.TemporaryDirectory() as directory:
             app = RivalApplication(str(Path(directory) / "test.sqlite3"))
-            self.assertEqual(app.health()["status"], "ok")
-            result = app.demo_run(
-                {
-                    "sample_size": 250,
-                    "human_anchor_size": 60,
-                    "scenario": {"name": "API test"},
-                }
-            )
-            self.assertEqual(result["simulation"]["scenario"]["name"], "API test")
-            self.assertIn("evidence_card", result)
+            try:
+                self.assertEqual(app.health()["status"], "ok")
+                result = app.demo_run(
+                    {
+                        "sample_size": 250,
+                        "human_anchor_size": 60,
+                        "scenario": {"name": "API test"},
+                    }
+                )
+                self.assertEqual(result["simulation"]["scenario"]["name"], "API test")
+                self.assertIn("evidence_card", result)
+            finally:
+                app.engine.store.close()
 
 
 if __name__ == "__main__":
