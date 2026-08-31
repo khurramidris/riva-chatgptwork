@@ -186,7 +186,7 @@ class FrozenPilotTests(unittest.TestCase):
             root = Path(directory)
             protocol = self._prepare(root)
             cases = root / "cases.jsonl"
-            lf_content = cases.read_bytes()
+            lf_content = cases.read_text(encoding="utf-8").encode("utf-8")
             self.assertNotIn(b"\r\n", lf_content)
             cases.write_bytes(lf_content.replace(b"\n", b"\r\n"))
 

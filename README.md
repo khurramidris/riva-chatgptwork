@@ -167,6 +167,19 @@ python scripts/run_mega_study_secure.py \
   --budget-usd 7.00 --expiry-minutes 120
 ```
 
+Audit the append-only ledger after preflight and every checkpoint without
+opening outcomes or comparing partial predictions:
+
+```bash
+python scripts/audit_mega_checkpoint.py \
+  --expect-terminal 4 --budget-usd 0.10
+```
+
+See [`docs/MEGA_STUDY_OPERATOR_RUNBOOK.md`](docs/MEGA_STUDY_OPERATOR_RUNBOOK.md)
+for the exact Windows commands, cumulative checkpoint counts, and stop rules.
+The separately specified SYN-DIGITS E/F supplement remains execution-blocked
+until its same-model reference bank and prediction-only adapter are frozen.
+
 Only after all 1,200 predictions are terminal may the ledger be frozen and
 human outcomes opened:
 

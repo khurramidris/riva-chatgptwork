@@ -1,0 +1,122 @@
+{
+  "schema_version": "rival.mega-study.syn-digits-design.v1",
+  "status": "DESIGN_SPECIFIED_EXECUTION_BLOCKED",
+  "raw_baseline": {
+    "study_id": "rival-twin2k-500-mega-development-v1",
+    "manifest_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0",
+    "cohort_sha256": "3021eb5a428575c2b3dd15d1256d2c8386a257ffbfc0d55004cdf2411f72c439",
+    "raw_variants": [
+      "generic",
+      "demographics",
+      "full_persona",
+      "rival_retrieval"
+    ],
+    "mutation_allowed": false
+  },
+  "supplement_variants": {
+    "full_persona_syn_digits": {
+      "label": "E — Full Persona + SYN-DIGITS",
+      "raw_source_variant": "full_persona"
+    },
+    "rival_retrieval_syn_digits": {
+      "label": "F — Rival Retrieval + SYN-DIGITS",
+      "raw_source_variant": "rival_retrieval"
+    }
+  },
+  "reference_bank": {
+    "source": "separate same-route Wave-4 calibration-reference run",
+    "legacy_protocol_sha256": "389be30eaa0ca7e2d342153b1641377ec6431f910fbc7b588e5539095f2ef06e",
+    "legacy_ledger_reused_or_modified": false,
+    "participants": "the 273 unique PIDs in the frozen Mega-Study cohort",
+    "participant_count": 273,
+    "reference_columns": [
+      "nonseparability ris _4",
+      "33_Q295",
+      "Q159_3",
+      "Q198_1",
+      "False Cons. self _3",
+      "Q163",
+      "Q172",
+      "Q194",
+      "Q176",
+      "Q183",
+      "Q167",
+      "Q192",
+      "Q179",
+      "Q161",
+      "Q157"
+    ],
+    "reference_column_count": 15,
+    "synthetic_conditions": [
+      "full_persona",
+      "rival_retrieval"
+    ],
+    "planned_reference_calls": 8190,
+    "human_reference_source": "Twin-2K Wave-4 only; never a Mega-Study outcome",
+    "same_model_route_required": true,
+    "provider_identity": {
+      "provider_name": "OpenRouter",
+      "provider_version": "rival-mega-openrouter-v1",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "upstream_provider": "DeepInfra",
+      "configuration_sha256": "58b3eab066a924dc69314de8548990bdefebeca0a971f5c08bcc71f727a030b0",
+      "endpoint_sha256": "c82ae1d6c3df7074f75a0a54b6d823dc479180db13e5e7fc1e4345bd97c6f38f"
+    }
+  },
+  "matrix_design": {
+    "orientation": "participants_by_scalar_outcomes",
+    "scale": "natural-range normalized to 0..100",
+    "per_target_rows": "the 100 frozen participants assigned to that Mega study",
+    "donor_columns": "15 Wave-4 reference outcomes",
+    "target_column": "one frozen raw C or D Mega outcome",
+    "human_target_column": "all NaN and unavailable",
+    "missing_reference_values": "hard SVD imputation within SYN-DIGITS",
+    "target_predictions_clipped_to_scale": true
+  },
+  "method": {
+    "component": "SYN-DIGITS SyntheticControl",
+    "paper": "https://arxiv.org/abs/2604.07513",
+    "upstream_commit": "db891b6f821c914455b11763a96679864bf4fc48",
+    "direction": "target-column impute-regress-transfer",
+    "primary_method": "ridge",
+    "regularization_multiplier": 0.000001,
+    "imputation_rank": "deterministic synthetic-donor-only cross-validation",
+    "target_human_values_used_for_fit_or_selection": false
+  },
+  "protected_mega_studies": {
+    "development": [
+      "junk_fees",
+      "hiring_algorithms",
+      "privacy"
+    ],
+    "confirmation": [
+      "accuracy_nudges",
+      "context_effects",
+      "preference_redistribution",
+      "quantitative_intuition"
+    ],
+    "reference_replication_only": "digital_certification"
+  },
+  "phase_order": [
+    "freeze exact reference cases, route, prompts, parser, budget, and hashes",
+    "generate and freeze same-route C/D reference predictions without reference outcomes",
+    "open Wave-4 reference outcomes only and build H_ref, S_C_ref, and S_D_ref",
+    "run leave-one-reference-column-out parity and calibration diagnostics",
+    "complete and freeze all 1200 raw Mega A/B/C/D predictions",
+    "derive E/F from frozen raw predictions while Mega human targets remain unavailable",
+    "freeze the E/F ledger and bind it to raw and reference hashes",
+    "only then materialize Mega development outcomes and evaluate A through F"
+  ],
+  "claims": {
+    "raw_a_d_remains_primary_baseline": true,
+    "e_f_is_separate_calibration_supplement": true,
+    "confirmation_claim_allowed": false,
+    "exploratory_if_target_outcomes_opened_before_e_f_freeze": true
+  },
+  "execution_blockers": [
+    "exact reference-case manifest and prompt hashes are not yet frozen",
+    "prediction-only SYN-DIGITS target-column adapter is not yet implemented",
+    "reference-run preflight and dollar ceiling are not yet frozen",
+    "E/F freeze marker and combined evaluator are not yet implemented"
+  ]
+}

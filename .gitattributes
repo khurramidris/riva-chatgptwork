@@ -1,2 +1,5 @@
+# Keep scientific hashes and frozen manifests stable across operating systems.
+* text=auto eol=lf
+
 rival/studies/*/cases.jsonl text eol=lf
 rival/studies/*/cohort.jsonl text eol=lf

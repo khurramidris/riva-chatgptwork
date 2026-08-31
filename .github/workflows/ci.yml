@@ -15,8 +15,13 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+    name: Verify (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,4 +39,4 @@ jobs:
       - name: Reproduce real-data qualification
         run: python -m rival qualify-all --output-dir reports --compact
       - name: Build wheel
-        run: python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist
+        run: python -m pip wheel . --no-deps --wheel-dir dist
