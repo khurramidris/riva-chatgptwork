@@ -103,7 +103,7 @@ jobs:
             --output reports/live_pilot_evaluation.json
       - name: Upload immutable run evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rival-live-pilot-${{ github.run_id }}
           path: |
