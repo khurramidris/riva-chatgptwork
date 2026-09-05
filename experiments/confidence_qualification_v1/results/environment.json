@@ -1,0 +1,18 @@
+{
+  "recorded_after_run": true,
+  "python": "3.12.13",
+  "system": "Linux",
+  "libraries": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  },
+  "unit_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "execution_date_utc": "2026-09-05",
+  "command": "python experiments/confidence_qualification_v1/run.py --output-dir experiments/confidence_qualification_v1/results",
+  "note": "This environment record was added after execution; it is not part of the prerecording manifest."
+}

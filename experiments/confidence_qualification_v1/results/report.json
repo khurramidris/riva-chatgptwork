@@ -1,0 +1,396 @@
+{
+  "limits": [
+    "Released predictions, not a newly trained behavior model.",
+    "Historical public survey counts, not prospective outcomes.",
+    "Error bounds require family exchangeability; wave drift can break coverage.",
+    "No claim of individual prediction, causal accuracy, or Simile parity.",
+    "No tuning on final results is allowed by this protocol."
+  ],
+  "manifest_sha256": "e18ff0d8d1b1bbc815507fbeefc5f98b547c65b9acaf27dd081f6cbe6c3d522f",
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "questions": 489,
+  "schema": "rival.confidence_qualification.v1",
+  "splits": {
+    "family": {
+      "distribution_metrics": {
+        "calibrated_personas": {
+          "mean_tvd": 0.17980072060366792,
+          "median_tvd": 0.16163754207852896,
+          "p90_tvd": 0.3201663316251453
+        },
+        "historical_positions": {
+          "mean_tvd": 0.23326093293142713,
+          "median_tvd": 0.212814892442765,
+          "p90_tvd": 0.4054266014863868
+        },
+        "raw_personas": {
+          "mean_tvd": 0.34163289831473853,
+          "median_tvd": 0.32326269178608685,
+          "p90_tvd": 0.5781788959963703
+        },
+        "uniform": {
+          "mean_tvd": 0.39202514443340225,
+          "median_tvd": 0.38554778554778557,
+          "p90_tvd": 0.5143510242731678
+        }
+      },
+      "error_models": {
+        "combined_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.7128787878787879,
+          "complete_family_coverage": 0.8529411764705882,
+          "family_macro_rmse": 0.08063399680903995,
+          "final_families": 68,
+          "mean_bound_increment": 0.10376655425301082,
+          "mean_expected_tvd": 0.16888381859823665,
+          "mean_upper_bound": 0.2726503728512475,
+          "observed_good_rate": 0.4520547945205479,
+          "question_coverage": 0.863013698630137,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.15889454839628142,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.16188867293300802,
+              "n": 37,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.16494240145210426,
+              "n": 55,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17980072060366795,
+              "n": 73,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.08375222960620336
+        },
+        "mean_error": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.5,
+          "complete_family_coverage": 0.7941176470588235,
+          "family_macro_rmse": 0.08447413449915338,
+          "final_families": 68,
+          "mean_bound_increment": 0.09332301454960307,
+          "mean_expected_tvd": 0.16648403938933942,
+          "mean_upper_bound": 0.2598070539389425,
+          "observed_good_rate": 0.4520547945205479,
+          "question_coverage": 0.8082191780821918,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.17641168420186176,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.18166086648021823,
+              "n": 37,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.19219986500139447,
+              "n": 55,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17980072060366792,
+              "n": 73,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.08768818841129605
+        },
+        "numeric_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.6742424242424242,
+          "complete_family_coverage": 0.8382352941176471,
+          "family_macro_rmse": 0.0826663426990208,
+          "final_families": 68,
+          "mean_bound_increment": 0.10546330672177145,
+          "mean_expected_tvd": 0.1667884818647644,
+          "mean_upper_bound": 0.2722517885865358,
+          "observed_good_rate": 0.4520547945205479,
+          "question_coverage": 0.8493150684931506,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.16203052833990636,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.1705907510751204,
+              "n": 37,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.16395432780885408,
+              "n": 55,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17980072060366795,
+              "n": 73,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.08591954372422209
+        },
+        "text_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.7113636363636364,
+          "complete_family_coverage": 0.8382352941176471,
+          "family_macro_rmse": 0.0815762744887541,
+          "final_families": 68,
+          "mean_bound_increment": 0.09839441170789194,
+          "mean_expected_tvd": 0.16890148511697578,
+          "mean_upper_bound": 0.2672958968248677,
+          "observed_good_rate": 0.4520547945205479,
+          "question_coverage": 0.8493150684931506,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.15063731224434948,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.15949631856948843,
+              "n": 37,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.15809802658968422,
+              "n": 55,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17980072060366792,
+              "n": 73,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.0845594425962697
+        }
+      },
+      "interpretation": "Exploratory aggregate prediction test; no prospective or commercial qualification.",
+      "predictions_sha256": "6f0ccf6808e5478b4811be44d35a86130d60b1f66dae22d00f8c46dbcf76202a",
+      "prespecified_gate": {
+        "at_least_ten_accepted_questions": false,
+        "complete_family_coverage_at_least_90pct": false,
+        "rmse_better_than_mean": true
+      },
+      "purged_questions": 0,
+      "role_counts": {
+        "bound_calibration": 73,
+        "error_fit": 99,
+        "final_test": 73,
+        "population_fit": 244
+      },
+      "status": "FAIL"
+    },
+    "wave": {
+      "distribution_metrics": {
+        "calibrated_personas": {
+          "mean_tvd": 0.17584085045186704,
+          "median_tvd": 0.16048263621807468,
+          "p90_tvd": 0.2775914280155905
+        },
+        "historical_positions": {
+          "mean_tvd": 0.21951577623699228,
+          "median_tvd": 0.20040664341248784,
+          "p90_tvd": 0.3766679565705973
+        },
+        "raw_personas": {
+          "mean_tvd": 0.32091511257458255,
+          "median_tvd": 0.2919405050155699,
+          "p90_tvd": 0.5261923130085682
+        },
+        "uniform": {
+          "mean_tvd": 0.35720174927826887,
+          "median_tvd": 0.3622496147919877,
+          "p90_tvd": 0.45739599383667184
+        }
+      },
+      "error_models": {
+        "combined_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.6742532005689901,
+          "complete_family_coverage": 0.9577464788732394,
+          "family_macro_rmse": 0.0794183662939569,
+          "final_families": 71,
+          "mean_bound_increment": 0.1557689599295435,
+          "mean_expected_tvd": 0.157206034780183,
+          "mean_upper_bound": 0.3129749947097265,
+          "observed_good_rate": 0.49333333333333335,
+          "question_coverage": 0.96,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.1242734550039343,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.15753637002836043,
+              "n": 38,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.167099935725172,
+              "n": 57,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17584085045186704,
+              "n": 75,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.07838184659688929
+        },
+        "mean_error": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.5,
+          "complete_family_coverage": 0.9577464788732394,
+          "family_macro_rmse": 0.08134830749417488,
+          "final_families": 71,
+          "mean_bound_increment": 0.13579496246435638,
+          "mean_expected_tvd": 0.18158913176694003,
+          "mean_upper_bound": 0.31738409423129643,
+          "observed_good_rate": 0.49333333333333335,
+          "question_coverage": 0.96,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.1971400966495494,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.18145913930830448,
+              "n": 38,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.1727332899482582,
+              "n": 57,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17584085045186704,
+              "n": 75,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.08163985002387365
+        },
+        "numeric_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.6877667140825036,
+          "complete_family_coverage": 0.9577464788732394,
+          "family_macro_rmse": 0.08006876922654137,
+          "final_families": 71,
+          "mean_bound_increment": 0.16060838677806838,
+          "mean_expected_tvd": 0.15561436140563265,
+          "mean_upper_bound": 0.31622274818370105,
+          "observed_good_rate": 0.49333333333333335,
+          "question_coverage": 0.96,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.12241437955234383,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.15787150751381965,
+              "n": 38,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.16844545169870503,
+              "n": 57,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17584085045186704,
+              "n": 75,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.07910388844189811
+        },
+        "text_ridge": {
+          "accepted_good_fraction": null,
+          "accepted_mean_tvd": null,
+          "accepted_questions": 0,
+          "auroc_tvd_below_0_16": 0.6842105263157895,
+          "complete_family_coverage": 0.971830985915493,
+          "family_macro_rmse": 0.0802073361095678,
+          "final_families": 71,
+          "mean_bound_increment": 0.13102682530483625,
+          "mean_expected_tvd": 0.18419035328647326,
+          "mean_upper_bound": 0.31521717859130943,
+          "observed_good_rate": 0.49333333333333335,
+          "question_coverage": 0.9733333333333334,
+          "risk_by_retention_descriptive": [
+            {
+              "mean_tvd": 0.13687379068165542,
+              "n": 19,
+              "retention": 0.25
+            },
+            {
+              "mean_tvd": 0.1468320054357557,
+              "n": 38,
+              "retention": 0.5
+            },
+            {
+              "mean_tvd": 0.1623236744506722,
+              "n": 57,
+              "retention": 0.75
+            },
+            {
+              "mean_tvd": 0.17584085045186704,
+              "n": 75,
+              "retention": 1.0
+            }
+          ],
+          "rmse": 0.08051346026657678
+        }
+      },
+      "interpretation": "Exploratory aggregate prediction test; no prospective or commercial qualification.",
+      "predictions_sha256": "2b4af85ab11d53592af475de4e2d53ce4f121706e527c127c87061ba72324087",
+      "prespecified_gate": {
+        "at_least_ten_accepted_questions": false,
+        "complete_family_coverage_at_least_90pct": true,
+        "rmse_better_than_mean": true
+      },
+      "purged_questions": 0,
+      "role_counts": {
+        "bound_calibration": 84,
+        "error_fit": 148,
+        "final_test": 75,
+        "population_fit": 182
+      },
+      "status": "FAIL"
+    }
+  },
+  "status": "FAIL",
+  "synthetic_personas": 2058
+}

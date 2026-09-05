@@ -1,0 +1,2957 @@
+{
+  "features": [
+    "entropy",
+    "max_probability",
+    "top_two_margin",
+    "concentration",
+    "log_word_count",
+    "similarity_to_population_fit",
+    "raw_to_calibrated_tvd"
+  ],
+  "parent_revision": "902a3eb975b9e765f5a0c41e66afb6abe2ead5c6",
+  "rows": [
+    {
+      "family": "population_fit",
+      "family_id": "fam_1ab73f89142b",
+      "question_id": "ACCCHECK_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b6f98b9f92e2",
+      "question_id": "AUTOLKLY_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cf4a1d8bafd0",
+      "question_id": "BENEFITCO_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cea91ff740f2",
+      "question_id": "BENEFITGOV_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1bf2a11a26cc",
+      "question_id": "CANDEXP_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_68e090d105ff",
+      "question_id": "CANQUALPOL_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_f88dd8201f83",
+      "question_id": "CAREGIV2_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d1339665f5af",
+      "question_id": "CAREGIV3A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f3e216965d9c",
+      "question_id": "CAREGIV3B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_20f42dee6722",
+      "question_id": "CARRYGUN_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_53fd6ee27b48",
+      "question_id": "CARS3A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a1b9a0a554d6",
+      "question_id": "CARS3B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_8413b74bc076",
+      "question_id": "CARS7A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cad6b167cc48",
+      "question_id": "CARS7B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3368c66688e5",
+      "question_id": "CARS9A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_4c1c9dfc3980",
+      "question_id": "CARS9B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_8d597a4ff3e1",
+      "question_id": "CARS9C_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cae4f1a7f920",
+      "question_id": "COMATTACH_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_2e3e3c2bd993",
+      "question_id": "COMMIMPA_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_88b18bb89684",
+      "question_id": "COMMIMPB_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7586dc672c9e",
+      "question_id": "COMMIMPC_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_820fc68ee4d1",
+      "question_id": "COMMIMPD_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f56df234d10c",
+      "question_id": "COMMIMPE_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a1e42fddeae9",
+      "question_id": "COMMIMPF_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_6c009e141879",
+      "question_id": "COMMIMPG_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_aeb6d9003faf",
+      "question_id": "COMMIMPH_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_57c5aa16bbd9",
+      "question_id": "CONCERNCO_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0721b785d852",
+      "question_id": "CONCERNGOV_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_64462bb127fe",
+      "question_id": "CONFa_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_763982240193",
+      "question_id": "CONFb_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_6993777be85c",
+      "question_id": "CONFc_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_9e023bdc7993",
+      "question_id": "CONFd_F1_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_dccf77764556",
+      "question_id": "CONFd_F2_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_1c81158bd4fb",
+      "question_id": "CONFe_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_61fb801ac587",
+      "question_id": "CONFf_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fe9c004285bb",
+      "question_id": "CONFg_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_8014c13c4aff",
+      "question_id": "CONTROLCO_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_e7b14392c3f3",
+      "question_id": "CONTROLGOV_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_eb1f65800ef7",
+      "question_id": "CONTROLGRPb_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_278f0c0674c2",
+      "question_id": "CONTROLGRPe_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_071ac0500494",
+      "question_id": "DEMDIRCT_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c26c1a0054ce",
+      "question_id": "EAT5A_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_8ea8a8b83541",
+      "question_id": "EAT5B_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9d89f7e60111",
+      "question_id": "EAT5C_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_02e993034f87",
+      "question_id": "EAT5D_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_ec111c397c91",
+      "question_id": "ECON1_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fac7cfe5efed",
+      "question_id": "ECON3_a_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c02f06a06701",
+      "question_id": "ECON3_b_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9d7070179e9a",
+      "question_id": "ECON3_c_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_26fddb56c7e0",
+      "question_id": "ECON3_d_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_c8090951e721",
+      "question_id": "ECON3_e_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_31f31dab5a49",
+      "question_id": "ECON3_f_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a96f2b1bddfe",
+      "question_id": "ECON3_g_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_ebd42045c399",
+      "question_id": "ECON3_h_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_7f8925432bf9",
+      "question_id": "ECON3_i_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_05b7de003dbd",
+      "question_id": "ECON4_a_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0db10c2cb128",
+      "question_id": "ECON4_b_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_6a954d65bbe5",
+      "question_id": "ECON4_c_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e852b299cd6c",
+      "question_id": "ECON4_d_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_5bbb39f48f83",
+      "question_id": "ECON4_e_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_80b6697ae6ad",
+      "question_id": "ECON4_f_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_d36caf1b8b5f",
+      "question_id": "ECON4_g_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_fb83ab75621f",
+      "question_id": "ECON4_h_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7b27fb130ad4",
+      "question_id": "ECON4_i_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1faa45e9ee61",
+      "question_id": "ELECT_CONF3_PRVFR_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_42f2a4cc467e",
+      "question_id": "ELECT_CONF3_PRVSUP_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1faa45e9ee61",
+      "question_id": "ELECT_IMPT3_PRVFR_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_42f2a4cc467e",
+      "question_id": "ELECT_IMPT3_PRVSUP_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_95a82e875ee8",
+      "question_id": "ELITEUNDMOD_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a01fc0b8e614",
+      "question_id": "FACE2a_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3315731634df",
+      "question_id": "FACE2b_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3315731634df",
+      "question_id": "FACE2c_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a867a3029575",
+      "question_id": "FACE3a_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cc8f78c702ea",
+      "question_id": "FACE3b_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_377e3a0dc03e",
+      "question_id": "FACE3c_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_bee9d87b3c07",
+      "question_id": "FAMSURV10a_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_de3f50f59d16",
+      "question_id": "FAMSURV10b_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_71e282891b19",
+      "question_id": "FAMSURV10c_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_dac5aa25421f",
+      "question_id": "FAMSURV10e_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_878cc1a8d571",
+      "question_id": "FAMSURV19_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_78a565055567",
+      "question_id": "FAMSURV32a_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_8b3edefe3425",
+      "question_id": "FAMSURV32b_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ab59a9f1ad74",
+      "question_id": "FAMSURV32c_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_67b10cb995c8",
+      "question_id": "FAMSURV32d_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5e30c0361e69",
+      "question_id": "FAMSURV32e_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f708fb28fc20",
+      "question_id": "FAMSURV33a_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_eb9b051b2b6b",
+      "question_id": "FAMSURV33b_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_1510d39a67fa",
+      "question_id": "FAMSURV33c_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_d28a90582f90",
+      "question_id": "FAMSURV33d_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_7e1812e03295",
+      "question_id": "FAMSURV39_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_ff6169990358",
+      "question_id": "FAMSURV40_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_e3b88e6be6b5",
+      "question_id": "FAMSURV43_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0750f54a2a39",
+      "question_id": "FAMSURV44_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f922ce7b400a",
+      "question_id": "FAMSURV6_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_94d6027d3988",
+      "question_id": "FAMSURV9a_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_12a795b6c66f",
+      "question_id": "FAMSURV9b_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cfb5c7740b9d",
+      "question_id": "FAMSURV9c_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_1717cc610254",
+      "question_id": "FAMSURV9e_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b0f4db994d31",
+      "question_id": "FEELA_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0e0abccd2762",
+      "question_id": "FEELB_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_4fd55147e846",
+      "question_id": "FEELC_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_dd7bb3ac742c",
+      "question_id": "FEELD_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_46d2df0d30a7",
+      "question_id": "FIN_SITCOMM_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5bcb96409d3f",
+      "question_id": "FIN_SITGROWUP_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_212455844688",
+      "question_id": "FIN_SITMOST_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_1b22b88bb6f0",
+      "question_id": "FIN_SIT_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_213edde8dca1",
+      "question_id": "FREECOLL_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_5dc69ef8c02c",
+      "question_id": "FTRWORRYa_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a6299a3551ea",
+      "question_id": "FTRWORRYb_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_aa3bbf41a034",
+      "question_id": "FTRWORRYc_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_28c6ea1098dd",
+      "question_id": "FTRWORRYd_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b9152a67dd40",
+      "question_id": "FTRWORRYe_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_299167de8d34",
+      "question_id": "FTRWORRYf_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d2f118e66d4f",
+      "question_id": "FUD22_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_70bfca54ebc5",
+      "question_id": "FUD33A_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_878a59b5001a",
+      "question_id": "FUD35_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d49190c13c61",
+      "question_id": "FUD37A_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_76454288a076",
+      "question_id": "FUD37B_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_73e78f3a5b09",
+      "question_id": "FUD37C_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_f410854d1a05",
+      "question_id": "FUD37D_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1d2a88163ab3",
+      "question_id": "FUTR_ABR_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0583b5e59dbc",
+      "question_id": "GAP21Q12_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_fa4bdc16773e",
+      "question_id": "GAP21Q13_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_303c6b6f04cd",
+      "question_id": "GAP21Q13_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_960c3849a598",
+      "question_id": "GAP21Q13_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b378e21d9a6a",
+      "question_id": "GAP21Q14_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_bbfe483f804e",
+      "question_id": "GAP21Q17_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a56cdcf389f0",
+      "question_id": "GAP21Q19_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d6184727bed2",
+      "question_id": "GAP21Q19_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c7779e3d6e79",
+      "question_id": "GAP21Q19_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_bb339fe38da2",
+      "question_id": "GAP21Q19_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cbf85e0efe8b",
+      "question_id": "GAP21Q19_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_08175ec7ae61",
+      "question_id": "GAP21Q1_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a3a287605fa6",
+      "question_id": "GAP21Q21_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_6325f780a2aa",
+      "question_id": "GAP21Q21_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ca8ad9009aa5",
+      "question_id": "GAP21Q21_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_5aa393b84be3",
+      "question_id": "GAP21Q21_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d3c129edc94c",
+      "question_id": "GAP21Q21_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cdc5d1160d91",
+      "question_id": "GAP21Q23_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_310425726d3c",
+      "question_id": "GAP21Q24_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_e71f9f79df54",
+      "question_id": "GAP21Q25_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_0e21d7117c41",
+      "question_id": "GAP21Q26_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_9f0b2859d678",
+      "question_id": "GAP21Q26_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_55c3d50c09e8",
+      "question_id": "GAP21Q26_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a2b5504d79b5",
+      "question_id": "GAP21Q26_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e3f873472d9b",
+      "question_id": "GAP21Q28_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f161cb8eabe0",
+      "question_id": "GAP21Q31_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_442816bde22f",
+      "question_id": "GAP21Q32_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_436e83bc9dd4",
+      "question_id": "GAP21Q34_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_dc3d8a2bca8c",
+      "question_id": "GAP21Q34_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_274e3eb9307d",
+      "question_id": "GAP21Q34_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_dc3d8a2bca8c",
+      "question_id": "GAP21Q34_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_57af99944e81",
+      "question_id": "GAP21Q34_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_dc3d8a2bca8c",
+      "question_id": "GAP21Q34_f_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_db15e8c7e1cb",
+      "question_id": "GAP21Q38_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_3504e2eeefa0",
+      "question_id": "GAP21Q38_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_731dd30826ea",
+      "question_id": "GAP21Q38_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_8e69fa3c4f51",
+      "question_id": "GAP21Q3_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_d4fc5cb909ba",
+      "question_id": "GAP21Q41_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3b621efadf04",
+      "question_id": "GAP21Q43_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_6634799b495b",
+      "question_id": "GAP21Q43_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_48aa557e1e39",
+      "question_id": "GAP21Q43_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f6b0cf479b50",
+      "question_id": "GAP21Q43_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a712311bb47d",
+      "question_id": "GAP21Q43_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3ae40264d9bc",
+      "question_id": "GAP21Q43_f_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b84f8b359fbc",
+      "question_id": "GAP21Q43_g_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_1434068a532d",
+      "question_id": "GAP21Q43_h_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_8c985da67c06",
+      "question_id": "GAP21Q47_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f62676710f95",
+      "question_id": "GAP21Q4_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d9ed6b84dda2",
+      "question_id": "GAP21Q4_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a71b481261b2",
+      "question_id": "GAP21Q4_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_1a9bf4d0e081",
+      "question_id": "GAP21Q4_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0f47de3acfb3",
+      "question_id": "GAP21Q4_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3b5bb2ac4cc5",
+      "question_id": "GAP21Q4_f_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_2087e7159ccb",
+      "question_id": "GAP21Q7_a_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_1fe92ed9192b",
+      "question_id": "GAP21Q7_b_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9e03072f9e4f",
+      "question_id": "GAP21Q7_c_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7062c633d2e1",
+      "question_id": "GAP21Q7_d_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_dfd4a80b06ea",
+      "question_id": "GAP21Q7_e_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_84f2029f9607",
+      "question_id": "GAP21Q8_W82",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_73e15bb5e744",
+      "question_id": "GAYMARR2_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0a7171d47506",
+      "question_id": "GODMORALIMP_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9ccebf3c553d",
+      "question_id": "GOPDIRCT_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f4ddfa398bd7",
+      "question_id": "GOVPRIORITYa_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b59b97cad546",
+      "question_id": "GOVPRIORITYb_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9eccbd4f877e",
+      "question_id": "GOVPRIORITYc_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ace8c6bfe6ed",
+      "question_id": "GOVPRIORITYd_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cb37dc1fca27",
+      "question_id": "GOVPRIORITYe_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fd2cbc085b6b",
+      "question_id": "GOVPRIORITYf_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_b052f136e41f",
+      "question_id": "GOVPRIOa_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_b67e527dd98e",
+      "question_id": "GOVPRIOb_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e7902cba9252",
+      "question_id": "GOVPRIOc_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_24fce1f91d27",
+      "question_id": "GOVPRIOd_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_61d14307a023",
+      "question_id": "GOVPRIOe_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d3cfee185e7a",
+      "question_id": "GOVPRIOfF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_14bd84152f76",
+      "question_id": "GOVPRIOgF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0cc7c2e59b73",
+      "question_id": "GOVPRIOhF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3289edbe5070",
+      "question_id": "GOVPRIOiF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_10f98d4f9cd7",
+      "question_id": "GOVPRIOjF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_6f5ac2614c2f",
+      "question_id": "GOVPRIOkF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0399262563d1",
+      "question_id": "GOVPRIOlF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0cc7c2e59b73",
+      "question_id": "GOVPRIOmF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3289edbe5070",
+      "question_id": "GOVPRIOnF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_4f171e13d8e6",
+      "question_id": "GOVPRIOoF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_699a55c365bf",
+      "question_id": "GROWUPGUN4_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_06ba2a3a26de",
+      "question_id": "GROWUPGUN6_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_bd03eab6a437",
+      "question_id": "GROWUPGUN7_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_75b0b4a56e5c",
+      "question_id": "GROWUPVIOL_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_f1af2fe715f3",
+      "question_id": "GUNACCESS_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1c6b4a6faf26",
+      "question_id": "GUNACTIVITYA_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a20fce205887",
+      "question_id": "GUNACTIVITYB_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b62baf671c68",
+      "question_id": "GUNACTIVITYC_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_58049e938ba3",
+      "question_id": "GUNACTIVITYD_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7a03c0c82958",
+      "question_id": "GUNACTIVITYE_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_21e9edb0fc1e",
+      "question_id": "GUNCONTRIBA_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_82b2bfb627a9",
+      "question_id": "GUNCONTRIBB_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a61acf8590eb",
+      "question_id": "GUNCONTRIBC_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cef59c91b3b9",
+      "question_id": "GUNCONTRIBD_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_9d98ec92a0f8",
+      "question_id": "GUNCONTRIBE_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_abd4914cb96f",
+      "question_id": "GUNCONTRIBF_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_139c84cd1298",
+      "question_id": "GUNFRIEND_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_b3e15d786075",
+      "question_id": "GUNIDENTITY_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_0aa8d9595797",
+      "question_id": "GUNRESPKIDSA_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_459ea2edb53e",
+      "question_id": "GUNRESPKIDSB_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f6a3e1b03ace",
+      "question_id": "GUNRESPKIDSC_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cfb0880b3f9f",
+      "question_id": "GUNRESPKIDSE_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_9066f9884cc7",
+      "question_id": "GUNRESPKIDSF_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fc4fadb46705",
+      "question_id": "GUNRESPKIDSG_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_dd2bc13fac98",
+      "question_id": "GUNRESPKIDSH_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_0aa8d9595797",
+      "question_id": "GUNRESPNOKIDSA_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_459ea2edb53e",
+      "question_id": "GUNRESPNOKIDSB_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f6a3e1b03ace",
+      "question_id": "GUNRESPNOKIDSC_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cfb0880b3f9f",
+      "question_id": "GUNRESPNOKIDSD_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cfb0880b3f9f",
+      "question_id": "GUNRESPNOKIDSE_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_9066f9884cc7",
+      "question_id": "GUNRESPNOKIDSF_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fc4fadb46705",
+      "question_id": "GUNRESPNOKIDSG_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_db3ba940331f",
+      "question_id": "HAPPEN2a_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3c1e7d60951a",
+      "question_id": "HAPPEN2b_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_551e1f4549d3",
+      "question_id": "HAPPEN2c_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_97b61fd2f93b",
+      "question_id": "HAPPEN2d_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_8163bcf70c8d",
+      "question_id": "HAPPEN2e_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_b4abe196534a",
+      "question_id": "HAPPEN2f_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_40b292d30130",
+      "question_id": "HAPPEN2g_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_92d838e4b9d4",
+      "question_id": "HAPPEN2h_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_f964bb34666f",
+      "question_id": "HAVEKIDS1_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_6b6ac57a162a",
+      "question_id": "HIRING2_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_311a64443cbe",
+      "question_id": "HIRING3A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_311a64443cbe",
+      "question_id": "HIRING3B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c1abcda592dc",
+      "question_id": "HOMEASSIST2_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b6bd8fb4464f",
+      "question_id": "HOMEASSIST4_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_7c7f657d93c6",
+      "question_id": "HOOD_NHISA_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_7d4f64577b30",
+      "question_id": "HOOD_NHISB_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7c878dd7cc1c",
+      "question_id": "HOOD_NHISC_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ae53b4906536",
+      "question_id": "IMMCOMM_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d730325f0f36",
+      "question_id": "IMPROVE1_W36",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d730325f0f36",
+      "question_id": "IMPROVE2_W36",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d730325f0f36",
+      "question_id": "IMPROVE3_W36",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cd6439c13a73",
+      "question_id": "INEQ4_a_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ee6728201e5a",
+      "question_id": "INEQ4_b_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_bfb51ed316c1",
+      "question_id": "INEQ4_c_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fdb3f0006899",
+      "question_id": "INEQ4_d_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e11f50c36ec8",
+      "question_id": "INEQ4_e_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_429e334f4d30",
+      "question_id": "INEQ5_a_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_426d1de25831",
+      "question_id": "INEQ5_b_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_113103345fbf",
+      "question_id": "INEQ5_c_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c7a46f439de3",
+      "question_id": "INEQ5_d_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c7a46f439de3",
+      "question_id": "INEQ5_e_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b957a227d289",
+      "question_id": "INEQ5_f_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ebfcfcd39577",
+      "question_id": "INEQ5_g_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a5f1dd563058",
+      "question_id": "INEQ5_h_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_4a022ac32e61",
+      "question_id": "INEQ5_i_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_af1ce641ed9e",
+      "question_id": "INEQ5_j_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_c3d211068e3c",
+      "question_id": "INEQ5_k_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_75d476bd4fad",
+      "question_id": "INEQ5_l_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_7615ea4d3569",
+      "question_id": "INEQ5_m_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_48e66203f103",
+      "question_id": "INEQ6_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_4f7755f47f84",
+      "question_id": "INEQ7_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_f6128e269a66",
+      "question_id": "INEQ8_a_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f14044f41a49",
+      "question_id": "INEQ8_b_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3fbf4b10fd48",
+      "question_id": "INEQ8_c_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_04942300895d",
+      "question_id": "INEQ8_d_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_891903436126",
+      "question_id": "INEQ8_e_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f14044f41a49",
+      "question_id": "INEQ8_f_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3391d04f7bfa",
+      "question_id": "INEQ8_g_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_8417be2665c5",
+      "question_id": "INEQ8_h_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a8b7c2264e65",
+      "question_id": "INEQ8_i_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ff3764c524d5",
+      "question_id": "INEQ8_j_W54",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_4b01e6a998b7",
+      "question_id": "INFOCHALa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_792d1a600098",
+      "question_id": "INFOCHALb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_265b6190ad8a",
+      "question_id": "INFOCHALc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_af8724ba0e74",
+      "question_id": "INFOCHALd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_d05a67678a24",
+      "question_id": "INFOCHALe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_46e67fea9889",
+      "question_id": "INFOCONFUSEa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e5aae28d76b3",
+      "question_id": "INFOCONFUSEb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_5497437b5737",
+      "question_id": "INFOCONFUSEc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_848100c035a9",
+      "question_id": "INFOCONFUSEd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_78f59867eab3",
+      "question_id": "INFOCONFUSEe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_710450050517",
+      "question_id": "INFOCREATEa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_351350242586",
+      "question_id": "INFOCREATEb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_8e3bc49e554d",
+      "question_id": "INFOCREATEc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d4fd0fad0f42",
+      "question_id": "INFOCREATEd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_223303d36504",
+      "question_id": "INFOCREATEe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_4a8ddf508814",
+      "question_id": "LOCALELECT_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0eb50c150841",
+      "question_id": "MADEUPDIS_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_aa6d679d16f1",
+      "question_id": "MADEUPIMPa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_f0fe6901e155",
+      "question_id": "MADEUPIMPb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a4c0e7e538d3",
+      "question_id": "MADEUPIMPc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_8e05afc5fb61",
+      "question_id": "MADEUPIMPd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_dbaf94b04032",
+      "question_id": "MADEUPIMPe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_2c5720dfc59e",
+      "question_id": "MADEUPLEVELa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f9586b875859",
+      "question_id": "MADEUPLEVELb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_640e44c02e5e",
+      "question_id": "MADEUPOFT_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_68be7dec9f16",
+      "question_id": "MADEUPTOPICa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d364ea9b8e52",
+      "question_id": "MADEUPTOPICb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_c0ebf8b7d46a",
+      "question_id": "MADEUPTOPICc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_bb3cf1b4a015",
+      "question_id": "MADEUPTOPICd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9cc44207e8ff",
+      "question_id": "MADEUPTOPICe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_377b71406cb3",
+      "question_id": "MADEUPTOPICf_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_d9eb7ae06e22",
+      "question_id": "MAN1A_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_85872266e3f4",
+      "question_id": "MAN1B_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ab11099d2b25",
+      "question_id": "MAN1C_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_748e27929686",
+      "question_id": "MAN1D_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_bbb797cb4f62",
+      "question_id": "MAN1E_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ff60951e26f1",
+      "question_id": "MASC2_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_dbc7d47e2d1b",
+      "question_id": "MED5_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ac6eda980d0e",
+      "question_id": "MED6A_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_86b54ba555ae",
+      "question_id": "MED6B_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_6ea620041485",
+      "question_id": "MED6C_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ea3465ac92ab",
+      "question_id": "MED6D_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c1f2b3cc7283",
+      "question_id": "MED6E_W34",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_fdf762c7ac7b",
+      "question_id": "NATDEBT_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b33a302ad535",
+      "question_id": "NEIGHKNOW_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cbb35955dedc",
+      "question_id": "NEWSPROBa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f373935c2aec",
+      "question_id": "NEWSPROBb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3ddb3d7e98e7",
+      "question_id": "NEWSPROBc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cbb35955dedc",
+      "question_id": "NEWSPROBd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ecf3da708a84",
+      "question_id": "NEWSPROBe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_bf706a1babd8",
+      "question_id": "NEWS_PLATFORMg_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_c7e82d05e135",
+      "question_id": "NEWS_PLATFORMh_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c983b9c0b156",
+      "question_id": "OPTIMIST_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_bc60de41ac76",
+      "question_id": "POLINTOL2_a_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_2c29a2d671c7",
+      "question_id": "POLINTOL2_b_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c2b3f034f3a2",
+      "question_id": "POP2_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_75ee9719d3fe",
+      "question_id": "PP2_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3a6c409214ed",
+      "question_id": "PP4_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_cbc0d62e505d",
+      "question_id": "PP5a_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0687ba268dd5",
+      "question_id": "PP5b_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_a1f1affe1e75",
+      "question_id": "PP5c_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_f8c8de22a646",
+      "question_id": "PP5d_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_aa99c0eacf56",
+      "question_id": "PP5e_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_aa7628f61d58",
+      "question_id": "PP6a_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_63c27022d92f",
+      "question_id": "PP6b_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_5ccc909d5e8b",
+      "question_id": "PP6c_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_7239640188b5",
+      "question_id": "PQ4_F2Aa_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_46bf1e1481b4",
+      "question_id": "PQ4_F2Ab_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_70e40fff428f",
+      "question_id": "PQ4_F2Ac_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d3e8ebcc8ccf",
+      "question_id": "PQ4_F2Ad_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_c477f9f71daf",
+      "question_id": "PQ4_F2Ae_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_9548f7cabb9c",
+      "question_id": "PQ4_F2Ba_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_b9f88cbf880a",
+      "question_id": "PQ4_F2Bb_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_f9365998b226",
+      "question_id": "PQ4_F2Bc_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_649408f18e2f",
+      "question_id": "PQ4_F2Bd_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_69a1ac12cbce",
+      "question_id": "PQ4_F2Be_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c82e96b46c5f",
+      "question_id": "PQ4_F2Ca_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_eefb8cee6277",
+      "question_id": "PQ4_F2Cb_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3ac1454c20d9",
+      "question_id": "PQ4_F2Cc_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3d7f7ade1ca0",
+      "question_id": "PQ4_F2Cd_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ee9f64e43547",
+      "question_id": "PQ4_F2Ce_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_7811c6d5c1ce",
+      "question_id": "PQ5_F2A_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_729a6df00f70",
+      "question_id": "PQ5_F2B_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_2dcc4dd45c39",
+      "question_id": "PQ5_F2C_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_66326fa6eb43",
+      "question_id": "PQ8_F2A_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e999e6008790",
+      "question_id": "PQ8_F2B_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a1c5a99ec204",
+      "question_id": "PQ8_F2C_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_24d524fd65f0",
+      "question_id": "PREDICTA_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_a3b91f6478b0",
+      "question_id": "PREDICTB_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_928520e2b4a8",
+      "question_id": "PREDICTC_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_e8016618dffc",
+      "question_id": "PREDICTD_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_4092b781a867",
+      "question_id": "PRIVACYNEWS1_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3f65e2177a4e",
+      "question_id": "PRIVACYREG_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_3bbbf20dcec1",
+      "question_id": "PROBRURAL_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_651829000257",
+      "question_id": "PROBSUBURB_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_0604b59a841d",
+      "question_id": "PROBURBAN_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_bfd79438702f",
+      "question_id": "PROFILE3_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_06609962930e",
+      "question_id": "PROFILE5_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_9ad7a36eb526",
+      "question_id": "RACESURV13_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_767d94b6b8c1",
+      "question_id": "RACESURV14_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_cd6b10aaaeba",
+      "question_id": "RACESURV17_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_cf1b0dd51fcb",
+      "question_id": "RACESURV21_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_be5bbbf86187",
+      "question_id": "RACESURV22_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f395f2c7b385",
+      "question_id": "RACESURV24_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_bd2204de54de",
+      "question_id": "RACESURV25_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_a842e4eccb66",
+      "question_id": "RACESURV26_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_da53e2b56249",
+      "question_id": "RACESURV27_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_45de34e29a82",
+      "question_id": "RACESURV29a_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5c5b017efccc",
+      "question_id": "RACESURV29b_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_f9995e7a8590",
+      "question_id": "RACESURV29c_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_17639a97ff23",
+      "question_id": "RACESURV29d_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a53185108099",
+      "question_id": "RACESURV36_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a0701456d9e7",
+      "question_id": "RACESURV38_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_07a021ed3cfd",
+      "question_id": "RACESURV48_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_543fc7080e56",
+      "question_id": "RACESURV52MOD_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_ee59720fc23d",
+      "question_id": "RACESURV52_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_176cfc427d3a",
+      "question_id": "RACESURV7_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_0c9f272604e6",
+      "question_id": "RACESURV8_W43",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_4695b9ceab31",
+      "question_id": "REPRSNTDEM_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_bc3970d7b925",
+      "question_id": "REPRSNTREP_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_1fa671f2c1e7",
+      "question_id": "ROBJOB2_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d0431fdbdb8d",
+      "question_id": "ROBJOB3A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d0431fdbdb8d",
+      "question_id": "ROBJOB3B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_b58b75fee19e",
+      "question_id": "ROBJOB5B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_30f7a010e7e9",
+      "question_id": "ROBJOB5C_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_255582204869",
+      "question_id": "ROBJOB5D_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_5cb638001af0",
+      "question_id": "ROBJOB8A_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_c9e122928a6b",
+      "question_id": "ROBJOB8B_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_32f1e19f8569",
+      "question_id": "ROBJOB8C_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_3e4ca7438438",
+      "question_id": "ROBJOB8D_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_b161e53bc5b7",
+      "question_id": "ROBJOB8E_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_de8a09b98ff5",
+      "question_id": "ROBJOB8F_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_81c67a71661d",
+      "question_id": "ROBJOB8G_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_45e383239e61",
+      "question_id": "ROBJOB9_W27",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_eb655cf603d1",
+      "question_id": "ROBWRK2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_798190eef690",
+      "question_id": "ROBWRK_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_19a6879ae4b2",
+      "question_id": "ROMRELSER_W50",
+      "wave": "bound_calibration"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9aba3eb62673",
+      "question_id": "RQ4_F1Aa_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5dcf27ec2463",
+      "question_id": "RQ4_F1Ab_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d3ecd562525d",
+      "question_id": "RQ4_F1Ac_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_95637fa62f8e",
+      "question_id": "RQ4_F1Ad_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ce215473a087",
+      "question_id": "RQ4_F1Ae_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_9a5e953b12ba",
+      "question_id": "RQ4_F1Ba_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5dcf27ec2463",
+      "question_id": "RQ4_F1Bb_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_de7c1725375c",
+      "question_id": "RQ4_F1Bc_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_95637fa62f8e",
+      "question_id": "RQ4_F1Bd_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_d9c202da46c2",
+      "question_id": "RQ4_F1Be_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_06b0b5c1051e",
+      "question_id": "RQ4_F1Ca_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_5dcf27ec2463",
+      "question_id": "RQ4_F1Cb_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_8adb93c2c212",
+      "question_id": "RQ4_F1Cc_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_95637fa62f8e",
+      "question_id": "RQ4_F1Cd_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_36aabd406da7",
+      "question_id": "RQ4_F1Ce_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_26519cb3e4ac",
+      "question_id": "RQ5_F1A_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_3a0fb1302a6c",
+      "question_id": "RQ5_F1B_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_d607302e855e",
+      "question_id": "RQ5_F1C_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_fecf2c053d42",
+      "question_id": "RQ8_F1A_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_26cea6d9207e",
+      "question_id": "RQ8_F1B_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_5f04a9830fef",
+      "question_id": "RQ8_F1C_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_83114b027179",
+      "question_id": "SAFECRIME_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_981610af5bd4",
+      "question_id": "SATLIFEA_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_907471d66b76",
+      "question_id": "SATLIFEB_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_604b507bc62b",
+      "question_id": "SATLIFEC_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_a139ef15b7cc",
+      "question_id": "SATLIFED_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_97fe0ddb87e4",
+      "question_id": "SATLIFEE_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_45b4155f9490",
+      "question_id": "SCM4a_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d3466f71391f",
+      "question_id": "SCM4b_W42",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ec492fc7374d",
+      "question_id": "SEENFEM_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_fb095b420010",
+      "question_id": "SEENMASC_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_d2791dddc1b1",
+      "question_id": "SHOOTFREQ_W26",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f58cbf653c7c",
+      "question_id": "SOLVPROBa_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_a011ae1a7991",
+      "question_id": "SOLVPROBb_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_e959239b2cb2",
+      "question_id": "SOLVPROBc_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_1d0006b4dbb3",
+      "question_id": "SOLVPROBdF1_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_99e0064dffbf",
+      "question_id": "SOLVPROBeF2_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_72b70870e883",
+      "question_id": "SOLVPROBf_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_ad0a41a65bee",
+      "question_id": "SOLVPROBg_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_5fea9964a86e",
+      "question_id": "SOLVPROBh_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_e9780402c4f5",
+      "question_id": "SOLVPROBi_W41",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_14c6234b5ab1",
+      "question_id": "SOURCESKEPa_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_281e3f0c9616",
+      "question_id": "SOURCESKEPb_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_164e3cafe8de",
+      "question_id": "SOURCESKEPc_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d0deb28b0eb8",
+      "question_id": "SOURCESKEPd_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_ffce48b882b4",
+      "question_id": "SOURCESKEPe_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_41c459fcbd45",
+      "question_id": "TRAITSA_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_90269b782d55",
+      "question_id": "TRAITSB_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_713f390b65e6",
+      "question_id": "TRAITSC_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_f5b9c6039a15",
+      "question_id": "TRAITSD_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_18ef1b2e66ea",
+      "question_id": "TRAITSE_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_0edc1ffe9480",
+      "question_id": "TRAITSF_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_fa805cccae54",
+      "question_id": "UNDERSTANDCO_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_89d0f2b51c0d",
+      "question_id": "UNDERSTANDGOV_W49",
+      "wave": "error_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_a625afd58a2b",
+      "question_id": "UNIMMIGCOMM_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_933894301d72",
+      "question_id": "VALUERURAL_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_4e820a87b642",
+      "question_id": "VALUESUBURB_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_224065cc5056",
+      "question_id": "VALUEURBAN_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_13c482a7263a",
+      "question_id": "VIDOFT_W45",
+      "wave": "error_fit"
+    },
+    {
+      "family": "final_test",
+      "family_id": "fam_baea99aa6a01",
+      "question_id": "WHADVANT_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_c23a5d954c9d",
+      "question_id": "WHADVANT_W92",
+      "wave": "final_test"
+    },
+    {
+      "family": "error_fit",
+      "family_id": "fam_d751f60e9ea8",
+      "question_id": "WILLMOVE_W32",
+      "wave": "population_fit"
+    },
+    {
+      "family": "population_fit",
+      "family_id": "fam_7b46da99909c",
+      "question_id": "WMNPRZ1_W36",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_b49cbd44718e",
+      "question_id": "WORRYBILL_W29",
+      "wave": "population_fit"
+    },
+    {
+      "family": "bound_calibration",
+      "family_id": "fam_73bf509cea91",
+      "question_id": "WORRYRET_W29",
+      "wave": "population_fit"
+    }
+  ],
+  "schema": "rival.confidence_qualification.v1",
+  "sources": {
+    "experiments/confidence_qualification_v1/PROTOCOL.md": "19fa290fcd7b3d9898d542a5cd6404779691f681adbe863159a3931054205091",
+    "experiments/confidence_qualification_v1/run.py": "92c43e240e68e2a62d4b3909c222f054a337fb18418d0e123c2c6b661d12610b",
+    "rival/datasets/opinionqa/persona_answers.csv": "f130a57ff74c95858d9ba0dc73e33dffb7c03fcb687546f97cfe3b0e042d16f4",
+    "rival/datasets/opinionqa/questions.json": "cd376aa97c852a0e32642c63faf86dbc7d6725cb698342bcfe351e75286892f6",
+    "rival/research/calibration.py": "dd86ee8683a47e5c1ad43779bbd53ed78d4bf32c95881bfbc48df262f67fab56",
+    "rival/research/firewall.py": "48d60a3165607b830200037a4b3d42c6d14394996968cae9544bf504e4864e0e"
+  }
+}
