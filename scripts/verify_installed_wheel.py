@@ -108,10 +108,12 @@ def main():
     with tempfile.TemporaryDirectory(prefix="rival-installed-") as directory:
         root = Path(directory)
         install = root / "installed"
+        venv = root / "console-venv"
         cwd = root / "outside-checkout"
         cwd.mkdir()
-        environment = {**os.environ, "PYTHONPATH": str(install), "PIP_DISABLE_PIP_VERSION_CHECK": "1",
-                       "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"}
+        base_environment = {**os.environ, "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                            "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"}
+        environment = {**base_environment, "PYTHONPATH": str(install)}
         run_checked([sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
                      "--target", str(install), str(wheel)], cwd=cwd, env=environment)
         (cwd / "INSTALL_ROOT").write_text(str(install), encoding="utf-8")
@@ -121,8 +123,16 @@ def main():
                         ["mega-v2", "run", "--help"], ["simulate-managed", "--help"]):
             run_checked([sys.executable, "-m", "rival", *command], cwd=cwd, env=environment)
         report["checks"].append("installed module CLI commands")
-        launcher = install / ("Scripts/rival.exe" if os.name == "nt" else "bin/rival")
-        run_checked([str(launcher), "--version"], cwd=cwd, env=environment)
+        # ``pip --target`` intentionally installs import files without console
+        # wrappers on Windows. Install the same wheel into a disposable venv so
+        # the platform-specific launcher is exercised as well.
+        run_checked([sys.executable, "-m", "venv", "--system-site-packages", str(venv)],
+                    cwd=cwd, env=base_environment)
+        venv_python = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+        run_checked([str(venv_python), "-m", "pip", "install", "--no-index", "--no-deps", str(wheel)],
+                    cwd=cwd, env=base_environment)
+        launcher = venv / ("Scripts/rival.exe" if os.name == "nt" else "bin/rival")
+        run_checked([str(launcher), "--version"], cwd=cwd, env=base_environment)
         report["checks"].append("installed console entry point")
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
