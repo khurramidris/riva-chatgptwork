@@ -129,8 +129,8 @@ def main():
         run_checked([sys.executable, "-m", "venv", "--system-site-packages", str(venv)],
                     cwd=cwd, env=base_environment)
         venv_python = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
-        run_checked([str(venv_python), "-m", "pip", "install", "--no-index", "--no-deps", str(wheel)],
-                    cwd=cwd, env=base_environment)
+        run_checked([str(venv_python), "-m", "pip", "install", "--ignore-installed", "--no-index",
+                     "--no-deps", str(wheel)], cwd=cwd, env=base_environment)
         launcher = venv / ("Scripts/rival.exe" if os.name == "nt" else "bin/rival")
         run_checked([str(launcher), "--version"], cwd=cwd, env=base_environment)
         report["checks"].append("installed console entry point")
