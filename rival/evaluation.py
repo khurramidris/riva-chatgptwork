@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-import math
 from datetime import datetime
 
 import numpy as np
+from scipy.stats import rankdata
 
-from .mathx import normalize
+from .mathx import validate_probabilities
 from .schemas import EvaluationResult
 
 
@@ -13,8 +13,8 @@ def _aligned(
     predicted: dict[str, float], observed: dict[str, float]
 ) -> tuple[list[str], np.ndarray, np.ndarray]:
     keys = sorted(set(predicted) | set(observed))
-    p = normalize(predicted.get(key, 0.0) for key in keys)
-    q = normalize(observed.get(key, 0.0) for key in keys)
+    p = validate_probabilities(predicted.get(key, 0.0) for key in keys)
+    q = validate_probabilities(observed.get(key, 0.0) for key in keys)
     return keys, p, q
 
 
@@ -51,8 +51,8 @@ def spearman_rank(
     _, p, q = _aligned(predicted, observed)
     if len(p) < 2 or np.allclose(p, p[0]) or np.allclose(q, q[0]):
         return 0.0
-    p_rank = np.argsort(np.argsort(p)).astype(float)
-    q_rank = np.argsort(np.argsort(q)).astype(float)
+    p_rank = rankdata(p, method="average")
+    q_rank = rankdata(q, method="average")
     return float(np.corrcoef(p_rank, q_rank)[0, 1])
 
 
@@ -71,7 +71,7 @@ def evaluate_distribution(
         ),
         "jensen_shannon": jensen_shannon_divergence(predicted, observed),
         "spearman": spearman_rank(predicted, observed),
-        "variance_ratio": float(np.var(p) / np.var(q)) if np.var(q) > 0 else math.nan,
+        "variance_ratio": float(np.var(p) / np.var(q)) if np.var(q) > 0 else None,
     }
     return EvaluationResult(
         run_id=run_id,
@@ -91,4 +91,3 @@ def interval_coverage(
         if key in intervals
     ]
     return float(np.mean(checks)) if checks else 0.0
-

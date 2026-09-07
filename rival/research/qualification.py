@@ -11,6 +11,7 @@ from .integrity_qualification import run_integrity_qualification
 from .provenance import stable_hash
 from .twin2k import benchmark_twin2k
 from ..version import __version__
+from ..readiness import release_claims
 
 
 def build_summary(
@@ -21,11 +22,21 @@ def build_summary(
 ) -> dict[str, Any]:
     opinion_metrics = opinionqa["metrics"]
     twin_metrics = twin2k["metrics"]
+    passed = (
+        opinionqa["status"] == "real-data, family-held-out"
+        and twin2k["status"] == "real-data, target-family-excluded transfer"
+        and all(report["status"] == "PASS" and report["checks"]
+                and all(item["status"] == "PASS" for item in report["checks"])
+                for report in (integrity, research_components))
+    )
     summary = {
-        "schema_version": "rival.qualification.summary.v3",
+        "schema_version": "rival.qualification.summary.v4",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "release": __version__,
-        "headline": "Two real-data qualification tracks; one strong aggregate result and one bounded individual result.",
+        "status": "PASS" if passed else "FAIL",
+        "status_scope": "research reproduction and engineering checks; not customer qualification",
+        "headline": "Research results and engineering checks; customer qualification remains pending.",
+        "current_release_claims": release_claims(),
         "opinionqa": {
             "status": opinionqa["status"],
             "questions": opinionqa["dataset"]["questions"],
@@ -93,8 +104,13 @@ def build_summary(
             "report_sha256": research_components["report_sha256"],
         },
         "release_decision": {
-            "population_distribution_calibration": "qualified for bounded pilots",
-            "individual_novel-question_prediction": "research only; baseline not beaten",
+            "population_distribution_calibration": "research only; current deployment not qualified",
+            "individual_novel-question_prediction": (
+                "research only; baseline not beaten"
+                if twin_metrics["categorical"]["leakage_safe_transfer"]["mean_accuracy"]
+                <= twin_metrics["categorical"]["population_baseline"]["mean_accuracy"]
+                else "research only; customer-domain generalization not qualified"
+            ),
             "universal_human_simulation": "not claimed",
         },
     }
@@ -133,7 +149,9 @@ def run_all(
 def load_bundled_summary() -> dict[str, Any]:
     path = files("rival").joinpath("qualification/summary.json")
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return {"release": __version__, "status": "HISTORICAL_ONLY",
+                "current_release_claims": release_claims(),
+                "historical_summary": json.loads(path.read_text(encoding="utf-8"))}
     except FileNotFoundError:
         return {
             "release": __version__,

@@ -1,5 +1,12 @@
 # Third-Party Research, Code, and Data Notices
 
+The current release is a research implementation; incorporation and numerical
+checks do not establish paper-faithful reproduction or predictive qualification.
+The original MIT files in the audited SYN-DIGITS and UQ snapshots omitted the
+final `SOFTWARE.` line. Complete copies, checked against the audited upstream
+license and diff, are supplied in `rival/notices/syn_digits_LICENSE.txt` and
+`rival/notices/uq_survey_LICENSE.txt`. Original hash-locked copies are unchanged.
+
 The user confirmed commercial permission for the research papers, repositories, and data used in this build. Rival preserves public attribution and license information below. Public license texts and any separate signed permission remain authoritative. Exact incorporated paths, commits, modifications, and SHA-256 hashes are recorded in `upstreams.lock.json`.
 
 ## Code incorporated in v0.5

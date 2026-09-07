@@ -1,0 +1,89 @@
+{
+  "artifact_root": "dist/phase-one",
+  "manifest": {
+    "qualification_artifacts": {
+      "verification/phase-one-installed-wheel.json": "fefeaa374b977b792a6be9391edfcafaf267097c24ae6ff0e09fbc09347a6450",
+      "verification/phase_one.json": "429852d28880ab926b089c37c46ae4b0eafa8227d9e07b449f24bdd435a03c85",
+      "verification/qualification_summary.json": "9baa4a57c90e4262bc6ae794cbf81599abc8679165d76ffb57e7b2b212b81497"
+    },
+    "release": "0.6.0.dev4",
+    "release_claims": {
+      "confidence_qualified": false,
+      "customer_launch_ready": false,
+      "decision_support_qualified": false,
+      "estimand": "aggregate choice shares for a declared audience and scenario",
+      "individual_fidelity_qualified": false,
+      "limitations": [
+        "Simulation draws are not independent human participants.",
+        "The bundled demo uses generated people, outcomes and anchors.",
+        "Historical benchmark results do not qualify the current release or a new audience."
+      ],
+      "mode": "research",
+      "offering": "supervised concept and message scenario comparisons",
+      "release": "0.6.0.dev4",
+      "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+      "schema_version": "rival.release-claims.v1"
+    },
+    "schema_version": "rival.release-manifest.v2",
+    "source_inventory": "wheel_inventory.json",
+    "source_inventory_sha256": "e1b53ab1635576160e112fb4fc519488318c735779d7007f8febe41892e7a77f",
+    "wheel": {
+      "path": "rival_sim-0.6.0.dev4-py3-none-any.whl",
+      "sha256": "a74c7ef5b7aec988b30e56b9a26ac7fd3ece36d3d94c57db99afa72dbd2e058d"
+    }
+  },
+  "manifest_sha256": "97362ac5ff91d39cdca8e3554e4887bf47947a135be71e1ea249bb8bb6988c33",
+  "status": "PASS",
+  "verification": {
+    "checks": [
+      {
+        "actual_sha256": "a74c7ef5b7aec988b30e56b9a26ac7fd3ece36d3d94c57db99afa72dbd2e058d",
+        "expected_sha256": "a74c7ef5b7aec988b30e56b9a26ac7fd3ece36d3d94c57db99afa72dbd2e058d",
+        "path": "rival_sim-0.6.0.dev4-py3-none-any.whl",
+        "status": "PASS"
+      },
+      {
+        "actual_sha256": "fefeaa374b977b792a6be9391edfcafaf267097c24ae6ff0e09fbc09347a6450",
+        "expected_sha256": "fefeaa374b977b792a6be9391edfcafaf267097c24ae6ff0e09fbc09347a6450",
+        "path": "verification/phase-one-installed-wheel.json",
+        "status": "PASS"
+      },
+      {
+        "actual_sha256": "429852d28880ab926b089c37c46ae4b0eafa8227d9e07b449f24bdd435a03c85",
+        "expected_sha256": "429852d28880ab926b089c37c46ae4b0eafa8227d9e07b449f24bdd435a03c85",
+        "path": "verification/phase_one.json",
+        "status": "PASS"
+      },
+      {
+        "actual_sha256": "9baa4a57c90e4262bc6ae794cbf81599abc8679165d76ffb57e7b2b212b81497",
+        "expected_sha256": "9baa4a57c90e4262bc6ae794cbf81599abc8679165d76ffb57e7b2b212b81497",
+        "path": "verification/qualification_summary.json",
+        "status": "PASS"
+      },
+      {
+        "actual_sha256": "e1b53ab1635576160e112fb4fc519488318c735779d7007f8febe41892e7a77f",
+        "expected_sha256": "e1b53ab1635576160e112fb4fc519488318c735779d7007f8febe41892e7a77f",
+        "path": "wheel_inventory.json",
+        "status": "PASS"
+      },
+      {
+        "path": "required-release-inventory",
+        "status": "PASS"
+      },
+      {
+        "path": "wheel-file-inventory",
+        "status": "PASS"
+      },
+      {
+        "actual": "0.6.0.dev4",
+        "expected": "0.6.0.dev4",
+        "path": "wheel-metadata-version",
+        "status": "PASS"
+      }
+    ],
+    "manifest": "/workspace/scratch/a3e0fea917db/rival-development/dist/phase-one/RELEASE_MANIFEST.json",
+    "release": "0.6.0.dev4",
+    "scope": "artifact integrity only; no predictive or customer qualification",
+    "status": "PASS"
+  }
+}

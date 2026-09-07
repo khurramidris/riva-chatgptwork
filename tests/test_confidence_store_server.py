@@ -21,7 +21,8 @@ class ConfidenceTests(unittest.TestCase):
                 "human_anchor_rate": 0.0,
             }
         )
-        self.assertIn(assessment.label, {"medium", "low"})
+        self.assertEqual(assessment.label, "unqualified")
+        self.assertTrue(assessment.abstain)
         self.assertEqual(assessment.training_examples, 0)
 
     def test_ridge_fit(self):
@@ -85,4 +86,3 @@ class ServerApplicationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

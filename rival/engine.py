@@ -14,7 +14,7 @@ from .integrity import (
     prepare_prediction_context as build_prediction_context,
     verify_locked_context,
 )
-from .mathx import canonical_hash, effective_sample_size, shannon_entropy
+from .mathx import canonical_hash, effective_sample_size, shannon_entropy, validate_probabilities
 from .population import PopulationCompiler
 from .providers import PredictionProvider
 from .schemas import (
@@ -44,8 +44,6 @@ class RivalEngine:
         self.hybrid = HybridEstimator()
         self.confidence_model = ConfidenceModel()
         self.store = store or EvidenceStore(store_path)
-        self._confidence_rows: list[dict[str, float]] = []
-        self._confidence_errors: list[float] = []
 
     def register_provider(self, name: str, provider: PredictionProvider) -> None:
         self.router.register(name, provider)
@@ -90,6 +88,8 @@ class RivalEngine:
         if locked_context is not None:
             verify_locked_context(locked_context, prepared.context)
         active_context = locked_context or prepared.context
+        # Reject conflicting study IDs before issuing any provider requests.
+        self.store.register_study(scenario)
         sampled = self.population.sample(
             prepared.records, scenario.sample_size, scenario.seed
         )
@@ -101,13 +101,19 @@ class RivalEngine:
         entropies: list[float] = []
         disagreements: list[float] = []
         for person in sampled:
-            output = provider.predict(person, scenario)
-            provider_call = provider.call_identity(person, scenario, output)
+            call_person = person
+            if getattr(provider, "deduplicate_population_draws", False):
+                # sample() appends this draw suffix; repeated draws of one seed
+                # share one model response while categorical draws stay random.
+                call_person = person.model_copy(update={"person_id": person.person_id.rsplit("__draw_", 1)[0]})
+            output = provider.predict(call_person, scenario)
+            provider_call = provider.call_identity(call_person, scenario, output)
             choice_ids = [choice.choice_id for choice in scenario.choices]
-            probabilities = np.asarray(
-                [output.probabilities[choice_id] for choice_id in choice_ids], dtype=float
+            if set(output.probabilities) != set(choice_ids):
+                raise ValueError("provider returned the wrong choice_id set")
+            probabilities = validate_probabilities(
+                output.probabilities[choice_id] for choice_id in choice_ids
             )
-            probabilities /= probabilities.sum()
             sampled_choice = str(rng.choice(choice_ids, p=probabilities))
             for choice_id, probability in zip(choice_ids, probabilities, strict=True):
                 totals[choice_id] += person.weight * float(probability)
@@ -146,7 +152,8 @@ class RivalEngine:
                 diagnostics.effective_sample_ratio if diagnostics else 1.0
             ),
             "scenario_novelty": scenario.novelty,
-            "human_anchor_rate": scenario.human_anchor_size / scenario.sample_size,
+            # A planned anchor is not observed evidence for this prediction.
+            "human_anchor_rate": 0.0,
         }
         confidence = self.confidence_model.assess(features)
         warnings: list[str] = []
@@ -184,7 +191,6 @@ class RivalEngine:
             lineage_hash=lineage_hash,
             warnings=warnings,
         )
-        self.store.register_study(scenario)
         self.store.save_run(result)
         return result
 
@@ -200,8 +206,13 @@ class RivalEngine:
         simulation: SimulationResult,
         observed_distribution: dict[str, float],
         preregistration_hash: str | None = None,
-        learn_confidence: bool = True,
+        learn_confidence: bool = False,
     ) -> EvaluationResult:
+        if learn_confidence:
+            raise ValueError(
+                "automatic confidence training is disabled; use a separately "
+                "qualified confidence model with independent protected evidence"
+            )
         evaluation = evaluate_distribution(
             simulation.run_id,
             simulation.distribution,
@@ -209,11 +220,4 @@ class RivalEngine:
             preregistration_hash=preregistration_hash,
         )
         self.store.save_evaluation(evaluation)
-        if learn_confidence and simulation.confidence:
-            self._confidence_rows.append(simulation.confidence.features)
-            self._confidence_errors.append(evaluation.metrics["tvd"])
-            if len(self._confidence_rows) >= 5:
-                self.confidence_model.fit(
-                    self._confidence_rows, self._confidence_errors
-                )
         return evaluation

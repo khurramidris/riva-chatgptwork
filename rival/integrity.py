@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 from typing import Any
 
 from .mathx import canonical_hash
+from .evaluation import evaluate_distribution
+from .outcome_vault import OutcomeVault
 from .schemas import (
     EvaluationResult,
     ManifestSeal,
@@ -159,7 +161,12 @@ def prepare_prediction_context(
         reasons: dict[str, int] = {}
         for item in record.history:
             instant = _history_instant(item)
-            if cutoff is not None and instant is not None and instant > cutoff:
+            if cutoff is not None and instant is None:
+                excluded.append(item)
+                reasons["missing_history_timestamp"] = (
+                    reasons.get("missing_history_timestamp", 0) + 1
+                )
+            elif cutoff is not None and instant is not None and instant > cutoff:
                 excluded.append(item)
                 reasons["after_information_cutoff"] = (
                     reasons.get("after_information_cutoff", 0) + 1
@@ -193,7 +200,7 @@ def prepare_prediction_context(
         )
 
     audit_payload = {
-        "policy_version": "rival.outcome-firewall.v1",
+        "policy_version": "rival.outcome-firewall.v2",
         "information_cutoff": scenario.information_cutoff,
         "entries": [entry.model_dump(mode="json") for entry in entries],
         "outcome_keys_detected": [],
@@ -301,6 +308,23 @@ class ManifestSigner:
         if not self.verify(sealed):
             raise ManifestVerificationError("study manifest seal is invalid")
 
+    def attest(self, payload: dict[str, Any]) -> dict[str, Any]:
+        envelope = {"schema_version": "rival.phase-attestation.v1",
+                    "key_id": self.key_id, "payload": payload}
+        return {**envelope, "signature": hmac.new(
+            self.secret, _canonical_bytes(envelope), hashlib.sha256
+        ).hexdigest()}
+
+    def verify_attestation(self, envelope: dict[str, Any]) -> bool:
+        payload = dict(envelope)
+        signature = payload.pop("signature", "")
+        return (payload.get("key_id") == self.key_id
+                and payload.get("schema_version") == "rival.phase-attestation.v1"
+                and isinstance(signature, str)
+                and hmac.compare_digest(signature, hmac.new(
+                    self.secret, _canonical_bytes(payload), hashlib.sha256
+                ).hexdigest()))
+
 
 def _phase_event(
     study_id: str,
@@ -333,6 +357,9 @@ class ProspectiveStudyManager:
         simulation: SimulationResult,
         preregistration: PreregistrationSpec,
     ) -> SealedStudyManifest:
+        previous = self.store.last_phase_event(simulation.scenario.scenario_id)
+        if previous is not None:
+            raise IntegrityError(f"study is already in phase {previous['to_phase']!r}")
         context = simulation.prediction_context
         if context is None or not context.outcome_free:
             raise IntegrityError("simulation has no outcome-free prediction context")
@@ -353,6 +380,9 @@ class ProspectiveStudyManager:
             simulation_sha256=canonical_hash(simulation),
         )
         sealed = self.signer.seal(manifest)
+        # Verification needs the exact simulation even when this manager is used
+        # outside RivalEngine. Immutable writes reject substituted run IDs.
+        self.store.save_run(simulation)
         self.store.save_manifest(sealed)
         previous = self.store.last_phase_event(manifest.study_id)
         from_phase: StudyPhase = previous["to_phase"] if previous else "draft"
@@ -365,7 +395,7 @@ class ProspectiveStudyManager:
             canonical_hash(sealed),
             previous["event_sha256"] if previous else None,
         )
-        self.store.append_phase_event(event)
+        self.store.append_phase_event(event, sealed.model_dump(mode="json"))
         return sealed
 
     def _stored_manifest(self, study_id: str) -> SealedStudyManifest:
@@ -379,23 +409,85 @@ class ProspectiveStudyManager:
     def record_outcome_reveal(
         self, study_id: str, receipt: OutcomeRevealReceipt
     ) -> PhaseEvent:
+        raise IntegrityError(
+            "standalone receipts are not authenticated evidence; use reveal_outcomes with the vault"
+        )
+
+    def reveal_outcomes(
+        self, study_id: str, vault: OutcomeVault, key_material: bytes | str
+    ) -> tuple[dict[str, Any], OutcomeRevealReceipt]:
+        """Authenticate and time-gate vault contents, then persist signed evidence.
+
+        This method deliberately has no caller-supplied clock or outcome payload.
+        Key custodians and the host clock remain part of the trusted boundary.
+        """
         previous = self.store.last_phase_event(study_id)
         if not previous or previous["to_phase"] != "prediction_locked":
             raise IntegrityError("outcomes can only be revealed after prediction lock")
         sealed = self._stored_manifest(study_id)
-        if receipt.study_id != study_id:
-            raise IntegrityError("outcome receipt belongs to a different study")
-        if receipt.manifest_sha256 != canonical_hash(sealed):
-            raise IntegrityError("outcome receipt is not bound to the sealed manifest")
+        if not self.verify(sealed):
+            raise IntegrityError("locked study evidence does not verify")
+        not_before = sealed.manifest.preregistration.outcome_not_before
+        if not_before and utc_now() < _parse_instant(not_before.isoformat()):
+            raise IntegrityError("preregistered outcome availability date has not arrived")
+        outcome, receipt = vault.reveal(study_id, canonical_hash(sealed), key_material)
+        evidence = self.signer.attest({"receipt": receipt.model_dump(mode="json"),
+                                       "outcome": outcome})
+        self._validate_reveal(sealed, evidence)
         event = _phase_event(
             study_id,
             "prediction_locked",
             "outcomes_revealed",
-            canonical_hash(receipt),
+            canonical_hash(evidence),
             previous["event_sha256"],
         )
-        self.store.append_phase_event(event)
-        return event
+        self.store.append_phase_event(event, evidence)
+        return outcome, receipt
+
+    def _validate_reveal(self, sealed: SealedStudyManifest,
+                         evidence: dict[str, Any]) -> dict[str, float]:
+        if not self.signer.verify_attestation(evidence):
+            raise IntegrityError("outcome attestation is invalid")
+        payload = evidence["payload"]
+        receipt = OutcomeRevealReceipt.model_validate(payload["receipt"])
+        outcome = payload["outcome"]
+        if (receipt.study_id != sealed.manifest.study_id
+                or receipt.manifest_sha256 != canonical_hash(sealed)
+                or receipt.outcome_sha256 != canonical_hash(outcome)):
+            raise IntegrityError("revealed outcome does not match its manifest or receipt")
+        earliest = sealed.seal.sealed_at
+        not_before = sealed.manifest.preregistration.outcome_not_before
+        if not_before:
+            earliest = max(earliest, _parse_instant(not_before.isoformat()))
+        if not earliest <= receipt.revealed_at <= utc_now():
+            raise IntegrityError("outcome reveal time violates the sealed study")
+        # Distribution studies may store the PMF directly or in a distribution
+        # field alongside source metadata; the receipt binds the entire object.
+        distribution = outcome.get("distribution", outcome)
+        if not isinstance(distribution, dict):
+            raise IntegrityError("revealed outcome is not a distribution")
+        return distribution
+
+    def _validate_evaluation(self, sealed: SealedStudyManifest,
+                             evaluation: EvaluationResult,
+                             observed: dict[str, float]) -> None:
+        if evaluation.run_id != sealed.manifest.run_id:
+            raise IntegrityError("evaluation run does not match the sealed manifest")
+        prereg = sealed.manifest.preregistration
+        if evaluation.preregistration_hash != canonical_hash(prereg):
+            raise IntegrityError("evaluation preregistration hash does not match")
+        if prereg.evaluation_protocol != "rival.distribution-evaluation.v2":
+            raise IntegrityError("unsupported preregistered evaluation protocol")
+        if canonical_hash(observed) != canonical_hash(evaluation.observed_distribution):
+            raise IntegrityError("evaluation outcomes differ from the authenticated reveal")
+        simulation = self.store.get("runs", sealed.manifest.run_id)
+        if simulation is None or canonical_hash(simulation) != sealed.manifest.simulation_sha256:
+            raise IntegrityError("locked simulation is missing or has changed")
+        expected = evaluate_distribution(evaluation.run_id, simulation["distribution"], observed)
+        if canonical_hash(evaluation.metrics) != canonical_hash(expected.metrics):
+            raise IntegrityError("evaluation metrics do not match recomputed locked predictions")
+        if evaluation.subgroup_metrics:
+            raise IntegrityError("subgroup metrics require separately bound subgroup outcomes")
 
     def record_evaluation(
         self, study_id: str, evaluation: EvaluationResult
@@ -404,22 +496,57 @@ class ProspectiveStudyManager:
         if not previous or previous["to_phase"] != "outcomes_revealed":
             raise IntegrityError("evaluation can only follow outcome reveal")
         sealed = self._stored_manifest(study_id)
-        if evaluation.run_id != sealed.manifest.run_id:
-            raise IntegrityError("evaluation run does not match the sealed manifest")
-        expected_preregistration = canonical_hash(sealed.manifest.preregistration)
-        if evaluation.preregistration_hash != expected_preregistration:
-            raise IntegrityError("evaluation preregistration hash does not match")
+        if not self.verify(sealed):
+            raise IntegrityError("revealed study evidence does not verify")
+        evidence = self.store.phase_evidence(previous["payload_sha256"])
+        if evidence is None:
+            raise IntegrityError("authenticated outcome evidence is missing")
+        observed = self._validate_reveal(sealed, evidence)
+        self._validate_evaluation(sealed, evaluation, observed)
+        receipt = OutcomeRevealReceipt.model_validate(evidence["payload"]["receipt"])
+        if not receipt.revealed_at <= evaluation.created_at <= utc_now():
+            raise IntegrityError("evaluation must be created after the authenticated reveal")
+        evaluation_payload = self.signer.attest(evaluation.model_dump(mode="json"))
         event = _phase_event(
             study_id,
             "outcomes_revealed",
             "evaluated",
-            canonical_hash(evaluation),
+            canonical_hash(evaluation_payload),
             previous["event_sha256"],
         )
-        self.store.append_phase_event(event)
+        self.store.save_evaluation(evaluation)
+        self.store.append_phase_event(event, evaluation_payload)
         return event
 
     def verify(self, sealed: SealedStudyManifest) -> bool:
-        return self.signer.verify(sealed) and self.store.verify_phase_chain(
-            sealed.manifest.study_id
-        )
+        study_id = sealed.manifest.study_id
+        try:
+            if not self.signer.verify(sealed) or not self.store.verify_phase_chain(study_id):
+                return False
+            stored = self.store.manifest_for_study(study_id)
+            if stored is None or canonical_hash(stored) != canonical_hash(sealed):
+                return False
+            run = self.store.get("runs", sealed.manifest.run_id)
+            if run is None or canonical_hash(run) != sealed.manifest.simulation_sha256:
+                return False
+            observed = None
+            for event in self.store.phase_events(study_id):
+                evidence = self.store.phase_evidence(event["payload_sha256"])
+                if evidence is None:
+                    return False
+                if event["to_phase"] == "prediction_locked":
+                    if canonical_hash(evidence) != canonical_hash(sealed):
+                        return False
+                elif event["to_phase"] == "outcomes_revealed":
+                    observed = self._validate_reveal(sealed, evidence)
+                elif event["to_phase"] == "evaluated":
+                    if observed is None or not self.signer.verify_attestation(evidence):
+                        return False
+                    self._validate_evaluation(
+                        sealed, EvaluationResult.model_validate(evidence["payload"]), observed
+                    )
+                else:
+                    return False
+            return True
+        except (RuntimeError, ValueError, KeyError, TypeError):
+            return False

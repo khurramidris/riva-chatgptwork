@@ -22,6 +22,10 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,3 +44,5 @@ jobs:
         run: python -m rival qualify-all --output-dir reports --compact
       - name: Build wheel
         run: python -m pip wheel . --no-deps --wheel-dir dist
+      - name: Verify installed wheel outside checkout
+        run: python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev4-py3-none-any.whl --output reports/installed_wheel.json

@@ -11,8 +11,8 @@ const validationView = document.querySelector("#validation-view");
 const stages = [
   ["Compiling calibrated population…", "18%"],
   ["Routing behavior model…", "42%"],
-  ["Sampling human anchor…", "67%"],
-  ["Correcting estimates and scoring confidence…", "88%"],
+  ["Generating demo anchors…", "67%"],
+  ["Comparing illustrative estimates…", "88%"],
 ];
 
 const pct = value => `${(Number(value) * 100).toFixed(1)}%`;
@@ -63,7 +63,7 @@ function render(data) {
   setText("#result-title", simulation.scenario.name);
   setText("#winner", winner.label);
   setText("#winner-share", `${pct(hybrid.corrected_distribution[winner.choice_id])} corrected preference`);
-  setText("#expected-error", simulation.confidence ? simulation.confidence.expected_tvd.toFixed(3) : "—");
+  setText("#expected-error", simulation.confidence ? "Unqualified" : "—");
   const anchorRate = hybrid.human_sample_size / simulation.scenario.sample_size;
   setText("#anchor-rate", pct(Math.max(0, anchorRate)));
 
@@ -78,15 +78,14 @@ function render(data) {
   const confidence = simulation.confidence;
   setText("#confidence-label", confidence ? `${confidence.label[0].toUpperCase()}${confidence.label.slice(1)} confidence` : "Not assessed");
   setText("#confidence-reason", confidence ? confidence.reason : "No confidence model result.");
-  const score = confidence ? Math.max(0, 1 - confidence.expected_tvd) : 0;
-  setText("#confidence-score", pct(score));
-  document.querySelector("#confidence-gauge").style.background = `conic-gradient(var(--lime-deep) 0deg, var(--lime-deep) ${score * 360}deg, #e4e6df ${score * 360}deg)`;
+  setText("#confidence-score", "N/A");
+  document.querySelector("#confidence-gauge").style.background = "#e4e6df";
 
   const syntheticTvd = data.synthetic_evaluation.metrics.tvd;
   const hybridTvd = data.hybrid_evaluation.metrics.tvd;
   setText("#synthetic-tvd", syntheticTvd.toFixed(4));
   setText("#hybrid-tvd", hybridTvd.toFixed(4));
-  setText("#improvement", `${pct(Math.max(0, data.improvement.relative_tvd_reduction))} lower error after the human anchor`);
+  setText("#improvement", `${pct(Math.abs(data.improvement.relative_tvd_reduction))} ${data.improvement.relative_tvd_reduction >= 0 ? "lower" : "higher"} error after generated demo anchors`);
 
   const card = data.evidence_card;
   setText("#lineage", card.lineage_hash);
@@ -169,7 +168,9 @@ async function loadQualification() {
   try {
     const response = await fetch("/api/qualification");
     if (!response.ok) return;
-    const data = await response.json();
+    const envelope = await response.json();
+    const data = envelope.historical_summary;
+    if (!data) return;
     const op = data.opinionqa;
     const twin = data.twin2k;
     if (!op || !twin) return;

@@ -145,7 +145,7 @@ class OutcomeVault:
         with self.lock, self.connection:
             existing = self.connection.execute(
                 """
-                SELECT manifest_sha256, outcome_sha256 FROM encrypted_outcomes
+                SELECT manifest_sha256, outcome_sha256, not_before FROM encrypted_outcomes
                 WHERE study_id = ?
                 """,
                 (study_id,),
@@ -154,6 +154,7 @@ class OutcomeVault:
                 if (
                     existing["manifest_sha256"] == manifest_sha256
                     and existing["outcome_sha256"] == outcome_sha256
+                    and existing["not_before"] == available_at
                 ):
                     return outcome_sha256
                 raise OutcomeVaultError("an immutable outcome already exists for this study")

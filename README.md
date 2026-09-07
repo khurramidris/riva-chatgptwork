@@ -1,244 +1,94 @@
 # Rival
 
-Rival is an evidence-gated population and behavior simulation product. It combines calibrated synthetic responses with a small human anchor, exposes the result through a study API and interface, and keeps prediction claims tied to reproducible qualification artifacts.
+Rival is building a supervised research service for comparing concepts, messages
+and proposed scenarios for a declared audience. The first output is simulated
+population choice shares. Individual synthetic responses are intermediate model
+outputs; they are not verified predictions of real people.
 
-Version 0.5 keeps the real-data qualification and prospective-integrity kernel from v0.4, then completes the planned research-component integration layer: semantic-similarity response rating, survey uncertainty intervals, the full SYN-DIGITS synthetic-control runtime, paired S-RCT estimation, calibrated persona-mixture demand/pricing, interview-grounded personas, official Twin-2K MAD evaluation, and revision-bound Centauri/Socrates inference adapters. This completes component development, not external validation: population-distribution calibration is ready for controlled pilots; universal or reliable individual prediction is not claimed.
+`0.6.0.dev4` is a research development release. See the
+[delivery board](docs/CUSTOMER_READINESS.md),
+[supported offering](docs/SUPPORTED_OFFERING.md), and
+[phase-one acceptance evidence](docs/verification/phase_one.json).
+Customer-domain accuracy, confidence coverage and launch readiness remain
+unqualified. No Aaru/Simile parity claim is made.
 
-The current `0.6.0.dev2` tree adds the frozen first live-model qualification:
-1,500 paired generic/twin cases, prompt and dataset hashing, append-and-resume
-execution, provider-usage accounting, local call/USD/expiry guards, and a
-separate post-prediction evaluator. No paid live-model result is claimed yet.
+## What goes in and comes out
 
-It also adds a separate, preregistered Twin-2K-500 Mega-Study benchmark for
-genuinely new situations. The new track freezes 300 participant-study cases
-across Junk Fees, Hiring Algorithms, and Privacy and compares Generic,
-Demographics, Full Persona, and target-specific Rival Retrieval using one exact
-model route. No Mega-Study model result is claimed yet.
+- Input: a question, alternatives, audience records, optional population controls,
+  evidence provenance and a relevant information cutoff.
+- Processing: prepare the audience, obtain a model probability distribution for
+  each seed person, aggregate simulated draws, and optionally correct against
+  observed human anchors.
+- Output: choice shares, diagnostics, research intervals, evidence and execution
+  identities, limitations, and observed comparison metrics when available.
+- Interface: a local browser demo and APIs exist. The demo uses generated people,
+  anchors and outcomes. The complete customer study interface is later work.
 
-## Real-data results
+## Install and run offline
 
-| Track | Data | Baseline | Rival result | Decision |
-|---|---:|---:|---:|---|
-| OpinionQA population distributions | 489 Pew questions × 2,058 released personas | 0.331 unweighted-persona TVD; 0.227 global-history TVD | **0.169 mean TVD** | Bounded pilots |
-| OpinionQA question win rate | 489 family-held-out questions | — | **85.1% improved** | Supporting evidence |
-| Twin-2K categorical individual prediction | 2,058 people × 108 categorical items | 52.8% population-mode accuracy | 54.1% released-LLM accuracy; **44.0% novel transfer** | Research only |
-| Twin-2K human reliability | same panel | — | 68.6% test–retest accuracy | Ceiling/context |
-| Twin-2K 80-person anchor | 108 categorical items | 0.279 raw model TVD | **0.074 hybrid TVD** | Bias correction works; human-only remains stronger here |
+Python 3.11 or newer is required. No API key is needed for these commands.
 
-OpinionQA is evaluated with five out-of-fold splits at the canonical/TF-IDF question-family level. Calibration reduces error 48.8% versus unweighted personas and 25.3% versus a classical global-history distribution, beating the latter on 71.6% of questions. Twin-2K transfer removes the target item, same QuestionID, normalized experimental block, and known semantic siblings from the donor matrix. Wave-4 outcomes never train that transfer model. Full per-question results, source hashes, limitations, and split-manifest hashes are in `reports/`.
-
-## Product capabilities
-
-- weighted seed populations calibrated to multiple target marginals;
-- family-held-out persona-mixture calibration adapted from SYN-DIGITS;
-- real OpinionQA and Twin-2K loaders with aligned schemas and SHA-256 provenance;
-- question-family leakage firewall with deterministic fold manifests;
-- longitudinal baselines: population mode/median, human test–retest, released LLM, and target-family-excluded ridge transfer;
-- prediction-powered categorical correction with a held-out human anchor;
-- TVD, Jensen–Shannon, percentage-point, rank, individual accuracy, normalized MAE, and correlation metrics;
-- confidence/abstention policy and append-only SQLite evidence ledger;
-- OpenAI-compatible behavior-provider adapter;
-- deterministic `PredictionContext` binding the scenario, eligible population, targets, retrieval audit, provider/model configuration, code version, and information cutoff;
-- fail-closed outcome firewall with per-person retrieval inclusion/exclusion hashes;
-- provider call identity covering model, endpoint fingerprint, request hash, cache key, attempts, latency, and upstream request ID without retaining credentials;
-- HMAC-SHA256 deployment seals over immutable prediction/preregistration manifests;
-- explicit `draft → prediction_locked → outcomes_revealed → evaluated` hash chain;
-- AES-GCM outcome vault in a separate database, with manifest binding, time-gated reveal, authenticated decryption, and access events;
-- local REST API, study workflow, and evidence/validation dashboard;
-- natural-language elicitation mapped to choice PMFs with licensed Semantic Similarity Rating code;
-- CLT, Hoeffding, and Bernstein synthetic-survey intervals with licensed numerical-parity tests;
-- full licensed SYN-DIGITS matrix completion and row/column synthetic-control evaluation;
-- paired surrogate-RCT estimation with pre-period residual calibration;
-- calibrated persona/no-buy demand mixtures, revenue CVaR, and price selection;
-- interview-transcript ingestion with protected-outcome rejection;
-- revision-, corpus-, endpoint-, and license-bound Centauri/Socrates inference adapters (no weights bundled);
-- official Twin-2K MAD evaluation wrappers;
-- frozen and resumable Twin-2K live-provider pilot with two-layer spending controls;
-- parallel Twin-2K-500 Mega-Study A/B/C/D benchmark with outcome-gated evaluation;
-- complete CLI qualification pipeline and machine-readable reports.
-
-## Install and run
-
-Rival requires Python 3.11+.
-
-```bash
-cd rival
-python3 -m pip install -e .
-python3 -m unittest discover -s tests -v
-python3 -m rival qualify-integrity
-python3 -m rival qualify-research-components
-python3 -m rival qualify-all --output-dir reports
-python3 -m rival verify-release
-python3 -m rival serve --port 8080
+```sh
+python -m pip install .
+python -m rival status
+python -m rival demo --sample-size 100 --human-anchor-size 20
+python -m rival serve --host 127.0.0.1 --port 8080
 ```
 
-Open `http://127.0.0.1:8080`, then select **Validation** to inspect the bundled release gate.
+Open `http://127.0.0.1:8080` for the research demonstration. It does not call a
+model API. The interface labels generated data and withholds decision confidence.
 
-Individual tracks can be reproduced directly:
+## Managed model execution
 
-```bash
-python3 -m rival qualify-opinionqa \
-  --folds 5 --iterations 150 \
-  --output reports/opinionqa_qualification.json
+Current general probability, behavioral-model and text/SSR adapters require an
+`ExecutionSession`: a persistent journal, explicit budget, expiry, conservative
+per-attempt reservation and total physical-attempt limit. Reported charges from
+failed attempts count. Missing billing or an interrupted request stops further
+spending until reconciled. Repeated draws of one seed person reuse its response.
 
-python3 -m rival qualify-twin2k \
-  --ridge-alpha 10 --anchor-size 80 \
-  --output reports/twin2k_qualification.json
+[Managed execution guide](docs/MANAGED_EXECUTION.md) describes the Python API,
+`python -m rival simulate-managed`, recovery and the limits of local cost estimates.
+Credentials belong in environment variables, never command arguments.
 
-python3 -m rival qualify-integrity \
-  --output reports/integrity_qualification.json
+## Scientific evidence and frozen experiments
+
+The original Twin-2K Wave-4 experiment, Mega A–D manifest, implementation witnesses
+and SYN-DIGITS E/F design remain preserved. Historical results and their negative
+findings remain available; they do not qualify this release or new audiences.
+The [historical README](docs/HISTORICAL_README_DEV2.md) retains the earlier numbers
+and their original context.
+
+Corrected Mega execution and reanalysis use the explicit v2 namespace and new
+artifact paths. Installed wheels include an archive of the original verification
+witnesses; the archive is not represented as the current runtime.
+
+```sh
+python -m rival mega-v2 verify-resources
+python -m rival mega-v2 --help
+python -m rival mega-v2 reanalyze --help
 ```
 
-The original offline concept-test slice remains available:
+Do not append v2 rows to the existing v1 experiment. Keep an existing historical
+execution environment pinned to its original commit. The current CLI exposes
+managed execution; the frozen v1 CLI remains an archival witness.
 
-```bash
-python3 -m rival demo
-python3 -m rival demo --json reports/demo.json --markdown reports/demo.md
+## Verification and provenance
+
+```sh
+python -m unittest discover -s tests -v
+python -m rival qualify-integrity
+python -m rival qualify-research-components
+python -m rival qualify-all --output-dir reports/current --compact
+python -m pip wheel . --no-deps --wheel-dir dist
+python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev4-py3-none-any.whl --output reports/installed_wheel.json
 ```
 
-## Use a real model provider
+`qualify-all` fails when a reproduction or engineering check fails. A PASS means
+those checks passed; it never enables a customer or confidence claim. Training,
+calibration and evaluation studies are assigned immutable roles before prediction
+lock. Only verified training-role studies enter the research confidence fit;
+even a fitted model continues to abstain pending independent qualification.
 
-The adapter accepts an OpenAI-compatible chat-completions endpoint and requests a strict probability distribution instead of unconstrained role-play.
-
-```python
-import os
-
-from rival.engine import RivalEngine
-from rival.providers import OpenAICompatibleProvider
-
-engine = RivalEngine()
-engine.register_provider(
-    "behavior-api",
-    OpenAICompatibleProvider(
-        model="your-authorized-model",
-        api_key=os.environ["RIVAL_API_KEY"],
-        base_url="https://your-endpoint.example/v1/chat/completions",
-    ),
-)
-```
-
-Set `scenario.model_family` to `behavior-api`. Credentials are read from the environment and are never stored in identities, contexts, runs, manifests, or reports. The public qualification numbers use released upstream model outputs because no external provider credential was configured during that benchmark.
-
-The active pinned live-provider qualification is frozen under
-`rival/studies/twin2k_live_v2/`. Rehearse it without network access, then run the
-one frozen case with a hidden key prompt, then resume the small preflight:
-
-```bash
-python3 -m rival rehearse-live-pilot
-
-# One actual frozen study case; the key is prompted for without echoing.
-python scripts/run_live_preflight.py --max-calls 1
-
-# No API key is accepted as a command argument.
-python scripts/run_live_preflight.py --max-calls 30
-
-# After reviewing the preflight, resume the same ledger to 300 total successes.
-python scripts/run_live_pilot_secure.py \
-  --target-total 300 --model PROVIDER_MODEL_ID \
-  --budget-usd LOCAL_CAP \
-  --input-cost-per-million INPUT_PRICE \
-  --output-cost-per-million OUTPUT_PRICE
-```
-
-The result ledger is resumable and provider-bound. See
-[`docs/FIRST_LIVE_TEST.md`](docs/FIRST_LIVE_TEST.md) for the frozen design,
-spending controls, baselines and interpretation rules.
-
-## New-situation Mega-Study benchmark
-
-The Mega-Study track is isolated from the Wave-4 pilot and starts with no API
-spending. Preparation downloads checksum-pinned official files, creates an
-answer-free prediction package, reproduces the authors' published non-target
-Digital Certification metrics, and audits all 1,200 prompts:
-
-```bash
-python scripts/prepare_mega_study.py
-```
-
-After it reports `PASS`, use the hidden-key secure runner for the four-call
-preflight and resumable checkpoints:
-
-```bash
-python scripts/run_mega_study_secure.py \
-  --phase preflight --budget-usd 0.10 --expiry-minutes 30
-
-python scripts/run_mega_study_secure.py \
-  --phase pilot --max-new-calls 100 \
-  --budget-usd 7.00 --expiry-minutes 120
-```
-
-Audit the append-only ledger after preflight and every checkpoint without
-opening outcomes or comparing partial predictions:
-
-```bash
-python scripts/audit_mega_checkpoint.py \
-  --expect-terminal 4 --budget-usd 0.10
-```
-
-See [`docs/MEGA_STUDY_OPERATOR_RUNBOOK.md`](docs/MEGA_STUDY_OPERATOR_RUNBOOK.md)
-for the exact Windows commands, cumulative checkpoint counts, and stop rules.
-The separately specified SYN-DIGITS E/F supplement remains execution-blocked
-until its same-model reference bank and prediction-only adapter are frozen.
-
-Only after all 1,200 predictions are terminal may the ledger be frozen and
-human outcomes opened:
-
-```bash
-python scripts/freeze_mega_study.py
-python scripts/evaluate_mega_study.py --no-download
-```
-
-See [`rival/studies/mega_study_v1/MEGA_STUDY_PROTOCOL.md`](rival/studies/mega_study_v1/MEGA_STUDY_PROTOCOL.md)
-and the adjacent preregistration, manifest, leakage audit, outcome mapping, and
-official-resource audit. These are development studies, not confirmation proof.
-
-## Prospective study workflow
-
-1. Prepare a prediction context with `/api/prediction-context`. Any protected outcome field fails closed; history after `information_cutoff` is excluded and hashed in the audit.
-2. Submit the returned `locked_context` with `/api/simulate`. Rival recomputes the context and stops before provider calls if any input, retrieval rule, provider configuration, or code version changed.
-3. Configure `RIVAL_MANIFEST_KEY` with at least 32 bytes and call `/api/studies/lock` with the unchanged ledger-backed simulation plus preregistered metrics and thresholds.
-4. Deposit future outcomes through `OutcomeVault` using separate storage and key custody. The simulation server intentionally has no outcome-reveal endpoint.
-5. After the declared availability time, reveal the outcome in a separate evaluation process, append the reveal receipt, evaluate, and close the phase chain.
-
-The manifest seal is a symmetric deployment seal, not a public-key signature or third-party timestamp. For a customer study, keep manifest and outcome keys outside the model team's credentials and export the sealed manifest to an independent custodian before outcome collection.
-
-## API
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/api/health` | Service status and providers |
-| GET | `/api/qualification` | Bundled real-data release summary |
-| GET | `/api/demo/config` | Demo scenario schema |
-| POST | `/api/demo/run` | Population → simulation → anchor → correction demo |
-| POST | `/api/prediction-context` | Audit and hash the exact outcome-free prediction boundary |
-| POST | `/api/simulate` | Run a supplied population, targets, and scenario |
-| POST | `/api/studies/lock` | Seal a ledger-backed run and preregistration; requires `RIVAL_MANIFEST_KEY` |
-| POST | `/api/hybrid` | Correct a simulation with human observations |
-| POST | `/api/research/ssr` | Map a natural-language response to a scale PMF |
-| POST | `/api/research/uncertainty` | Compute a synthetic-survey confidence interval |
-| POST | `/api/research/srct` | Estimate a weighted paired surrogate-RCT effect |
-| POST | `/api/research/pricing` | Fit persona demand or optimize price/revenue risk |
-| POST | `/api/research/personas` | Build outcome-free person state from interviews |
-| POST | `/api/research/synthetic-control/complete` | Complete a missing-value matrix with SYN-DIGITS |
-| GET | `/api/runs` | Recent immutable run records |
-
-## Architecture
-
-```mermaid
-flowchart TD
-    A["Pre-cutoff evidence"] --> B["Outcome firewall"]
-    B --> C["Locked prediction context"]
-    C --> D["Population and model runtime"]
-    D --> E["Sealed prediction manifest"]
-    E --> F["Append-only phase ledger"]
-    G["Separate encrypted outcome vault"] --> F
-    F --> H["Evaluation and release gate"]
-```
-
-See `docs/ARCHITECTURE.md`, `docs/RESEARCH_COMPONENTS.md`, `docs/PROSPECTIVE_STUDIES.md`, `docs/VALIDATION_PROTOCOL.md`, and `docs/UPSTREAM_INTEGRATION.md`. Source and data attribution is in `THIRD_PARTY_NOTICES.md`; exact incorporated file hashes are in `upstreams.lock.json`.
-
-## Honest release scope
-
-Rival v0.5 has a reproducible aggregate-distribution result on one five-choice survey domain, verified engineering controls for a prospective study, and verified integration/parity checks for the planned research components. These controls and component tests do not themselves establish customer-domain predictive or causal validity. Rival still does not prove transfer to customer concepts, future behavior, open-ended responses, interventions, or interactive multi-agent settings. The Twin-2K negative transfer result is intentionally shipped: a plausible research method failed to beat a classical population baseline, so individual novel-question prediction stays behind the research gate.
-
-The next commercial milestone is a protected, prospective pilot with customer-owned outcomes, a relevant classical model, an equal-cost human baseline, preregistered thresholds, and misses retained.
+See [third-party notices](THIRD_PARTY_NOTICES.md) and `upstreams.lock.json` for
+incorporated code, papers, data and pinned revisions. Complete supplemental MIT
+notices are bundled separately so original audited files stay byte-identical.

@@ -1,0 +1,5 @@
+include THIRD_PARTY_NOTICES.md upstreams.lock.json
+recursive-include scripts *.py
+recursive-include docs *.md
+recursive-include rival/studies *.json *.jsonl *.md
+recursive-include rival/notices *

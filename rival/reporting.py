@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from .schemas import EvaluationResult, HybridResult, SimulationResult
+from .readiness import release_claims
 
 
 def evidence_card(
@@ -11,7 +12,10 @@ def evidence_card(
     evaluation: EvaluationResult | None = None,
 ) -> dict[str, Any]:
     diagnostics = simulation.population_diagnostics
+    if evaluation and evaluation.run_id != simulation.run_id:
+        raise ValueError("evaluation belongs to a different simulation")
     return {
+        "release_claims": release_claims(),
         "run_id": simulation.run_id,
         "lineage_hash": simulation.lineage_hash,
         "study": simulation.scenario.name,
@@ -44,7 +48,9 @@ def evidence_card(
             ),
         },
         "confidence": (
-            simulation.confidence.model_dump(mode="json")
+            {**simulation.confidence.model_dump(mode="json"), "label": "unqualified",
+             "lower_tvd": 0.0, "upper_tvd": 1.0, "abstain": True,
+             "reason": "research diagnostic only; current release confidence is unqualified"}
             if simulation.confidence
             else None
         ),
@@ -52,8 +58,11 @@ def evidence_card(
         "labels": {
             "quantitative_output": "simulated" if not hybrid else "hybrid estimate",
             "agent_quotes": "synthetic; never a literal participant quotation",
+            "validation": "comparison only; protected provenance is not verified by this report",
+            "intervals": "research intervals; empirical coverage not qualified",
+            "confidence": "unqualified; decision support withheld",
         },
-        "warnings": simulation.warnings + (hybrid.warnings if hybrid else []),
+        "warnings": release_claims()["limitations"] + simulation.warnings + (hybrid.warnings if hybrid else []),
     }
 
 
@@ -73,7 +82,7 @@ def markdown_report(
         "",
         "## Result",
         "",
-        "| Choice | Estimate | 95% interval |",
+        "| Choice | Estimate | Research interval (coverage unqualified) |",
         "|---|---:|---:|",
     ]
     for choice in simulation.scenario.choices:
@@ -89,9 +98,9 @@ def markdown_report(
             "## Confidence",
             "",
             (
-                f"{simulation.confidence.label.title()} — expected TVD "
+                "Unqualified — research error diagnostic "
                 f"{simulation.confidence.expected_tvd:.3f}. "
-                f"Abstain: {'yes' if simulation.confidence.abstain else 'no'}."
+                "Decision support withheld; empirical error coverage is not established."
                 if simulation.confidence
                 else "Not assessed."
             ),
@@ -105,10 +114,9 @@ def markdown_report(
         ]
     )
     if evaluation:
-        lines.append(f"- Protected-outcome TVD: {evaluation.metrics['tvd']:.4f}")
+        lines.append(f"- Comparison TVD: {evaluation.metrics['tvd']:.4f}; protected provenance not verified by this report.")
     for warning in card["warnings"]:
         lines.append(f"- Warning: {warning}")
     lines.append("")
     lines.append("*Generated agent language is synthetic and is not a participant quotation.*")
     return "\n".join(lines)
-

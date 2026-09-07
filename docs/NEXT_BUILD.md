@@ -1,5 +1,9 @@
 # Next Phase: v0.6 Protected Customer Qualification
 
+Implementation tracking now lives in [CUSTOMER_READINESS.md](CUSTOMER_READINESS.md).
+The text below records the earlier roadmap; its release and readiness language
+does not certify the current development branch.
+
 ## Current gate
 
 Rival v0.5 completes the planned research-component development layer. It has a strong retrospective aggregate result on OpinionQA, a deliberately retained negative individual-transfer result on Twin-2K, ten passing prospective-integrity controls, and eight passing research integration/parity checks.

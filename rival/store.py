@@ -79,6 +79,10 @@ class EvidenceStore:
                     created_at TEXT NOT NULL,
                     UNIQUE(study_id, ordinal)
                 );
+                CREATE TABLE IF NOT EXISTS phase_payloads (
+                    id TEXT PRIMARY KEY,
+                    payload TEXT NOT NULL
+                );
                 """
             )
 
@@ -176,7 +180,7 @@ class EvidenceStore:
             ).fetchone()
         return json.loads(row["payload"]) if row else None
 
-    def append_phase_event(self, event: PhaseEvent) -> str:
+    def append_phase_event(self, event: PhaseEvent, evidence: dict[str, Any] | None = None) -> str:
         allowed = {
             ("draft", "prediction_locked"),
             ("prediction_locked", "outcomes_revealed"),
@@ -189,6 +193,8 @@ class EvidenceStore:
         payload = event.model_dump(mode="json")
         encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"))
         digest = canonical_hash(payload)
+        if evidence is not None and canonical_hash(evidence) != event.payload_sha256:
+            raise ValueError("phase evidence does not match event payload hash")
         with self.lock, self.connection:
             last = self.connection.execute(
                 """
@@ -209,6 +215,11 @@ class EvidenceStore:
                 if event.from_phase != "draft" or event.previous_event_sha256 is not None:
                     raise ImmutableConflict("the first phase event must start at draft")
             try:
+                if evidence is not None:
+                    self.connection.execute(
+                        "INSERT OR IGNORE INTO phase_payloads (id, payload) VALUES (?, ?)",
+                        (event.payload_sha256, json.dumps(evidence, sort_keys=True)),
+                    )
                 self.connection.execute(
                     """
                     INSERT INTO phase_events
@@ -227,6 +238,26 @@ class EvidenceStore:
             except sqlite3.IntegrityError as exc:
                 raise ImmutableConflict("phase event conflicts with the immutable chain") from exc
         return digest
+
+    def phase_evidence(self, digest: str) -> dict[str, Any] | None:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT payload FROM phase_payloads WHERE id = ?", (digest,)
+            ).fetchone()
+        if row is None:
+            return None
+        payload = json.loads(row["payload"])
+        if canonical_hash(payload) != digest:
+            raise ImmutableConflict("stored phase evidence hash does not verify")
+        return payload
+
+    def phase_events(self, study_id: str) -> list[dict[str, Any]]:
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT payload FROM phase_events WHERE study_id = ? ORDER BY ordinal",
+                (study_id,),
+            ).fetchall()
+        return [json.loads(row["payload"]) for row in rows]
 
     def last_phase_event(self, study_id: str) -> dict[str, Any] | None:
         with self.lock:

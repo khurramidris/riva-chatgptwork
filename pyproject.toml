@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rival-sim"
-version = "0.6.0.dev2"
-description = "Calibrated population and behavior simulation for enterprise decisions"
+version = "0.6.0.dev4"
+description = "Research population and behavior simulation with protected evaluation"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -26,7 +26,7 @@ behavioral-local = ["transformers>=4.45", "torch>=2.4", "peft>=0.13"]
 upstream-demand = ["cvxpy>=1.5", "tqdm>=4.66"]
 
 [project.scripts]
-rival = "rival.cli:main"
+rival = "rival.commands:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -35,6 +35,8 @@ include = ["rival*"]
 [tool.setuptools.package-data]
 rival = [
   "static/*",
+  "notices/*",
+  "studies/mega_study_syn_digits_v1/*",
   "datasets/opinionqa/*",
   "datasets/twin2k/*",
   "qualification/*",

@@ -1,0 +1,112 @@
+{
+  "additional_checks": [
+    "Python compilation",
+    "JavaScript syntax",
+    "git diff whitespace check",
+    "failure propagation through build_summary and current CLI",
+    "lazy sentence-transformer constructor"
+  ],
+  "base_commit": "902a3eb975b9e765f5a0c41e66afb6abe2ead5c6",
+  "evidence_sha256": {
+    "docs/verification/phase_one_artifacts/integrity_qualification.json": "11aff7f00d83603fc0b78ce76f1395212acd79c0d822e5db504a9ce7e3eb8dde",
+    "docs/verification/phase_one_artifacts/opinionqa_qualification.json": "490cdb3fcdaa3eb6e8b7402b4b0983056fa716c6160122240fe82e335e99f143",
+    "docs/verification/phase_one_artifacts/phase-one-installed-wheel.json": "fefeaa374b977b792a6be9391edfcafaf267097c24ae6ff0e09fbc09347a6450",
+    "docs/verification/phase_one_artifacts/phase-one-preservation.json": "9e49315fdba712e3d265077dea414a69ad5ad9a19a9c6cd93922c63da1c249b2",
+    "docs/verification/phase_one_artifacts/phase-one-tests-final.log": "8d576c32ca2b93f473c3937716db56c3287f3d960497cb3a461826fc8fa9406b",
+    "docs/verification/phase_one_artifacts/phase-one-wheel-source.json": "738d2ecdad44c1c0438b9132f73822c02dbf7e9a2d0205ba93c9bffb8d3a9bb9",
+    "docs/verification/phase_one_artifacts/qualification_summary.json": "9baa4a57c90e4262bc6ae794cbf81599abc8679165d76ffb57e7b2b212b81497",
+    "docs/verification/phase_one_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "docs/verification/phase_one_artifacts/twin2k_qualification.json": "e3491d8990b2f44a90a1362cf026a71bc78189f93d25ef0f06b91b672005dfaa"
+  },
+  "implementation_commit": "56176903d4c9d3b763f640a4acef68ef36fd7394",
+  "installed_wheel": {
+    "checks": [
+      "installed imports",
+      "all frozen witnesses",
+      "complete notices",
+      "E/F design resources",
+      "offline demo",
+      "research confidence",
+      "historical claims separation",
+      "real stage loader",
+      "freeze algorithm",
+      "local HTTP health, demo page and demo execution",
+      "installed module CLI commands",
+      "installed console entry point"
+    ],
+    "current_package_files_matched_to_checkout": 116,
+    "sha256": "a74c7ef5b7aec988b30e56b9a26ac7fd3ece36d3d94c57db99afa72dbd2e058d",
+    "status": "PASS",
+    "wheel": "dist/rival_sim-0.6.0.dev4-py3-none-any.whl"
+  },
+  "later_tasks_pending": [
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14"
+  ],
+  "limitations": [
+    "Customer accuracy and confidence coverage are unqualified.",
+    "Independent study grouping remains a custodian declaration requiring empirical review.",
+    "Local spending reservations cannot guarantee a provider-side hard ceiling.",
+    "Frozen v1 runners remain historical, outside the current managed CLI."
+  ],
+  "paid_provider_calls": 0,
+  "phase_one_tasks": {
+    "L01": "COMPLETE_LOCAL",
+    "L02": "COMPLETE_LOCAL",
+    "L03": "COMPLETE_LOCAL",
+    "L04": "COMPLETE_LOCAL",
+    "L05": "COMPLETE_LOCAL",
+    "L06": "COMPLETE_LOCAL"
+  },
+  "platform": {
+    "dependency_versions": {
+      "cryptography": "46.0.0",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "pyarrow": "25.0.1",
+      "pydantic": "2.13.4",
+      "scikit-learn": "1.8.0",
+      "scipy": "1.17.0"
+    },
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "preservation": {
+    "base_commit": "902a3eb975b9e765f5a0c41e66afb6abe2ead5c6",
+    "changed_protected_files": [],
+    "manifest_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0",
+    "protected_files_verified": 68
+  },
+  "publication": {
+    "github_branch_published": false,
+    "pull_request_created": false,
+    "reason": "Earlier automatic approval review rejected branch upload without explicit authorization for that destination; no retry or workaround attempted.",
+    "windows_ci": "NOT_RUN"
+  },
+  "research_reproduction": {
+    "evidence_role": "reproduction of existing public development benchmarks; not untouched qualification",
+    "release_decision": {
+      "individual_novel-question_prediction": "research only; baseline not beaten",
+      "population_distribution_calibration": "research only; current deployment not qualified",
+      "universal_human_simulation": "not claimed"
+    },
+    "status": "PASS",
+    "status_scope": "research reproduction and engineering checks; not customer qualification"
+  },
+  "schema_version": "rival.phase-one-verification.v1",
+  "scope": "phase-one engineering implementation and local verification; not customer or predictive qualification",
+  "tests": {
+    "failed": 0,
+    "network_model_responses": "mocked",
+    "passed": 136,
+    "seconds": 3.771
+  },
+  "verified_at": "2026-09-07T03:12:52.813715+00:00",
+  "version": "0.6.0.dev4"
+}

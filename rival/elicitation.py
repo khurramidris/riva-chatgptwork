@@ -5,11 +5,8 @@ import json
 import math
 import os
 import re
-import time
-import urllib.error
 import urllib.parse
-import urllib.request
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol, Sequence
 
 import numpy as np
@@ -220,6 +217,8 @@ class GeneratedText:
     request_id: str | None = None
     attempts: int = 1
     latency_ms: float = 0.0
+    diagnostics: dict[str, float] = field(default_factory=dict)
+    cache_hit: bool = False
 
 
 class TextResponseGenerator(Protocol):
@@ -232,6 +231,9 @@ class TextResponseGenerator(Protocol):
 class OpenAICompatibleTextGenerator:
     """Generate unconstrained natural-language intent for subsequent SSR rating."""
 
+    name = "openai-compatible-text"
+    deduplicate_population_draws = True
+
     def __init__(
         self,
         model: str,
@@ -240,10 +242,20 @@ class OpenAICompatibleTextGenerator:
         timeout_seconds: int = 60,
         temperature: float = 0.7,
         max_retries: int = 3,
+        execution=None,
     ):
         self.model = model
+        self.execution = execution
         self.api_key = api_key or os.getenv("RIVAL_API_KEY") or os.getenv("OPENROUTER_API_KEY")
         self.base_url = base_url or os.getenv("RIVAL_BASE_URL") or "https://openrouter.ai/api/v1/chat/completions"
+        endpoint = urllib.parse.urlsplit(self.base_url)
+        hostname = (endpoint.hostname or "").casefold()
+        if endpoint.username or endpoint.password or endpoint.query or endpoint.fragment:
+            raise ProviderError("provider URL must not contain credentials, query parameters or fragments")
+        if not hostname or (endpoint.scheme != "https" and not (
+            endpoint.scheme == "http" and hostname in {"localhost", "127.0.0.1", "::1"}
+        )):
+            raise ProviderError("remote provider URL must use HTTPS")
         self.timeout_seconds = int(timeout_seconds)
         self.temperature = float(temperature)
         self.max_retries = int(max_retries)
@@ -296,37 +308,9 @@ class OpenAICompatibleTextGenerator:
         }
 
     def generate(self, person: PopulationRecord, scenario: ScenarioSpec) -> GeneratedText:
-        request = urllib.request.Request(
-            self.base_url,
-            data=json.dumps(self._payload(person, scenario)).encode("utf-8"),
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://rival.local",
-                "X-Title": "Rival SSR Elicitation",
-            },
-            method="POST",
-        )
-        started = time.perf_counter()
-        last_error: Exception | None = None
-        for attempt in range(1, self.max_retries + 1):
-            try:
-                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
-                text = str(payload["choices"][0]["message"]["content"]).strip()
-                if not text:
-                    raise ProviderError("provider returned an empty text response")
-                return GeneratedText(
-                    text=text,
-                    request_id=str(payload["id"]) if payload.get("id") is not None else None,
-                    attempts=attempt,
-                    latency_ms=(time.perf_counter() - started) * 1000,
-                )
-            except (urllib.error.URLError, TimeoutError, KeyError, IndexError, TypeError, ValueError, ProviderError) as exc:
-                last_error = exc
-                if attempt < self.max_retries:
-                    time.sleep(2 ** (attempt - 1))
-        raise ProviderError(f"text generation failed after {self.max_retries} attempts") from last_error
+        if self.execution is None:
+            raise ProviderError("text generation requires a durable ExecutionSession with budget, expiry and attempt limits")
+        return self.execution.generate(self, person, scenario)
 
 
 class SSRElicitationProvider(PredictionProvider):
@@ -342,6 +326,7 @@ class SSRElicitationProvider(PredictionProvider):
         epsilon: float = 1e-8,
     ):
         self.generator = generator
+        self.deduplicate_population_draws = getattr(generator, "deduplicate_population_draws", False)
         self.embedder = embedder or HashingTextEmbedder()
         self.temperature = temperature
         self.epsilon = epsilon
@@ -359,10 +344,11 @@ class SSRElicitationProvider(PredictionProvider):
         probabilities = self._rater(scenario).rate(generated.text)
         return ProviderPrediction(
             probabilities=probabilities,
-            diagnostics={"ssr_response_characters": float(len(generated.text))},
+            diagnostics={**generated.diagnostics, "ssr_response_characters": float(len(generated.text))},
             provider_request_id=generated.request_id,
             attempts=generated.attempts,
             latency_ms=generated.latency_ms,
+            cache_hit=generated.cache_hit,
         )
 
     def identity(self) -> ProviderIdentity:
@@ -379,4 +365,3 @@ class SSRElicitationProvider(PredictionProvider):
             model=str(self.generator.identity.get("model", "text-generator+SSR")),
             configuration_sha256=canonical_hash(configuration),
         )
-

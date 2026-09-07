@@ -7,6 +7,8 @@ from typing import Sequence
 import numpy as np
 from scipy.stats import t
 
+from ..integrity import prepare_prediction_context
+from ..mathx import validate_probabilities
 from ..providers import PredictionProvider
 from ..schemas import PopulationRecord, ScenarioSpec
 
@@ -52,8 +54,10 @@ def estimate_paired_srct(
     confidence: float = 0.95,
     pre_period: PrePeriodAnchor | None = None,
 ) -> SRCTEstimate:
-    if not predictions:
-        raise ValueError("at least one paired prediction is required")
+    if len(predictions) < 2:
+        raise ValueError("at least two independent pairs are required to estimate variance")
+    if len({item.person_id for item in predictions}) != len(predictions):
+        raise ValueError("paired predictions must have distinct person IDs")
     if not 0 < confidence < 1:
         raise ValueError("confidence must be between zero and one")
     weights = np.asarray([item.weight for item in predictions], dtype=float)
@@ -67,6 +71,8 @@ def estimate_paired_srct(
     weight_sum = float(weights.sum())
     raw = float(np.dot(weights, differences) / weight_sum)
     effective_n = weight_sum**2 / float(np.dot(weights, weights))
+    if effective_n <= 1.0 + 1e-12:
+        raise ValueError("effective pair count is insufficient to estimate variance")
     centered = differences - raw
     denominator = weight_sum - float(np.dot(weights, weights)) / weight_sum
     variance = float(np.dot(weights, centered**2) / denominator) if denominator > 0 else 0.0
@@ -98,16 +104,29 @@ def simulate_paired_srct(
     confidence: float = 0.95,
     pre_period: PrePeriodAnchor | None = None,
 ) -> SRCTEstimate:
-    if not population:
-        raise ValueError("population cannot be empty")
+    if len(population) < 2 or len({person.person_id for person in population}) != len(population):
+        raise ValueError("simulation requires at least two distinct participants")
     control_choices = {choice.choice_id for choice in control_scenario.choices}
     treatment_choices = {choice.choice_id for choice in treatment_scenario.choices}
     if outcome_choice_id not in control_choices or outcome_choice_id not in treatment_choices:
         raise ValueError("outcome_choice_id must exist in both scenarios")
     pairs = []
-    for person in population:
+    # Prepare both arms before the first request; either arm can expose leakage.
+    control_context = prepare_prediction_context(
+        list(population), control_scenario, None, provider.identity()
+    )
+    treatment_context = prepare_prediction_context(
+        list(population), treatment_scenario, None, provider.identity()
+    )
+    for person, treated_person in zip(
+        control_context.records, treatment_context.records, strict=True
+    ):
         control = provider.predict(person, control_scenario)
-        treatment = provider.predict(person, treatment_scenario)
+        treatment = provider.predict(treated_person, treatment_scenario)
+        for output, choices in ((control, control_choices), (treatment, treatment_choices)):
+            if set(output.probabilities) != choices:
+                raise ValueError("provider returned the wrong choice_id set")
+            validate_probabilities(output.probabilities.values())
         pairs.append(
             PairedPrediction(
                 person_id=person.person_id,
@@ -117,4 +136,3 @@ def simulate_paired_srct(
             )
         )
     return estimate_paired_srct(pairs, confidence=confidence, pre_period=pre_period)
-

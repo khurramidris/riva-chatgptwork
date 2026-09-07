@@ -48,8 +48,10 @@ class RivalApplication:
         )
 
     def health(self) -> dict[str, Any]:
+        from .readiness import release_claims
         return {
             "status": "ok",
+            "release_claims": release_claims(),
             "service": "rival-sim",
             "version": __version__,
             "providers": self.engine.router.available,

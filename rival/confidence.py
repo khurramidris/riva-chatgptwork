@@ -18,7 +18,7 @@ FEATURE_NAMES = [
 
 
 class ConfidenceModel:
-    """Ridge error predictor with a conservative cold-start policy."""
+    """Research error predictor. Fitting cannot authorize operational claims."""
 
     def __init__(self, ridge: float = 1.0, quality_threshold: float = 0.16):
         self.ridge = ridge
@@ -31,13 +31,22 @@ class ConfidenceModel:
 
     @staticmethod
     def vectorize(features: dict[str, float]) -> np.ndarray:
-        return np.asarray([float(features.get(name, 0.0)) for name in FEATURE_NAMES])
+        values = np.asarray([float(features.get(name, 0.0)) for name in FEATURE_NAMES])
+        if not np.isfinite(values).all():
+            raise ValueError("confidence features must be finite")
+        # Planned or caller-declared anchors are not protected evidence.
+        values[FEATURE_NAMES.index("human_anchor_rate")] = 0.0
+        return values
 
     def fit(self, feature_rows: list[dict[str, float]], observed_tvd: list[float]) -> None:
         if len(feature_rows) != len(observed_tvd) or len(feature_rows) < 5:
             raise ValueError("confidence fitting requires at least five aligned examples")
         matrix = np.vstack([self.vectorize(row) for row in feature_rows])
         target = np.asarray(observed_tvd, dtype=float)
+        if not np.isfinite(target).all() or np.any((target < 0) | (target > 1)):
+            raise ValueError("observed TVD must be finite and between zero and one")
+        if not math.isfinite(self.ridge) or self.ridge <= 0:
+            raise ValueError("ridge must be finite and positive")
         self.mean = matrix.mean(axis=0)
         self.scale = matrix.std(axis=0)
         self.scale[self.scale < 1e-9] = 1.0
@@ -53,33 +62,23 @@ class ConfidenceModel:
         self.training_examples = len(feature_rows)
 
     def assess(self, features: dict[str, float]) -> ConfidenceAssessment:
+        features = dict(zip(FEATURE_NAMES, self.vectorize(features), strict=True))
         if self.coefficients is None or self.mean is None or self.scale is None:
             expected = self._cold_start_error(features)
-            uncertainty = 0.14
-            reason = "cold-start confidence; fewer than five protected outcomes"
+            reason = "unqualified cold-start heuristic; empirical error coverage not established"
         else:
             vector = (self.vectorize(features) - self.mean) / self.scale
             expected = float(np.dot(np.r_[1.0, vector], self.coefficients))
-            uncertainty = 1.645 * self.residual_std
-            reason = "ridge estimate from protected outcome features"
+            reason = "research ridge fit; independent provenance and error coverage require qualification"
 
         expected = min(max(expected, 0.0), 1.0)
-        lower = max(0.0, expected - uncertainty)
-        upper = min(1.0, expected + uncertainty)
-        if upper <= self.quality_threshold:
-            label = "high"
-        elif expected <= self.quality_threshold:
-            label = "medium"
-        else:
-            label = "low"
-        abstain = label == "low" or upper > max(self.quality_threshold * 1.75, 0.25)
         return ConfidenceAssessment(
-            label=label,
+            label="unqualified",
             expected_tvd=expected,
-            lower_tvd=lower,
-            upper_tvd=upper,
-            abstain=abstain,
-            reason=reason,
+            lower_tvd=0.0,
+            upper_tvd=1.0,
+            abstain=True,
+            reason=reason + "; diagnostic estimate only; decision support withheld",
             training_examples=self.training_examples,
             features={name: float(features.get(name, 0.0)) for name in FEATURE_NAMES},
         )
@@ -91,7 +90,6 @@ class ConfidenceModel:
         margin = min(features.get("population_margin_error", 0.0) * 10.0, 1.0)
         ess_penalty = 1.0 - min(max(features.get("population_ess_ratio", 0.0), 0.0), 1.0)
         novelty = features.get("scenario_novelty", 0.5)
-        anchor_credit = min(features.get("human_anchor_rate", 0.0) * 2.0, 0.5)
         value = (
             0.06
             + 0.05 * entropy
@@ -99,7 +97,5 @@ class ConfidenceModel:
             + 0.05 * margin
             + 0.05 * ess_penalty
             + 0.10 * novelty
-            - 0.08 * anchor_credit
         )
         return float(max(value, 0.03))
-

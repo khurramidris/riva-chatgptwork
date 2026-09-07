@@ -8,6 +8,21 @@ from typing import Any, Iterable
 import numpy as np
 
 
+def validate_probabilities(values: Iterable[float]) -> np.ndarray:
+    """Validate an external PMF without silently repairing invalid evidence."""
+    raw = list(values)
+    if any(isinstance(value, (bool, str)) for value in raw):
+        raise ValueError("probabilities must be numeric, not booleans or strings")
+    array = np.asarray(raw, dtype=float)
+    if array.ndim != 1 or not len(array):
+        raise ValueError("probabilities must be a nonempty vector")
+    if not np.all(np.isfinite(array)) or np.any(array < 0) or np.any(array > 1):
+        raise ValueError("probabilities must be finite values between zero and one")
+    if not np.isclose(array.sum(), 1.0, rtol=0, atol=1e-6):
+        raise ValueError("probabilities must sum to one")
+    return array / array.sum()
+
+
 def normalize(values: Iterable[float]) -> np.ndarray:
     array = np.asarray(list(values), dtype=float)
     array = np.where(np.isfinite(array), array, 0.0)
@@ -69,4 +84,3 @@ def canonical_hash(value: Any) -> str:
 def stable_unit_interval(*parts: Any) -> float:
     digest = canonical_hash(parts)
     return int(digest[:16], 16) / float(0xFFFFFFFFFFFFFFFF)
-

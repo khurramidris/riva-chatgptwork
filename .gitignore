@@ -12,3 +12,4 @@ reports/*.jsonl
 .env
 .rival-data/
 reports/mega_study/
+reports/phase-one/

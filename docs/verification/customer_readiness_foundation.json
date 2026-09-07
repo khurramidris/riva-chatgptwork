@@ -1,0 +1,34 @@
+{
+  "base_commit": "902a3eb975b9e765f5a0c41e66afb6abe2ead5c6",
+  "manifest_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0",
+  "protected_files_verified": 65,
+  "changed_protected_files": [],
+  "integrity_qualification": "PASS",
+  "version": "0.6.0.dev3",
+  "verification_date": "2026-09-06",
+  "python": "3.12.13",
+  "operating_system": "Linux",
+  "unit_tests_passed": 121,
+  "unit_tests_failed": 0,
+  "paid_provider_calls": 0,
+  "scope": "local engineering verification, not scientific or customer qualification",
+  "commands": [
+    "python -m unittest discover -s tests -v",
+    "python -m rival.mega_study_v2 --help",
+    "python -m rival qualify-integrity --output reports/integrity_dev3.json"
+  ],
+  "upstream_instrument_format_checks": {
+    "junk_fees": {
+      "questions": 63,
+      "outcomes": 3
+    },
+    "hiring_algorithms": {
+      "questions": 22,
+      "outcomes": 40
+    },
+    "privacy": {
+      "questions": 5,
+      "outcomes": 1
+    }
+  }
+}

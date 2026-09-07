@@ -119,7 +119,7 @@ class ProviderCallIdentity(StrictModel):
     request_sha256: str
     cache_key: str
     provider_request_id: str | None = None
-    attempts: int = Field(default=1, ge=1)
+    attempts: int = Field(default=1, ge=0)
     latency_ms: float = Field(default=0.0, ge=0)
     cache_hit: bool = False
 
@@ -134,7 +134,7 @@ class RetrievalAuditEntry(StrictModel):
 
 
 class RetrievalAudit(StrictModel):
-    policy_version: str = "rival.outcome-firewall.v1"
+    policy_version: str = "rival.outcome-firewall.v2"
     information_cutoff: str | None = None
     entries: list[RetrievalAuditEntry]
     audit_sha256: str
@@ -169,7 +169,7 @@ class AgentPrediction(StrictModel):
 
 
 class ConfidenceAssessment(StrictModel):
-    label: Literal["high", "medium", "low"]
+    label: Literal["high", "medium", "low", "unqualified"]
     expected_tvd: float
     lower_tvd: float
     upper_tvd: float
@@ -210,7 +210,7 @@ class EstimateInterval(StrictModel):
     estimate: float
     lower: float
     upper: float
-    standard_error: float
+    standard_error: float | None
 
 
 class HybridResult(StrictModel):
@@ -228,7 +228,7 @@ class EvaluationResult(StrictModel):
     run_id: str
     created_at: datetime = Field(default_factory=utc_now)
     observed_distribution: dict[str, float]
-    metrics: dict[str, float]
+    metrics: dict[str, float | None]
     subgroup_metrics: dict[str, dict[str, float]] = Field(default_factory=dict)
     preregistration_hash: str | None = None
     outcome_available_at: datetime | None = None
@@ -244,7 +244,7 @@ class PreregistrationSpec(StrictModel):
     primary_metrics: list[str] = Field(default_factory=lambda: ["tvd"])
     acceptance_thresholds: dict[str, float] = Field(default_factory=dict)
     subgroup_keys: list[str] = Field(default_factory=list)
-    evaluation_protocol: str = "rival.distribution-evaluation.v1"
+    evaluation_protocol: str = "rival.distribution-evaluation.v2"
     outcome_not_before: datetime | None = None
     notes: str = ""
 

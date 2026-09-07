@@ -23,8 +23,8 @@ Use separate people or systems for these roles in a customer study. A single dev
 5. Define `PreregistrationSpec`, including primary metrics, thresholds, subgroups, and `outcome_not_before`.
 6. Call `ProspectiveStudyManager.lock_prediction`. Export the complete `SealedStudyManifest` to the evaluator or custodian.
 7. Deposit the outcome in a separate `OutcomeVault` database. Keep the vault key and database outside the simulation service.
-8. After `outcome_not_before`, reveal in the custodian/evaluation environment. Append the `OutcomeRevealReceipt`, run the registered evaluation, and append the evaluation phase event.
-9. Verify both the manifest seal and phase chain. Publish every eligible study, including misses.
+8. After `outcome_not_before`, call `manager.reveal_outcomes(study_id, vault, outcome_key)` in the custodian/evaluation environment. Standalone caller-created receipts cannot advance the study.
+9. Evaluate the returned distribution with the sealed preregistration hash, then call `manager.record_evaluation`. The manager compares the authenticated outcome and recomputes metrics from the stored locked simulation. `manager.verify(sealed)` checks the stored signed evidence as well as the phase chain. Publish every eligible study, including misses.
 
 ## Minimal Python flow
 
@@ -62,11 +62,26 @@ vault.deposit(
     outcome_key,
     sealed.manifest.preregistration.outcome_not_before,
 )
+
+# Execute only after the sealed availability date, in the custodian environment.
+revealed, receipt = manager.reveal_outcomes(scenario.scenario_id, vault, outcome_key)
+observed = revealed.get("distribution", revealed)
+evaluation = engine.evaluate(
+    simulation, observed,
+    preregistration_hash=canonical_hash(sealed.manifest.preregistration),
+)
+manager.record_evaluation(scenario.scenario_id, evaluation)
+assert manager.verify(sealed)
 ```
 
 Do not put `manifest_key`, `outcome_key`, provider API keys, or plaintext outcomes in source control. `RIVAL_MANIFEST_KEY` configures API locking, but the API intentionally exposes no reveal route.
 
 ## What v0.5 proves
+
+Historical scope: these statements describe the old qualification run, not an
+approval of `0.6.0.dev3`. The new manager requires persisted signed phase evidence;
+legacy receipt-only chains do not satisfy that requirement. Keep those artifacts
+with their original version. Do not manufacture signatures for historical claims.
 
 The deterministic qualification verifies that contexts reproduce, outcome fields fail closed, input changes are rejected before provider calls, manifest tampering is detected, plaintext is absent from vault files, early and unauthenticated reveal fail, and phase chains verify. A separate eight-check gate verifies the v0.5 research-component wiring and numerical parity.
 

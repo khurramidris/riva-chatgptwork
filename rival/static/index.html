@@ -24,8 +24,8 @@
     <main class="shell" id="study-view">
       <aside class="builder panel">
         <div class="eyebrow">New study</div>
-        <h1>Test a decision before the market does.</h1>
-        <p class="intro">Simulate the population, verify the uncertain cases with real people, and receive a corrected result.</p>
+        <h1>Explore a research simulation.</h1>
+        <p class="intro">This offline demo generates people, anchors and outcomes. It illustrates the workflow; it does not predict a real market.</p>
 
         <form id="study-form">
           <label>
@@ -42,7 +42,7 @@
           </label>
 
           <div class="section-label">Population</div>
-          <div class="population-chip"><strong>National households</strong><span>4 calibrated controls</span></div>
+          <div class="population-chip"><strong>Generated demo households</strong><span>4 calibrated controls</span></div>
 
           <div class="split-inputs">
             <label>
@@ -50,7 +50,7 @@
               <input id="sample-size" type="number" min="100" max="10000" step="100" value="1200">
             </label>
             <label>
-              Human anchor
+              Generated demo anchor
               <input id="anchor-size" type="number" min="0" max="2000" step="10" value="80">
             </label>
           </div>
@@ -63,7 +63,7 @@
           </div>
 
           <button class="run-button" id="run-button" type="submit">
-            <span>Run calibrated study</span><em>→</em>
+            <span>Run offline demo</span><em>→</em>
           </button>
         </form>
       </aside>
@@ -82,8 +82,8 @@
 
         <div id="empty-state" class="empty-state">
           <div class="signal" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-          <h3>Your calibrated result will appear here</h3>
-          <p>The demo locks a synthetic prediction, samples a human anchor, corrects the estimate, and scores both against a protected outcome.</p>
+          <h3>Your demo result will appear here</h3>
+          <p>The demo compares a heuristic prediction and generated anchors against generated outcomes. No real participants or model API are used.</p>
         </div>
 
         <div id="loading-state" class="loading-state hidden" aria-live="polite">
@@ -91,24 +91,24 @@
           <h3 id="loading-label">Compiling target population…</h3>
           <div class="progress"><span id="progress-bar"></span></div>
           <div class="pipeline">
-            <span class="current">Population</span><span>Simulation</span><span>Human anchor</span><span>Calibration</span>
+            <span class="current">Population</span><span>Simulation</span><span>Generated demo anchor</span><span>Calibration</span>
           </div>
         </div>
 
         <div id="result-state" class="results hidden">
           <div class="summary-grid">
             <article class="metric-card hero-metric">
-              <span>Recommended concept</span>
+              <span>Largest simulated share</span>
               <strong id="winner">—</strong>
               <small id="winner-share">—</small>
             </article>
             <article class="metric-card">
-              <span>Expected error</span>
+              <span>Decision confidence</span>
               <strong id="expected-error">—</strong>
-              <small>Total variation distance</small>
+              <small>Empirical accuracy not qualified</small>
             </article>
             <article class="metric-card">
-              <span>Human anchor rate</span>
+              <span>Generated demo anchor rate</span>
               <strong id="anchor-rate">—</strong>
               <small>efficiency must be proven on real studies</small>
             </article>
@@ -116,11 +116,11 @@
 
           <article class="chart-card">
             <div class="card-head">
-              <div><span class="eyebrow">Purchase preference</span><h3>Corrected population estimate</h3></div>
+              <div><span class="eyebrow">Purchase preference</span><h3>Illustrative corrected shares</h3></div>
               <div class="legend"><span class="hybrid-dot"></span>Hybrid estimate <span class="synthetic-dot"></span>Synthetic prior</div>
             </div>
             <div id="bars" class="bars"></div>
-            <div class="demo-truth">Demo benchmark only: protected outcome is shown after the prediction is locked.</div>
+            <div class="demo-truth">Generated demonstration only. Research intervals have unqualified coverage.</div>
           </article>
 
           <div class="detail-grid">
@@ -133,7 +133,7 @@
               <div class="confidence-gauge" id="confidence-gauge"><span id="confidence-score">—</span></div>
             </article>
             <article class="validation-card">
-              <span class="eyebrow">Protected benchmark</span>
+              <span class="eyebrow">Generated benchmark</span>
               <div class="validation-row"><span>Synthetic TVD</span><strong id="synthetic-tvd">—</strong></div>
               <div class="validation-row"><span>Hybrid TVD</span><strong id="hybrid-tvd">—</strong></div>
               <div class="improvement" id="improvement">—</div>
@@ -157,16 +157,16 @@
     <main class="validation-shell hidden" id="validation-view">
       <section class="validation-hero">
         <div>
-          <div class="eyebrow">Qualification ledger · v0.5</div>
+          <div class="eyebrow">Historical benchmarks ledger · v0.5</div>
           <h1>Evidence before claims.</h1>
-          <p>Every number below comes from released research data, a deterministic split manifest, and a reproducible command. Green means bounded pilot-ready. Amber means research only.</p>
+          <p>Every number below comes from released research data, a deterministic split manifest, and a reproducible command. These are historical research results. They do not qualify the current release.</p>
         </div>
-        <div class="release-gate"><span></span><div><strong>Population calibration</strong><small>Qualified for bounded pilots</small></div></div>
+        <div class="release-gate"><span></span><div><strong>Population calibration</strong><small>Current release: research only</small></div></div>
       </section>
 
       <section class="benchmark-grid">
         <article class="benchmark-card opinion-card">
-          <div class="benchmark-head"><span class="dataset-tag">OpinionQA · real survey outcomes</span><span class="gate pass">Pilot gate passed</span></div>
+          <div class="benchmark-head"><span class="dataset-tag">OpinionQA · real survey outcomes</span><span class="gate pass">Historical research</span></div>
           <h2>Family-held-out population calibration</h2>
           <p class="benchmark-copy">Persona weights learn from related survey history, then predict entirely held-out question families.</p>
           <div class="benchmark-kpis">

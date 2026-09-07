@@ -4,7 +4,7 @@ import math
 
 import numpy as np
 
-from .mathx import effective_sample_size, normalize, project_simplex
+from .mathx import effective_sample_size, normalize, project_simplex, validate_probabilities
 from .schemas import EstimateInterval, HumanObservation, HybridResult
 
 
@@ -27,11 +27,13 @@ class HybridEstimator:
         observations: list[HumanObservation],
     ) -> HybridResult:
         choice_ids = list(synthetic_distribution)
-        synthetic = normalize(synthetic_distribution[key] for key in choice_ids)
+        synthetic = validate_probabilities(synthetic_distribution[key] for key in choice_ids)
+        if len({item.person_id for item in observations}) != len(observations):
+            raise ValueError("human anchors must have distinct person IDs")
         if not observations:
             intervals = {
                 key: EstimateInterval(
-                    estimate=float(value), lower=0.0, upper=1.0, standard_error=0.5
+                    estimate=float(value), lower=0.0, upper=1.0, standard_error=None
                 )
                 for key, value in zip(choice_ids, synthetic, strict=True)
             }
@@ -55,7 +57,7 @@ class HybridEstimator:
                 raise ValueError(
                     f"unknown observed choice {observation.observed_choice!r}"
                 )
-            predicted = normalize(
+            predicted = validate_probabilities(
                 observation.synthetic_probabilities.get(key, 0.0) for key in choice_ids
             )
             observed = np.zeros(len(choice_ids), dtype=float)
@@ -68,6 +70,12 @@ class HybridEstimator:
         ess = effective_sample_size(weights)
         intervals: dict[str, EstimateInterval] = {}
         for column, key in enumerate(choice_ids):
+            if len(observations) < 2 or ess <= 1.0 + 1e-12:
+                intervals[key] = EstimateInterval(
+                    estimate=float(corrected[column]), lower=0.0, upper=1.0,
+                    standard_error=None,
+                )
+                continue
             centered = residual_matrix[:, column] - residual[column]
             weighted_variance = float(np.sum(weights * np.square(centered)))
             standard_error = math.sqrt(weighted_variance / max(ess - 1.0, 1.0))
@@ -79,6 +87,8 @@ class HybridEstimator:
             )
 
         warnings: list[str] = []
+        if len(observations) < 2 or ess <= 1.0 + 1e-12:
+            warnings.append("insufficient independent anchors to estimate sampling variance")
         if len(observations) < 30:
             warnings.append("human anchor has fewer than 30 observations")
         if not np.allclose(raw_corrected, corrected, atol=1e-9):
@@ -99,4 +109,3 @@ class HybridEstimator:
             effective_human_sample_size=ess,
             warnings=warnings,
         )
-

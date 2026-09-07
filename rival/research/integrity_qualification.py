@@ -103,7 +103,7 @@ def run_integrity_qualification() -> dict[str, Any]:
         )
         signer = ManifestSigner(b"integrity-qualification-key-material-0001")
         manager = ProspectiveStudyManager(engine.store, signer)
-        not_before = utc_now() + timedelta(hours=1)
+        not_before = utc_now()
         sealed = manager.lock_prediction(
             simulation,
             PreregistrationSpec(
@@ -164,22 +164,16 @@ def run_integrity_qualification() -> dict[str, Any]:
             raise AssertionError("outcome was revealed before not_before")
 
         check("time_gate_blocks_early_reveal", early_reveal_check)
-        revealed, receipt = vault.reveal(
-            scenario.scenario_id,
-            manifest_sha256,
-            vault_key,
-            now=not_before + timedelta(seconds=1),
-        )
+        revealed, receipt = manager.reveal_outcomes(scenario.scenario_id, vault, vault_key)
         check(
             "authenticated_outcome_reveal",
             lambda: receipt.outcome_sha256
             if revealed == protected_outcome
             else (_ for _ in ()).throw(AssertionError("revealed payload changed")),
         )
-        manager.record_outcome_reveal(scenario.scenario_id, receipt)
         evaluation = engine.evaluate(
             simulation,
-            simulation.distribution,
+            revealed["distribution"],
             preregistration_hash=canonical_hash(sealed.manifest.preregistration),
             learn_confidence=False,
         )

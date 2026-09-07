@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
-import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -13,7 +13,7 @@ from typing import Any
 
 import numpy as np
 
-from .mathx import canonical_hash, normalize, stable_softmax, stable_unit_interval
+from .mathx import canonical_hash, stable_softmax, stable_unit_interval
 from .schemas import (
     PopulationRecord,
     ProviderCallIdentity,
@@ -210,6 +210,7 @@ class OpenAICompatibleProvider(PredictionProvider):
     """OpenAI-compatible probability provider using Python's standard library."""
 
     name = "openai-compatible"
+    deduplicate_population_draws = True
 
     def __init__(
         self,
@@ -222,8 +223,10 @@ class OpenAICompatibleProvider(PredictionProvider):
         history_limit: int = 16,
         max_output_tokens: int = 300,
         use_response_format: bool = True,
+        execution=None,
     ):
         self.model = model
+        self.execution = execution
         self.api_key = api_key or os.getenv("RIVAL_API_KEY") or os.getenv(
             "OPENROUTER_API_KEY"
         )
@@ -236,6 +239,8 @@ class OpenAICompatibleProvider(PredictionProvider):
         hostname = (endpoint.hostname or "").casefold()
         self.is_openrouter = hostname == "openrouter.ai"
         local_endpoint = hostname in {"localhost", "127.0.0.1", "::1"}
+        if endpoint.query or endpoint.fragment:
+            raise ProviderError("provider URL must not contain query parameters or fragments")
         if endpoint.username or endpoint.password:
             raise ProviderError("provider URL must not contain credentials")
         if endpoint.scheme != "https" and not (
@@ -402,7 +407,8 @@ class OpenAICompatibleProvider(PredictionProvider):
         for destination, candidates in aliases.items():
             for candidate in candidates:
                 value = usage.get(candidate)
-                if isinstance(value, (int, float)) and float(value) >= 0:
+                if (isinstance(value, (int, float)) and not isinstance(value, bool)
+                        and math.isfinite(value) and float(value) >= 0):
                     diagnostics[destination] = float(value)
                     break
         if "total_tokens" not in diagnostics:
@@ -415,70 +421,9 @@ class OpenAICompatibleProvider(PredictionProvider):
     def predict(
         self, person: PopulationRecord, scenario: ScenarioSpec
     ) -> ProviderPrediction:
-        body = json.dumps(self._request_payload(person, scenario)).encode("utf-8")
-        request = urllib.request.Request(
-            self.base_url,
-            data=body,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://rival.local",
-                "X-Title": "Rival Simulation",
-            },
-            method="POST",
-        )
-        last_error: Exception | None = None
-        started = time.perf_counter()
-        for attempt in range(self.max_retries):
-            try:
-                with urllib.request.urlopen(
-                    request, timeout=self.timeout_seconds
-                ) as response:
-                    response_payload = json.loads(response.read().decode("utf-8"))
-                content = self._extract_content(response_payload).strip()
-                if content.startswith("```"):
-                    content = content.strip("`")
-                    if content.startswith("json"):
-                        content = content[4:].lstrip()
-                parsed = json.loads(content)
-                choice_ids = [choice.choice_id for choice in scenario.choices]
-                if set(parsed) != set(choice_ids):
-                    raise ProviderError("provider returned the wrong choice_id set")
-                probabilities = normalize(float(parsed[key]) for key in choice_ids)
-                diagnostics = {"attempts": float(attempt + 1)}
-                diagnostics.update(self._usage_diagnostics(response_payload))
-                return ProviderPrediction(
-                    probabilities={
-                        key: float(value)
-                        for key, value in zip(choice_ids, probabilities, strict=True)
-                    },
-                    diagnostics=diagnostics,
-                    provider_request_id=(
-                        str(response_payload.get("id"))
-                        if response_payload.get("id") is not None
-                        else None
-                    ),
-                    attempts=attempt + 1,
-                    latency_ms=(time.perf_counter() - started) * 1000,
-                )
-            except urllib.error.HTTPError as exc:
-                last_error = ProviderError(_http_error_detail(exc))
-                if attempt + 1 < self.max_retries:
-                    time.sleep(2**attempt)
-            except urllib.error.URLError as exc:
-                last_error = ProviderError(
-                    "network error: " + _redact_provider_detail(exc.reason)
-                )
-                if attempt + 1 < self.max_retries:
-                    time.sleep(2**attempt)
-            except (TimeoutError, ValueError, ProviderError) as exc:
-                last_error = exc
-                if attempt + 1 < self.max_retries:
-                    time.sleep(2**attempt)
-        detail = _redact_provider_detail(last_error or "unknown provider failure")
-        raise ProviderError(
-            f"prediction failed after {self.max_retries} attempts: {detail}"
-        ) from last_error
+        if self.execution is None:
+            raise ProviderError("network prediction requires a durable ExecutionSession with budget, expiry and attempt limits")
+        return self.execution.predict(self, person, scenario)
 
 
 class BehavioralModelProvider(PredictionProvider):
@@ -490,6 +435,7 @@ class BehavioralModelProvider(PredictionProvider):
     """
 
     name = "behavioral-model"
+    deduplicate_population_draws = True
 
     def __init__(
         self,
@@ -505,12 +451,14 @@ class BehavioralModelProvider(PredictionProvider):
         max_retries: int = 3,
         provider_name: str | None = None,
         behavioral_instruction: str | None = None,
+        execution=None,
     ):
         if not model_revision.strip():
             raise ValueError("model_revision is required for reproducible inference")
         if not training_corpus.strip() or not model_license.strip():
             raise ValueError("training_corpus and model_license declarations are required")
         self.model = model
+        self.execution = execution
         self.base_url = base_url
         self.model_revision = model_revision
         self.training_corpus = training_corpus
@@ -524,7 +472,14 @@ class BehavioralModelProvider(PredictionProvider):
             "Use the described person's pre-outcome evidence to predict behavior. "
             "Return a calibrated probability distribution, not a role-play response."
         )
-        hostname = (urllib.parse.urlsplit(base_url).hostname or "").casefold()
+        endpoint = urllib.parse.urlsplit(base_url)
+        hostname = (endpoint.hostname or "").casefold()
+        if endpoint.username or endpoint.password or endpoint.query or endpoint.fragment:
+            raise ProviderError("provider URL must not contain credentials, query parameters or fragments")
+        if not hostname or (endpoint.scheme != "https" and not (
+            endpoint.scheme == "http" and hostname in {"localhost", "127.0.0.1", "::1"}
+        )):
+            raise ProviderError("remote provider URL must use HTTPS")
         self._local_endpoint = hostname in {"localhost", "127.0.0.1", "::1"}
         if not self.api_key and not self._local_endpoint:
             raise ProviderError(
@@ -597,52 +552,9 @@ class BehavioralModelProvider(PredictionProvider):
     def predict(
         self, person: PopulationRecord, scenario: ScenarioSpec
     ) -> ProviderPrediction:
-        headers = {"Content-Type": "application/json", "X-Title": "Rival Behavioral Model"}
-        if self.api_key:
-            headers["Authorization"] = f"Bearer {self.api_key}"
-        request = urllib.request.Request(
-            self.base_url,
-            data=json.dumps(self._request_payload(person, scenario)).encode("utf-8"),
-            headers=headers,
-            method="POST",
-        )
-        started = time.perf_counter()
-        last_error: Exception | None = None
-        for attempt in range(1, self.max_retries + 1):
-            try:
-                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
-                    response_payload = json.loads(response.read().decode("utf-8"))
-                content = OpenAICompatibleProvider._extract_content(response_payload).strip()
-                if content.startswith("```"):
-                    content = content.strip("`")
-                    if content.startswith("json"):
-                        content = content[4:].lstrip()
-                parsed = json.loads(content)
-                choice_ids = [choice.choice_id for choice in scenario.choices]
-                if set(parsed) != set(choice_ids):
-                    raise ProviderError("behavioral model returned the wrong choice_id set")
-                probabilities = normalize(float(parsed[key]) for key in choice_ids)
-                return ProviderPrediction(
-                    probabilities={
-                        key: float(value)
-                        for key, value in zip(choice_ids, probabilities, strict=True)
-                    },
-                    diagnostics={"attempts": float(attempt)},
-                    provider_request_id=(
-                        str(response_payload.get("id"))
-                        if response_payload.get("id") is not None
-                        else None
-                    ),
-                    attempts=attempt,
-                    latency_ms=(time.perf_counter() - started) * 1000,
-                )
-            except (urllib.error.URLError, TimeoutError, ValueError, ProviderError) as exc:
-                last_error = exc
-                if attempt < self.max_retries:
-                    time.sleep(2 ** (attempt - 1))
-        raise ProviderError(
-            f"behavioral prediction failed after {self.max_retries} attempts"
-        ) from last_error
+        if self.execution is None:
+            raise ProviderError("network prediction requires a durable ExecutionSession with budget, expiry and attempt limits")
+        return self.execution.predict(self, person, scenario)
 
 
 class CentauriProvider(BehavioralModelProvider):
@@ -714,6 +626,7 @@ class EnsembleProvider(PredictionProvider):
         if len(providers) < 2:
             raise ValueError("an ensemble requires at least two providers")
         self.providers = providers
+        self.deduplicate_population_draws = all(getattr(provider, "deduplicate_population_draws", False) for provider in providers)
 
     def predict(
         self, person: PopulationRecord, scenario: ScenarioSpec
@@ -725,15 +638,16 @@ class EnsembleProvider(PredictionProvider):
         )
         mean = matrix.mean(axis=0)
         disagreement = float(np.mean(np.var(matrix, axis=0)))
+        diagnostics = {"provider_disagreement": disagreement, "ensemble_size": float(len(outputs))}
+        for key in ("provider_cost_usd", "request_cost_usd", "prompt_tokens", "completion_tokens", "total_tokens"):
+            if all(key in output.diagnostics for output in outputs):
+                diagnostics[key] = sum(output.diagnostics[key] for output in outputs)
         return ProviderPrediction(
             probabilities={
                 key: float(value) for key, value in zip(choice_ids, mean, strict=True)
             },
-            diagnostics={
-                "provider_disagreement": disagreement,
-                "ensemble_size": float(len(outputs)),
-            },
-            attempts=max(output.attempts for output in outputs),
+            diagnostics=diagnostics,
+            attempts=sum(output.attempts for output in outputs),
             latency_ms=sum(output.latency_ms for output in outputs),
             cache_hit=all(output.cache_hit for output in outputs),
         )

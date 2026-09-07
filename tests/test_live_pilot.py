@@ -19,6 +19,8 @@ from rival.live_pilot import (
     run_live_pilot,
 )
 from rival.providers import OpenAICompatibleProvider, ProviderError
+from rival.managed_execution import ExecutionSession
+from rival.execution import ReconciliationRequired
 
 
 class _Response:
@@ -36,6 +38,14 @@ class _Response:
 
 
 class ProviderAccountingTests(unittest.TestCase):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.execution = ExecutionSession(Path(directory.name) / "attempts.db", scope_id="test",
+            budget_usd=1., reservation_usd=.01, max_total_attempts=10,
+            not_after=datetime.now(timezone.utc) + timedelta(hours=1))
+        self.addCleanup(self.execution.close)
+
     def test_remote_provider_requires_https_and_url_credentials_are_rejected(self):
         with self.assertRaises(ProviderError):
             OpenAICompatibleProvider(
@@ -69,7 +79,7 @@ class ProviderAccountingTests(unittest.TestCase):
             },
         }
         provider = OpenAICompatibleProvider(
-            model="test-model", api_key="super-secret", max_retries=1
+            model="test-model", api_key="super-secret", max_retries=1, execution=self.execution
         )
         with patch("urllib.request.urlopen", return_value=_Response(response)) as request_call:
             output = provider.predict(person, scenario)
@@ -112,15 +122,16 @@ class ProviderAccountingTests(unittest.TestCase):
             response,
         )
         provider = OpenAICompatibleProvider(
-            model="test-model", api_key=fake_key, max_retries=1
+            model="test-model", api_key=fake_key, max_retries=1, execution=self.execution
         )
         with patch("urllib.request.urlopen", side_effect=failure):
-            with self.assertRaises(ProviderError) as captured:
+            with self.assertRaises(ReconciliationRequired) as captured:
                 provider.predict(person, scenario)
         detail = str(captured.exception)
-        self.assertIn("HTTP 403", detail)
-        self.assertIn("Access denied", detail)
-        self.assertIn("[REDACTED]", detail)
+        self.assertIn("cost", detail)
+        persisted = str(self.execution.journal.connection.execute("SELECT payload FROM attempts").fetchone()[0])
+        self.assertIn('"http_status": 403', persisted)
+        self.assertNotIn(fake_key, persisted)
         self.assertNotIn(fake_key, detail)
 
     def test_expired_budget_fails_before_a_call(self):
@@ -282,7 +293,11 @@ class FrozenPilotTests(unittest.TestCase):
             self.assertIn("twin", report["variants"])
 
     def test_v2_strict_openrouter_contract_runs_one_frozen_case(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as directory, ExecutionSession(
+            Path(directory) / "attempts.db", scope_id="frozen-case-rehearsal", budget_usd=1.,
+            reservation_usd=.01, max_total_attempts=1,
+            not_after=datetime.now(timezone.utc) + timedelta(hours=1),
+        ) as execution:
             root = Path(directory)
             self._prepare(root)
             results = root / "results.jsonl"
@@ -290,6 +305,7 @@ class FrozenPilotTests(unittest.TestCase):
                 model="dots-studio/dots-3-note-preview:free",
                 api_key="test-secret",
                 max_retries=1,
+                execution=execution,
                 temperature=0.0,
                 history_limit=8,
                 max_output_tokens=300,
@@ -310,7 +326,7 @@ class FrozenPilotTests(unittest.TestCase):
                                 "message": {"content": json.dumps(probabilities)},
                             }
                         ],
-                        "usage": {"prompt_tokens": 100, "completion_tokens": 20},
+                        "usage": {"prompt_tokens": 100, "completion_tokens": 20, "cost": 0.},
                     }
                 )
 
