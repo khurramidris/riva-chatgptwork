@@ -36,6 +36,21 @@ assert demo["simulation"]["confidence"]["abstain"] is True
 assert demo["simulation"]["confidence"]["label"] == "unqualified"
 assert load_bundled_summary()["status"] == "HISTORICAL_ONLY"
 
+# The new study commands must be usable from the installed package, including
+# their generated example, saved execution state and aggregate report export.
+from rival.study_commands import example_request
+from rival.study_contract import StudyRequest
+from rival.study_workflow import prepare_study, run_study, export_study
+study_input = example_request()
+study_input["brief"]["sample_size"] = 40
+prepare_study("workflow-study", StudyRequest.model_validate(study_input))
+assert run_study("workflow-study")["completed_draws"] == 40
+assert run_study("workflow-study")["accounting"]["attempts"] == 0
+export_study("workflow-study", "workflow-report")
+study_report = json.loads(Path("workflow-report/report.json").read_text(encoding="utf-8"))
+assert study_report["confidence"]["abstain"] is True
+assert study_report["audience"]["simulation_draws"] == 40
+
 # Exercise the real local HTTP surface, without model/network dependencies.
 from http.server import ThreadingHTTPServer
 from threading import Thread
@@ -85,7 +100,8 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
                   "archived_protocol_sha256": manifest["manifest_sha256"], "paid_calls": 0,
                   "checks": ["installed imports", "all frozen witnesses", "complete notices", "E/F design resources",
                              "offline demo", "research confidence", "historical claims separation", "real stage loader", "freeze algorithm",
-                             "local HTTP health, demo page and demo execution"]}))
+                             "local HTTP health, demo page and demo execution",
+                             "study preparation, execution, recovery and report export"]}))
 '''
 
 
@@ -113,6 +129,7 @@ def main():
         cwd.mkdir()
         base_environment = {**os.environ, "PIP_DISABLE_PIP_VERSION_CHECK": "1",
                             "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"}
+        base_environment.pop("PYTHONPATH", None)
         environment = {**base_environment, "PYTHONPATH": str(install)}
         run_checked([sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
                      "--target", str(install), str(wheel)], cwd=cwd, env=environment)
@@ -120,7 +137,8 @@ def main():
         result = run_checked([sys.executable, "-c", PROBE], cwd=cwd, env=environment)
         report = json.loads(result.stdout.strip().splitlines()[-1])
         for command in (["--version"], ["status"], ["mega-v2", "verify-resources"],
-                        ["mega-v2", "run", "--help"], ["simulate-managed", "--help"]):
+                        ["mega-v2", "run", "--help"], ["simulate-managed", "--help"],
+                        ["study", "status", "--workspace", "workflow-study"]):
             run_checked([sys.executable, "-m", "rival", *command], cwd=cwd, env=environment)
         report["checks"].append("installed module CLI commands")
         # ``pip --target`` intentionally installs import files without console

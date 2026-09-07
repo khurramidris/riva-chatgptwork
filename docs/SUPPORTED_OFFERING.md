@@ -9,19 +9,23 @@ human evidence.
 
 ## Current release contract
 
-The development release runs in research mode. It provides simulation components,
-an offline demonstration, protected prediction/outcome records, corrected scoring,
-and managed request accounting. It withholds decision-ready confidence and any
+The development release runs in research mode. It provides a saved study workflow
+from brief and audience through simulation, recovery and aggregate report export,
+alongside an offline demonstration, protected prediction/outcome records, corrected
+scoring and managed request accounting. It withholds decision-ready confidence and any
 claim of customer-domain accuracy, individual fidelity or Aaru/Simile parity.
 `rival.readiness.release_claims()` is the machine-readable contract used by the
 health API and reports. Historical qualification files remain historical.
 
 Inputs are a question, alternatives, audience records and optional population
 controls, with source provenance and an information cutoff where applicable.
-Outputs are simulated choice shares, optional anchor corrections, diagnostics,
+Component outputs include simulated choice shares, optional anchor corrections, diagnostics,
 source and execution identities, limitations and comparison metrics when observed
 outcomes are available. The built-in browser screen uses generated demo people,
 anchors and outcomes; it is not yet the customer study interface.
+The `study` operator commands implement the first integrated workflow. Their
+reports currently contain raw simulated choice shares; runtime calibration is
+L10 work. See [phase-two development](PHASE_TWO_DEVELOPMENT.md).
 
 ## Acceptance before offering decision support (L07–L14)
 

@@ -1,18 +1,20 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Target version: `0.6.0.dev4`. Branch: `codex/customer-readiness-foundation`.
+Current version: `0.6.0.dev5`. Branch: `codex/phase-two-study-workflow`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
 service. These changes improve engineering reliability; they do not establish
 customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 
-Phase one is L01–L06. Its implementation and local engineering verification are
-complete as of 2026-09-07: **6 of 14 tasks complete; 8 later tasks pending**.
-The branch is published as [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5),
-which tracks the Linux and Windows CI results. Statistical qualification and
-customer launch are later gates, not implied by phase-one completion.
+Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
+Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
+Phase two is L07–L10. Its first task, L07, is implemented and locally verified:
+**7 of 14 tasks complete; 7 later tasks pending** as of 2026-09-07. Phase two has
+one of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [verification record](verification/phase_two_workflow.json). Statistical
+qualification and customer launch remain later gates.
 
 ## Delivery board
 
@@ -24,7 +26,7 @@ customer launch are later gates, not implied by phase-one completion.
 | L04 Confidence evidence | Complete, locally verified | All research fits abstain with uninformative bounds; signed pre-lock roles, unique study groups and runs; verified admission; held-out partitions excluded from training |
 | L05 Request accounting and recovery | Complete, locally verified | General probability, behavioral and text/SSR providers plus Mega v2 use per-attempt journals; budget/expiry, physical attempt limits, cached recovery, unknown-billing quarantine and draw deduplication |
 | L06 Installation and release bookkeeping | Complete, locally verified | Installed-wheel archive/resources, offline CLI/HTTP rehearsal, complete notices, truthful qualification exits and full wheel inventory/manifest |
-| L07 One integrated study workflow | Next development batch | Versioned brief, audience, alternatives, evidence roles, execution, results and report contracts; use the new journal throughout |
+| L07 One integrated study workflow | Complete, locally verified | Versioned input; signed preparation and evidence role; journaled execution and crash recovery; sealed predictions; aggregate report; protected outcome comparison; installed-package rehearsal |
 | L08 Public evidence and population support | Pending | Retrieval provenance, timestamp coverage, unsupported population/condition handling |
 | L09 Model execution and elicitation | Pending | Real pinned checkpoint or endpoint execution, SSR tie handling, reproducibility and measured cost |
 | L10 Runtime calibration | Pending | Reference bank and adapter identity; fit/validation separation; SYN-DIGITS integration |
@@ -83,6 +85,14 @@ and an OS file lock protect concurrent writers. A provider-side hard spending
 limit remains necessary for a remote ceiling: local reservations use estimates.
 
 ## Verification
+
+Phase two's first increment passes **152 tests**, including a real local HTTP
+retry/recovery test with generated responses, and the offline installed-wheel
+check. The integrity and research reproduction checks also pass. The
+[generated example report](examples/study-workflow/report.md) illustrates the
+new input-to-report path; it is not a model accuracy result. See the
+[phase-two verification record](verification/phase_two_workflow.json) for source,
+wheel and evidence hashes. The results below remain the phase-one checkpoint.
 
 Run from the repository checkout:
 
@@ -166,8 +176,8 @@ worker has stopped and the journal confirms no unresolved remote attempt.
 
 - Frozen v1 runners remain historical witnesses and are excluded from the current
   managed CLI. General current probability, behavioral and text-generation adapters
-  require an explicit execution session. The complete customer study orchestration
-  and operator interface remain L07/L13 work.
+  require an explicit execution session. L07 now connects the saved study workflow
+  through operator commands; a complete browser interface remains L13 work.
 - HMAC seals are deployment-local. Key custodians, host clock, filesystem and
   database access remain trusted; independent custody and external timestamping
   are separate release work.

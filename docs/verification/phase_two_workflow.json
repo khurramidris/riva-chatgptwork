@@ -1,0 +1,106 @@
+{
+  "accuracy_improvement_established": false,
+  "artifacts_sha256": {
+    "phase_two_artifacts/installed_wheel.json": "3dcdb8f138cd61ee294e858f7a75eeea50c13c325a5dc10673cce8779792b154",
+    "phase_two_artifacts/integrity_qualification.json": "517b16514160a25f32912ed6b2a056267199d06959c2b1ef8021c8859b85e5c3",
+    "phase_two_artifacts/opinionqa_qualification.json": "2a36bd8c25d15b14509d9c1efa9b1510a12f145b682e49cd7167977dc7d8a342",
+    "phase_two_artifacts/preservation.json": "885c39482a1f1e1cd24cd3341cd4cd660e3dbb50024acfebc36f074b66d3d1a0",
+    "phase_two_artifacts/qualification_summary.json": "a5a34c89cb47cc6169bbab3732c22bba048e744346ef5f86cbf8599d28ac4977",
+    "phase_two_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "phase_two_artifacts/tests.log": "beb1d64454714dcddfc910ed2f9085977863fa57787e1cc0bd28217d4a8b11f4",
+    "phase_two_artifacts/twin2k_qualification.json": "4f7be9efece990f153413d6e69a56d10da66129f9e7b4d174cca71a7c0396d8d",
+    "phase_two_artifacts/wheel.json": "b7878067994350cfb01f5435ecbb421af0a4de3d38d2853dd2933049aa8252dd"
+  },
+  "base_commit": "c67da54bcbc279a6051ec9db021281b687f2d573",
+  "branch": "codex/phase-two-study-workflow",
+  "ci": {
+    "publication_record": "See the phase-two draft pull request for final remote CI status.",
+    "required_platforms": [
+      "ubuntu-latest / Python 3.11",
+      "windows-latest / Python 3.11"
+    ],
+    "status": "not_part_of_this_local_checkpoint"
+  },
+  "delivery_status": {
+    "L07": "complete_locally_verified",
+    "complete_tasks": 7,
+    "phase_one": "complete",
+    "phase_two_complete": false,
+    "remaining_phase_two_tasks": [
+      "L08",
+      "L09",
+      "L10"
+    ],
+    "total_tasks": 14
+  },
+  "environment": {
+    "blas_threads": 1,
+    "os": "Linux",
+    "python": "3.12.13"
+  },
+  "example": {
+    "evidence": "generated fixture; not human or model accuracy evidence",
+    "input_seed_records": 6,
+    "manifest": "../examples/study-workflow/manifest.json",
+    "mode": "offline",
+    "paid_calls": 0,
+    "report": "../examples/study-workflow/report.md",
+    "simulation_draws": 1000
+  },
+  "generated_at": "2026-09-07T19:47:01.465020+00:00",
+  "installed_wheel": {
+    "checks_passed": 13,
+    "command": "python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev5-py3-none-any.whl --output reports/phase-two-installed-wheel.json",
+    "exit_code": 0,
+    "inventory": "phase_two_artifacts/wheel.json",
+    "report": "phase_two_artifacts/installed_wheel.json",
+    "sha256": "6b5f3b84280012e93999da727aed77fffff549bd6ccb57fc116eef067d3fe9a3"
+  },
+  "limitations": [
+    "No real-model study or paid inference was run.",
+    "Declared evidence rights and population support are not independently verified.",
+    "Runtime calibration and qualified uncertainty are pending.",
+    "Cross-workspace group independence and external signature custody remain operator responsibilities.",
+    "The browser remains a generated demonstration; this increment supplies operator commands."
+  ],
+  "paid_inference_calls": 0,
+  "preservation": {
+    "changed_files": [],
+    "files_verified": 68,
+    "report": "phase_two_artifacts/preservation.json"
+  },
+  "qualification": {
+    "prospective_integrity_checks_passed": 10,
+    "prospective_integrity_checks_total": 10,
+    "report": "phase_two_artifacts/qualification_summary.json",
+    "research_component_checks_passed": 8,
+    "research_component_checks_total": 8,
+    "scope": "research reproduction and engineering checks; not customer qualification",
+    "status": "PASS"
+  },
+  "release": "0.6.0.dev5",
+  "schema_version": "rival.phase-two-workflow-verification.v1",
+  "scope": "L07 engineering integration; first of four phase-two tasks, not empirical or customer qualification",
+  "source_sha256": {
+    ".github/workflows/ci.yml": "c314670b5a9afea23dcc0d7f7284b6142392b6ed3491281e64773e1f195689fd",
+    "README.md": "7ed11703adc61798110a15799dfd192e5c93847bee2cb9a16d8d65c7ad80f2e7",
+    "docs/SUPPORTED_OFFERING.md": "c6e2a01ac3973f01f244907904d817b6d5a0295af15898f77529e54bdf9c1edd",
+    "pyproject.toml": "2e4094c60d6bc1364eb57fc8de761cdc0e724dda920132b781b2f54fa7046ee1",
+    "rival/commands.py": "d9cad0fc936f2d0acd9261885dedfbe519391af7fa0540f36abba82cc104096c",
+    "rival/study_commands.py": "90afb14f46885155eff48f2fc296e9e14d5e14d717efd6f62e06d94b085b3a2f",
+    "rival/study_contract.py": "03229dcb5f0b2d14dc812eaa446881a7f584c9407e76e4f055fc7b8fa74f2cfc",
+    "rival/study_report.py": "56b231582abbde01d50b78145c33aecc0d16646d3e92728d01a4a5450bf1ee82",
+    "rival/study_workflow.py": "ededa849c5c461436e6994af6dd5d8c93b0225a684ee0b1678818cee77b3445d",
+    "rival/version.py": "06253d45be74d817425bcb65832c9d8a92ff6880843d66c7d92e5612cb08a771",
+    "scripts/verify_installed_wheel.py": "3945690d0d1e8d08b998ee4011533f5c55039ecac9d9224706f897b54fed2fd0",
+    "tests/test_study_workflow.py": "6ad1bef45cc6fa98e857375603dbc5ccf2add72ee9b765afd237b358535943dd"
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "log": "phase_two_artifacts/tests.log",
+    "new_workflow_tests": 16,
+    "passed": 152,
+    "seconds": 7.111
+  }
+}

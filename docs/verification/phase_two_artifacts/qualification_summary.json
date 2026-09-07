@@ -1,0 +1,71 @@
+{
+  "current_release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev5",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "generated_at": "2026-09-07T15:00:41.143787+00:00",
+  "headline": "Research results and engineering checks; customer qualification remains pending.",
+  "opinionqa": {
+    "calibrated_mean_tvd": 0.16949517757707122,
+    "global_history_mean_tvd": 0.22677466073935948,
+    "personas": 2058,
+    "question_win_rate": 0.8507157464212679,
+    "question_win_rate_vs_global_history": 0.7157464212678937,
+    "questions": 489,
+    "raw_mean_tvd": 0.33112460224135193,
+    "relative_mean_tvd_reduction": 0.48812266914093977,
+    "relative_mean_tvd_reduction_vs_global_history": 0.25258326029697686,
+    "report_sha256": "a5bdb3df1697529956f455407b66a41e1020149eb42d417334ca4c583bea7c39",
+    "split_manifest_sha256": "2fae83e0f1e1e1d703ee18e670bc0c6da7fe7a909bad134ad5416d24c19521d6",
+    "status": "real-data, family-held-out"
+  },
+  "prospective_integrity": {
+    "checks_passed": 10,
+    "checks_total": 10,
+    "report_sha256": "29f4a30495483d5afc873d8143382848231508ba219f50909e49a59b7438c6e4",
+    "scope": "deterministic engineering controls; not a prospective customer validity result",
+    "status": "PASS"
+  },
+  "release": "0.6.0.dev5",
+  "release_decision": {
+    "individual_novel-question_prediction": "research only; baseline not beaten",
+    "population_distribution_calibration": "research only; current deployment not qualified",
+    "universal_human_simulation": "not claimed"
+  },
+  "research_components": {
+    "checks_passed": 8,
+    "checks_total": 8,
+    "report_sha256": "5ed1f2226de185d04d2e269bee7108046e5afce25a92646b91b4fb80e7fc481d",
+    "scope": "component wiring and numerical parity; not external predictive or causal validity",
+    "status": "PASS"
+  },
+  "schema_version": "rival.qualification.summary.v4",
+  "status": "PASS",
+  "status_scope": "research reproduction and engineering checks; not customer qualification",
+  "summary_sha256": "8e7bb5d1daa835cfd280faff67643b2f14ac97cea0aa79dbc7d6d2d32ccae458",
+  "twin2k": {
+    "direct_llm_categorical_accuracy": 0.5411458724329086,
+    "human_test_retest_categorical_accuracy": 0.6861023116827288,
+    "hybrid_mean_tvd": 0.07352039420340876,
+    "population_mode_categorical_accuracy": 0.5282652117717594,
+    "questions": 126,
+    "raw_mean_tvd": 0.27921943396105775,
+    "report_sha256": "b36af594baa86c278bd4d896a3adc8cfdde35fe8c3605789278a9b51710fd4ac",
+    "status": "real-data, target-family-excluded transfer",
+    "transfer_categorical_accuracy": 0.43992436550115216,
+    "twins": 2058
+  }
+}

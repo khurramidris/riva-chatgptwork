@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "0e430ce4c2884b2d8b1bf47cfc28d6124016bec60765b48764035083364896ef",
+    "report.md": "e28033b48082bcae19bdce29444286216d48f86a5dfe76cb4a08b20ac1e9c24b"
+  },
+  "request_sha256": "e71a51f343f31369a1b9516968f4ea720812f86ed5c14713d2eadf418bfea8ba",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "grocery-concepts-example-v1"
+}

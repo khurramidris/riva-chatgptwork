@@ -5,7 +5,7 @@ and proposed scenarios for a declared audience. The first output is simulated
 population choice shares. Individual synthetic responses are intermediate model
 outputs; they are not verified predictions of real people.
 
-`0.6.0.dev4` is a research development release. See the
+`0.6.0.dev5` is a research development release. See the
 [delivery board](docs/CUSTOMER_READINESS.md),
 [supported offering](docs/SUPPORTED_OFFERING.md), and
 [phase-one acceptance evidence](docs/verification/phase_one.json).
@@ -37,6 +37,24 @@ python -m rival serve --host 127.0.0.1 --port 8080
 
 Open `http://127.0.0.1:8080` for the research demonstration. It does not call a
 model API. The interface labels generated data and withholds decision confidence.
+
+## Complete study workflow
+
+The new operator workflow saves a versioned brief, audience, sources and execution
+policy, runs or resumes the simulation, seals predictions and exports an aggregate
+report. This offline example uses six generated records and makes no paid calls:
+
+```sh
+python -m rival study example --output reports/study-input.json
+python -m rival study prepare --input reports/study-input.json --workspace .rival-data/workflow-example
+python -m rival study run --workspace .rival-data/workflow-example
+python -m rival study export --workspace .rival-data/workflow-example --output reports/workflow-example-export
+```
+
+See the [phase-two workflow guide](docs/PHASE_TWO_DEVELOPMENT.md) for managed model
+execution, status, recovery, source declarations and protected outcome comparison.
+The browser interface remains the generated demo; the operator commands handle
+the new study workflow.
 
 ## Managed model execution
 
@@ -80,7 +98,7 @@ python -m rival qualify-integrity
 python -m rival qualify-research-components
 python -m rival qualify-all --output-dir reports/current --compact
 python -m pip wheel . --no-deps --wheel-dir dist
-python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev4-py3-none-any.whl --output reports/installed_wheel.json
+python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev5-py3-none-any.whl --output reports/installed_wheel.json
 ```
 
 `qualify-all` fails when a reproduction or engineering check fails. A PASS means

@@ -1,0 +1,139 @@
+{
+  "audience": {
+    "description": "Six generated example records; no real consumers represented.",
+    "effective_seed_records": 6.0,
+    "eligible_seed_records": 6,
+    "geography": [
+      "example-only"
+    ],
+    "input_seed_records": 6,
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "simulation_draws": 1000,
+    "unique_sampled_seed_records": 6
+  },
+  "choices": [
+    {
+      "choice_id": "standard",
+      "difference_from_reference_pp": 0.0,
+      "label": "Standard delivery",
+      "simulated_share": 0.40399851019544053
+    },
+    {
+      "choice_id": "flexible",
+      "difference_from_reference_pp": 0.29669445190134147,
+      "label": "Flexible delivery",
+      "simulated_share": 0.40696545471445394
+    },
+    {
+      "choice_id": "neither",
+      "difference_from_reference_pp": -21.4962475105335,
+      "label": "Neither plan",
+      "simulated_share": 0.18903603509010553
+    }
+  ],
+  "confidence": {
+    "abstain": true,
+    "label": "unqualified",
+    "lower_tvd": 0.0,
+    "upper_tvd": 1.0
+  },
+  "created_at": "2026-09-07T15:04:25.451139+00:00",
+  "decision": "Explore how two delivery plans compare in a generated audience.",
+  "evaluation": null,
+  "evidence": {
+    "assignment": {
+      "group_id": "generated-workflow-example",
+      "role": "development",
+      "source_reference": "Generated engineering example; no independent human evidence."
+    },
+    "excluded_history_entries": 0,
+    "information_cutoff": "2026-09-01T00:00:00+00:00",
+    "local_manifest_verified": true,
+    "manifest_sha256": "392788b290b76f46c6df63d0651d3138622950ec32953bcb13e3dc81b4cf5d3d",
+    "protected_comparison_verified": false,
+    "retrieval_audit_sha256": "ced332626fb341e88de70d350873f2d05cd95e93d01058befc80fe53c715d5e2",
+    "sources": [
+      {
+        "collected_at": "2026-08-01T00:00:00Z",
+        "geography": [
+          "example-only"
+        ],
+        "name": "Rival generated workflow example",
+        "permitted_uses": [
+          "simulation"
+        ],
+        "rights_reference": "Generated in Rival for testing.",
+        "sha256": null,
+        "source_id": "generated-example",
+        "source_type": "synthetic"
+      }
+    ],
+    "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"
+  },
+  "execution": {
+    "accounting": {
+      "attempts": 0,
+      "known_cost_usd": 0.0,
+      "mode": "offline",
+      "reserved_usd": 0.0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "mode": "offline",
+    "provider": {
+      "configuration_sha256": "592132bf1ad3e6a5b858fa36582e810a86866021d4ac78f693972540e88bdca1",
+      "endpoint_sha256": null,
+      "model": "transparent-utility-baseline",
+      "provider_name": "heuristic-v1",
+      "provider_version": "1"
+    },
+    "sample_plan_sha256": "1731ca149d6eda201fb3f5b357cd5977bbcf46e7aaf3ace26c8ce353ce1f0dce"
+  },
+  "limitations": [
+    "Offline heuristic baseline: no language model was called.",
+    "This study includes generated audience records; it is an engineering demonstration.",
+    "Choice shares describe model outputs for the supplied audience; customer-domain accuracy is not established.",
+    "Resampled draws do not add independent people or human evidence.",
+    "Differences between choice shares are not causal effects of an intervention.",
+    "Source rights, dates, geography and independence are operator declarations, not independently verified facts.",
+    "Confidence remains unqualified; no decision-ready interval or recommendation is issued."
+  ],
+  "question": "Which grocery delivery plan would you choose?",
+  "reference_choice_id": "standard",
+  "release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev5",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "request_sha256": "e71a51f343f31369a1b9516968f4ea720812f86ed5c14713d2eadf418bfea8ba",
+  "run_id": "run_e6dc92b299a040fb",
+  "runtime_release": "0.6.0.dev5",
+  "schema_version": "rival.study-report.v1",
+  "study_id": "grocery-concepts-example-v1",
+  "title": "Grocery delivery concept example"
+}
