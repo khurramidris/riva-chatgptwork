@@ -28,7 +28,10 @@ the checkout exercised imports, notices, archived witnesses, stage loading,
 freeze, CLI entry points, demo execution and the local HTTP API. All 68 protected
 files matched the starting commit. See `docs/verification/phase_one.json`.
 No paid inference, customer-domain accuracy improvement, deployment or launch is
-claimed. Windows CI is configured and pending branch publication.
+claimed. GitHub CI covers Linux and Windows/Python 3.11; see the PR checks for
+the latest result. The installation checker resolves temporary-directory aliases
+and retains subprocess diagnostics; an aliased-directory rehearsal reproduced
+the old path-check failure and passed with the correction.
 
 Compatibility: current network adapters require ExecutionSession; use the new
 `simulate-managed` or `mega-v2` interface. Frozen v1 commands remain archival
@@ -36,7 +39,11 @@ witnesses and are not current CLI options. Existing experiments and historical
 reports are unchanged. Old receipt-only chains are not upgraded by inventing
 missing evidence. L07–L14 remain on the delivery board.
 
-Publication: committed/prepared locally. The earlier automatic approval review
-rejected the branch push because explicit authorization to upload code to the
-existing GitHub destination was not established. No remote branch, PR, CI run,
-merge or deployment has been completed for this change.
+Publication: [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5)
+is open on `codex/customer-readiness-foundation`. The initial remote commit
+`4da97a0becf16d8914b9db236b45becd8491801b` exactly matches local checkpoint
+`be4221781676932bc5be27ac41a9a8ffa6ab013b` (tree
+`d2fa86508829dcb5f12ef5335cf7395b91d7cdcd`). Commit IDs in the existing local
+verification records identify those pre-publication checkpoints; subsequent
+publication fixes are recorded in the PR history. No merge or deployment has
+been performed.

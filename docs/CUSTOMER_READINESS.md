@@ -10,8 +10,9 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 
 Phase one is L01–L06. Its implementation and local engineering verification are
 complete as of 2026-09-07: **6 of 14 tasks complete; 8 later tasks pending**.
-GitHub publication and the Windows CI run remain pending. Statistical qualification
-and customer launch are later gates, not implied by phase-one completion.
+The branch is published as [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5),
+which tracks the Linux and Windows CI results. Statistical qualification and
+customer launch are later gates, not implied by phase-one completion.
 
 ## Delivery board
 
@@ -97,7 +98,13 @@ commit byte for byte. The wheel was installed offline outside the checkout and
 exercised through the CLI, resource loader, freeze algorithm, demo and local HTTP
 API. See [the phase-one verification record](verification/phase_one.json).
 The earlier [dev3 verification record](verification/customer_readiness_foundation.json)
-remains a historical checkpoint. Windows CI has been configured but not run here.
+remains a historical checkpoint. GitHub CI runs the suite, integrity and research
+checks, wheel build and isolated installation on Linux and Windows/Python 3.11;
+the PR records the latest verified commit. The first publication run exposed a
+Windows installation-check failure. The checker now resolves both installation
+paths before comparison and retains child-process diagnostics on failure. A
+local aliased-directory rehearsal reproduced the old path-check failure and
+passed with the correction.
 The [release receipt](verification/phase_one_release.json) records the verified
 wheel hash, per-file inventory and evidence hashes. The concrete local release
 bundle is `dist/phase-one`; its manifest verifies without changing the historical

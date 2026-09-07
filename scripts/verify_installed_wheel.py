@@ -23,11 +23,12 @@ from rival.research.qualification import load_bundled_summary
 from rival.version import __version__
 
 package = Path(rival.__file__).resolve().parent
-assert Path("INSTALL_ROOT").read_text() in str(package), package
+install_root = Path(Path("INSTALL_ROOT").read_text(encoding="utf-8")).resolve()
+assert package.is_relative_to(install_root), (package, install_root)
 manifest = load_manifest()
 assert manifest["manifest_sha256"] == "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0"
 for filename in ("syn_digits_LICENSE.txt", "uq_survey_LICENSE.txt"):
-    assert (package / "notices" / filename).read_text().rstrip().endswith("SOFTWARE.")
+    assert (package / "notices" / filename).read_text(encoding="utf-8").rstrip().endswith("SOFTWARE.")
 assert (package / "notices/THIRD_PARTY_NOTICES.md").is_file()
 assert (package / "studies/mega_study_syn_digits_v1/CALIBRATION_DESIGN.json").is_file()
 demo = run_demo(sample_size=40, human_anchor_size=5)
@@ -88,6 +89,16 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
 '''
 
 
+def run_checked(command, **kwargs):
+    """Preserve child diagnostics when an isolated installation check fails."""
+    result = subprocess.run(command, capture_output=True, text=True, **kwargs)
+    if result.returncode:
+        sys.stderr.write(result.stdout)
+        sys.stderr.write(result.stderr)
+        result.check_returncode()
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wheel", type=Path, required=True)
@@ -101,21 +112,17 @@ def main():
         cwd.mkdir()
         environment = {**os.environ, "PYTHONPATH": str(install), "PIP_DISABLE_PIP_VERSION_CHECK": "1",
                        "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"}
-        subprocess.run([sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
-                        "--target", str(install), str(wheel)], check=True, capture_output=True, text=True,
-                       cwd=cwd, env=environment)
-        (cwd / "INSTALL_ROOT").write_text(str(install))
-        result = subprocess.run([sys.executable, "-c", PROBE], check=True, capture_output=True,
-                                text=True, cwd=cwd, env=environment)
+        run_checked([sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
+                     "--target", str(install), str(wheel)], cwd=cwd, env=environment)
+        (cwd / "INSTALL_ROOT").write_text(str(install), encoding="utf-8")
+        result = run_checked([sys.executable, "-c", PROBE], cwd=cwd, env=environment)
         report = json.loads(result.stdout.strip().splitlines()[-1])
         for command in (["--version"], ["status"], ["mega-v2", "verify-resources"],
                         ["mega-v2", "run", "--help"], ["simulate-managed", "--help"]):
-            subprocess.run([sys.executable, "-m", "rival", *command], check=True, capture_output=True,
-                           text=True, cwd=cwd, env=environment)
+            run_checked([sys.executable, "-m", "rival", *command], cwd=cwd, env=environment)
         report["checks"].append("installed module CLI commands")
         launcher = install / ("Scripts/rival.exe" if os.name == "nt" else "bin/rival")
-        subprocess.run([str(launcher), "--version"], check=True, capture_output=True,
-                       text=True, cwd=cwd, env=environment)
+        run_checked([str(launcher), "--version"], cwd=cwd, env=environment)
         report["checks"].append("installed console entry point")
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
