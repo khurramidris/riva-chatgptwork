@@ -1,0 +1,158 @@
+{
+  "artifacts_sha256": {
+    "docs/examples/calibration/held-out-benefit-before-outcomes/manifest.json": "57b740afef2e3bfa4ca1071c9a2c6ed888dc6b5127fd21fdceb9686f117e8525",
+    "docs/examples/calibration/held-out-benefit-before-outcomes/report.json": "5c7ccd17da45243cacc5bae21d4ee35268cb39a43c7164a93dcc6b95affd72bb",
+    "docs/examples/calibration/held-out-benefit-before-outcomes/report.md": "b68c54c222173592329f21f135eb675d13757b30160442dc5b83aaa5d3999d40",
+    "docs/examples/calibration/held-out-benefit/manifest.json": "5a8362d0dcbd0ca5465dc1c6d1a6401ca1a4fe958afb1089d220ff3e7eadca78",
+    "docs/examples/calibration/held-out-benefit/report.json": "99963120cde3d11267664d14f38d25a61971301af080821e0aaa6099a8c9edcf",
+    "docs/examples/calibration/held-out-benefit/report.md": "43113218e3d1d1671f0d5d9b2e472cd55da5ea97af7889bb9fb9ee00c01db66f",
+    "docs/examples/calibration/held-out-harm-before-outcomes/manifest.json": "0d35c30cec2189d927c77e8d9ebdc5222671975aa163a36dc845646957ecaed5",
+    "docs/examples/calibration/held-out-harm-before-outcomes/report.json": "2a975cc070c104b713f94ef7ae705106d6ce81a333b5cd56b6f118b05f87090f",
+    "docs/examples/calibration/held-out-harm-before-outcomes/report.md": "241beda2d06d58787955c7fceeb6c7cd9978d8b80a0e0e7c712ba6f41a434463",
+    "docs/examples/calibration/held-out-harm/manifest.json": "27d1b1f64efc0700e0988baf51730a1a8d19082da79cf8d33a4c588b37a33464",
+    "docs/examples/calibration/held-out-harm/report.json": "fd5698b2251cf8d8a1ca0cf63730f903d4bed011d5e936b48cc4239688c48a9f",
+    "docs/examples/calibration/held-out-harm/report.md": "823dc1f9da05a3d977fcd2a0fbe97716e9ad9ad4553490c47f28b20913141da2",
+    "docs/examples/calibration/rehearsal.json": "0d9a010d11c24ae78c096d0907bb11c05db636546a5fe8268ac2fc7586a7d22a",
+    "docs/verification/phase_two_calibration_artifacts/installed-wheel.json": "be49beee36d614fb4db35e76ae9670fcba0674f41dfcbd0eb73bb4b40090b6cf",
+    "docs/verification/phase_two_calibration_artifacts/integrity_qualification.json": "f3df55a8fbd225fbc75a9b0c5daf4303ad61c16377341dc18a243317c9909968",
+    "docs/verification/phase_two_calibration_artifacts/legacy-compatibility.json": "4ea8492dd85e36ff6ee0f6292df7480bce358d58e3405a825c4b79d45cffeb2e",
+    "docs/verification/phase_two_calibration_artifacts/opinionqa-runtime.json": "01aa2c92720c3c617e1ff86346b8c79f9705232ca9eaaea4debea5f71263b26e",
+    "docs/verification/phase_two_calibration_artifacts/opinionqa_qualification.json": "bef5f48104d8866ba47115fa6f20cfa5d534f9b643e070efaaede6b3a0a3349d",
+    "docs/verification/phase_two_calibration_artifacts/preservation.json": "742003862e41d301c6fda4818b4811b14f3047c87bcf5373de353c65e3719c3c",
+    "docs/verification/phase_two_calibration_artifacts/qualification_summary.json": "e35a2a02f40136ba2372970d708086f68b12c48ec91d53ff41b79e23e596f08a",
+    "docs/verification/phase_two_calibration_artifacts/rehearsal.log": "67dca0e2266b63180e29e4b28ff7801ffbc08f4ca1aae40d2d65c464137a0e1b",
+    "docs/verification/phase_two_calibration_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "docs/verification/phase_two_calibration_artifacts/tests.log": "2413d0e129c5a747795646a895a80cb8b70eddc15a1746da34e354ac105289c8",
+    "docs/verification/phase_two_calibration_artifacts/twin2k_qualification.json": "c86ab9bfe21c73993e8295669e11150cf61d04bd02881526c160b8a324e08a2e",
+    "docs/verification/phase_two_calibration_artifacts/wheel-build.log": "b91d51b0d9847ca26eadcd6470f8ce1cb0c17f20494453e54e4900b816c5c91e",
+    "docs/verification/phase_two_calibration_artifacts/wheel.json": "7f42d6d07fd882f3fecd55160255efb167bb471a2a207f636cbf347912457de9"
+  },
+  "base_commit": "cead2063e6a6e4e98c8072c9428752f9f5f9e8cb",
+  "branch": "codex/phase-two-calibration",
+  "ci": {
+    "required_platforms": [
+      "ubuntu-latest / Python 3.11",
+      "windows-latest / Python 3.11"
+    ],
+    "status": "see_final_pull_request_record"
+  },
+  "customer_accuracy_qualified": false,
+  "delivery_status": {
+    "complete_engineering_tasks": 10,
+    "phase_one": "complete",
+    "phase_two_tasks_complete": [
+      "L07",
+      "L08",
+      "L09",
+      "L10"
+    ],
+    "phase_two_tasks_pending": [],
+    "remaining": [
+      "L11",
+      "L12",
+      "L13",
+      "L14"
+    ],
+    "total_tasks": 14
+  },
+  "environment": {
+    "os": "Linux",
+    "python": "3.12.13",
+    "test_blas_threads": 1
+  },
+  "generated_at": "2026-09-08T10:20:35.858499+00:00",
+  "installed_wheel": {
+    "checks_passed": 16,
+    "report": "docs/verification/phase_two_calibration_artifacts/installed-wheel.json",
+    "sha256": "5dc11aca822092c15a7b448da2afc460abf56cd05636541d415ad7361537bd04"
+  },
+  "limitations": [
+    "Fixed panel, model, evidence and choice schema only; no arbitrary audience or domain transfer.",
+    "The bank verifies local training ledgers; source truth, representative sampling, human sample sizes and group independence remain declarations.",
+    "SYN-DIGITS probability vectors are an explicit extension; source parity checks use one-hot interior cases and MSE disabled.",
+    "The public-data comparison reuses development data and different candidate defaults; all five fits reach the iteration cap before the requested convergence tolerance.",
+    "The public released predictions cannot be attested to a current live provider and were not imported as a live reference bank.",
+    "The L10 HTTP rehearsal uses generated model-response fixtures; L09 real-model evidence is preserved separately.",
+    "Qualified uncertainty, untouched evaluation, full GUI and delivery rehearsal remain L11\u2013L14."
+  ],
+  "milestone": "L10_ENGINEERING_COMPLETE",
+  "numerical_audit": {
+    "independent_slsqp_objective_tolerance": 2e-06,
+    "optional_upstream_mse_penalty": 0,
+    "scope": "stated distributional adaptation; not all upstream solvers or individual-level methods",
+    "soft_gradient_finite_differences_pass": true,
+    "upstream_objective_gradient_interior_one_hot_cases": 5,
+    "upstream_revision": "db891b6f821c914455b11763a96679864bf4fc48"
+  },
+  "paid_inference_calls": 0,
+  "preservation": {
+    "changed_files": [],
+    "completed_v1_v2_v3_exports": "byte-identical against L09 export; v3 uses an L09-generated HTTP fixture",
+    "original_baseline": "902a3eb975b9e765f5a0c41e66afb6abe2ead5c6",
+    "protected_files": 68
+  },
+  "qualification_checks": {
+    "integrity_passed": 10,
+    "qualification_all_exit": 0,
+    "research_components_passed": 8,
+    "scope": "engineering and existing research reproduction; no new operational qualification"
+  },
+  "retrospective_development_comparison": {
+    "all_questions_scored": true,
+    "fits_meeting_gap_tolerance": 0,
+    "folds": 5,
+    "historical_mean_tvd": 0.22677466073935948,
+    "iterations": 500,
+    "lexical_families": 464,
+    "new_provider_calls": 0,
+    "previous_adapter_mean_tvd": 0.16949517757707122,
+    "questions": 489,
+    "raw_mean_tvd": 0.331124602241346,
+    "record": "docs/verification/phase_two_calibration_artifacts/opinionqa-runtime.json",
+    "released_personas": 2058,
+    "runtime_adapter_mean_tvd": 0.16679274432676397,
+    "untouched_qualification": false
+  },
+  "schema_version": "rival.development-verification.v1",
+  "source_files_sha256": {
+    ".github/workflows/ci.yml": "8f0bcb3b772a06756888b00fbbcd95797bfe9f85f3f46eeb73131eb0ebf49e76",
+    "README.md": "01838d3adec200335aa5c448793713085c6dd092d522eea3f4b72d431a70d753",
+    "pyproject.toml": "f70bf4d02f3158c7556c9603b2a8f5301debcd5ae6a7b52957224590e1449ad9",
+    "rival/calibration_catalog.py": "c56c0779484d8d4b01fa6c1349bceac6c0c2a0d5eae0b079ceaeaa37b5cfa176",
+    "rival/calibration_commands.py": "e8bc8cb4b18a7012b0f44549bfe666522cf208b26f4099a3908fe1610ce2ab00",
+    "rival/commands.py": "8f86912917ce9bd0534075e1c5f2ae2306c8eb9ddaf72d2136b910922632d60a",
+    "rival/runtime_calibration.py": "562394a7ff3a1b9b0ec1d17204649dc81285cd05858c35e3d22696eacaf0f826",
+    "rival/study_calibration.py": "6632706386dc25a54c46ef7ed60d06598b13a77a63fd745f7695355c80544331",
+    "rival/study_commands.py": "483dd78bafb9107f9ca07e1209d42e7594799cd30a1b9d218f90c3f07338ca6b",
+    "rival/study_contract.py": "64cd7f47d719b6b71cccd44a010c20af7f5b040f780fdd77d714940603903da9",
+    "rival/study_evidence.py": "02cbc151b0bde0622fa49c36ed5ea8a0fcb215aaa7be6ff958413da8d2d09400",
+    "rival/study_report.py": "115f6654bc7f899328beca0909fdd8c635e3710bd96d538f1aab82985bf05a86",
+    "rival/study_workflow.py": "3b25173ba1e28b97182ea9bab8da78514507f1a543916e2c0885a09245ba0617",
+    "rival/version.py": "6b2aee7c368bc9053057d39c5bf3559ddd27ab75a99966921deac2f39324e006",
+    "scripts/compare_runtime_calibration.py": "b7a6aec94dc650b71a72908f26e4405b4cba55a1433a51f79f69701d2e3d8f13",
+    "scripts/run_calibration_rehearsal.py": "10ebe84be469c77f9d86660fd06bd628eea58b2e97db7945e5aebb942e9b046c",
+    "scripts/verify_installed_wheel.py": "28ff670f2e7a994e5a2545ab87930e2c0e8cc76f7e8c1ccf81c08aa711750a12",
+    "tests/test_runtime_calibration.py": "fb8b5736729a59f0ed5d604c693a1e79197516eed04fbca9329049580424bf2f"
+  },
+  "tests": {
+    "elapsed_seconds": 27.808,
+    "log": "docs/verification/phase_two_calibration_artifacts/tests.log",
+    "new_calibration_tests": 19,
+    "passed": 215
+  },
+  "version": "0.6.0.dev8",
+  "workflow_rehearsal": {
+    "actual_llm_calls": 0,
+    "api_cost_usd": 0,
+    "completed_draws": 160,
+    "held_out_groups": 2,
+    "http_fixture_calls": 24,
+    "human_outcomes": false,
+    "improvement_and_harm_both_reported": true,
+    "planned_draws": 160,
+    "record": "docs/examples/calibration/rehearsal.json",
+    "resume_calls": 0,
+    "studies_completed": 4,
+    "training_groups": 2
+  }
+}

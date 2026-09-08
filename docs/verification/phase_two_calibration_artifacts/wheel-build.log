@@ -1,0 +1,9 @@
+Processing /workspace/scratch/a3e0fea917db/rival-l10
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: rival-sim
+  Building wheel for rival-sim (pyproject.toml): started
+  Building wheel for rival-sim (pyproject.toml): finished with status 'done'
+  Created wheel for rival-sim: filename=rival_sim-0.6.0.dev8-py3-none-any.whl size=1585966 sha256=5dc11aca822092c15a7b448da2afc460abf56cd05636541d415ad7361537bd04
+  Stored in directory: /root/.cache/pip/wheels/01/5f/d8/849d2ff558a7c5cb82f7549683cddb287c1c98c931aefa5bc0
+Successfully built rival-sim

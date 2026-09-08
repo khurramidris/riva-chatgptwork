@@ -44,4 +44,4 @@ jobs:
       - name: Build wheel
         run: python -m pip wheel . --no-deps --wheel-dir dist
       - name: Verify installed wheel outside checkout
-        run: python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev7-py3-none-any.whl --output reports/installed_wheel.json
+        run: python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev8-py3-none-any.whl --output reports/installed_wheel.json

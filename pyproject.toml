@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rival-sim"
-version = "0.6.0.dev7"
+version = "0.6.0.dev8"
 description = "Research population and behavior simulation with protected evaluation"
 readme = "README.md"
 requires-python = ">=3.11"

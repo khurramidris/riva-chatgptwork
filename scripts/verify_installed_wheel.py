@@ -121,6 +121,7 @@ class ModelHandler(BaseHTTPRequestHandler):
 model_server = ThreadingHTTPServer(('127.0.0.1', 0), ModelHandler)
 model_worker = Thread(target=model_server.serve_forever, daemon=True)
 model_worker.start()
+model_requests = {}
 try:
     for method in ('direct', 'ssr'):
         brief = strict_json(example['brief.json'])
@@ -136,6 +137,7 @@ try:
         if method == 'ssr':
             brief['execution']['elicitation']['embedding'] = {'kind': 'hashing'}
         request = bind_evidence(brief, catalog.root, [bundle.bundle_sha256], strict_json(example['support.json']))
+        model_requests[method] = request
         workspace = 'workflow-study-v3-' + method
         prepare_study(workspace, request, catalog_root=catalog.root)
         assert run_study(workspace, api_key='test-local-key')['complete']
@@ -144,6 +146,49 @@ try:
         assert audit_study_execution(workspace)['accepted_seed_requests'] == 6
         export_study(workspace, 'workflow-report-v3-' + method)
     assert ModelHandler.calls == 12
+    # Fit only verified training studies, then bind a v4 target before reveal.
+    from rival.calibration_catalog import CalibrationCatalog
+    from rival.mathx import canonical_hash as study_hash
+    from rival.outcome_vault import OutcomeVault
+    from rival.study_contract import parse_study_request
+    from rival.study_workflow import _workspace, evaluate_study
+    calibration = CalibrationCatalog('workflow-calibration')
+    references = []
+    for index in range(3):
+        payload = model_requests['direct'].model_dump(mode='json')
+        identifier = 'installed-calibration-' + str(index)
+        payload['brief'].update(study_id=identifier, question='Which delivery plan fits scenario ' + str(index) + '?',
+                                information_cutoff=utc_now().isoformat())
+        payload['evidence'].update(role='training' if index < 2 else 'evaluation', group_id=identifier)
+        if index == 2:
+            payload.update(schema_version='rival.study-request.v4', calibration={'adapter_sha256': fitted['adapter_sha256']})
+        request = parse_study_request(payload)
+        prepare_study(identifier, request, catalog_root=catalog.root,
+                      calibration_catalog_root=calibration.root if index == 2 else None)
+        assert run_study(identifier, api_key='test-local-key')['complete']
+        count = ModelHandler.calls
+        assert run_study(identifier)['complete'] and ModelHandler.calls == count
+        with _workspace(identifier) as workspace, workspace.execution() as session:
+            _, sealed = workspace.require_complete(workspace.journal_snapshot(session))
+        vault = OutcomeVault(identifier + '-vault.sqlite3')
+        try:
+            vault.deposit(identifier, study_hash(sealed), {'distribution': {'standard': 0.2, 'flexible': 0.5, 'neither': 0.3},
+                          'source': 'Generated test outcomes'}, 'installed-generated-outcome-key', utc_now() - timedelta(seconds=1))
+        finally:
+            vault.close()
+        evaluate_study(identifier, vault.path, key_material='installed-generated-outcome-key')
+        if index < 2:
+            references.append(identifier)
+            if index == 1:
+                bank = calibration.create_bank(references)
+                fitted = calibration.fit(bank['bank_sha256'])
+        else:
+            export_study(identifier, 'workflow-calibration-report')
+            report = json.loads(Path('workflow-calibration-report/report.json').read_text())
+            assert report['schema_version'] == 'rival.study-report.v4'
+            assert report['calibration']['comparison']['tvd_reduction_vs_raw'] > 0.3
+            assert report['confidence']['label'] == 'unqualified'
+    assert ModelHandler.calls == 30
 finally:
     model_server.shutdown()
     model_server.server_close()
@@ -175,7 +220,8 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
                              "local HTTP health, demo page and demo execution",
                              "study preparation, execution, recovery and report export",
                              "pinned evidence import, population support and v2 study execution",
-                             "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery"]}))
+                             "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery",
+                             "protected training bank, runtime calibration, v4 sealing and held-out comparison"]}))
 '''
 
 

@@ -1,0 +1,146 @@
+{
+  "adapter": {
+    "adapter_sha256": "9dc50947d5c8b734c4e91ff4c00c0b4d981850a0366201f7b4def2ddb0bc84b8",
+    "bank_sha256": "5e89bb982b72454c58995a3c1a19e01c8c8133bbb84a5bdaf8389cdf87eb3190",
+    "diagnostics": {
+      "base_mass": 0.5319041010530132,
+      "converged": true,
+      "effective_personas": 5.485636417438065,
+      "final_objective": 1.74145867409605e-07,
+      "initial_objective": 0.09694822912758226,
+      "iterations": 28,
+      "monotone_objective": true,
+      "simplex_gap": 6.162661839725914e-07
+    },
+    "qualification": "unqualified; training fit is not held-out evidence",
+    "training_groups": 2
+  },
+  "api_cost_usd": 0,
+  "bank": {
+    "bank_sha256": "5e89bb982b72454c58995a3c1a19e01c8c8133bbb84a5bdaf8389cdf87eb3190",
+    "seed_records": 6,
+    "training_groups": 2
+  },
+  "comparisons": {
+    "held-out-benefit": {
+      "comparison_sha256": "1942da51a57c5c43185937288028bddaf9a88bb48fb799ec1846cbf3b5bbb990",
+      "evidence_role": "evaluation",
+      "held_out_from_this_adapter": true,
+      "metrics": {
+        "calibrated": {
+          "jensen_shannon": 1.6124220560210886e-13,
+          "squared_error": 4.158927144871354e-13,
+          "tvd": 4.7641757421057473e-07
+        },
+        "historical_mean": {
+          "jensen_shannon": 0.0,
+          "squared_error": 0.0,
+          "tvd": 0.0
+        },
+        "raw": {
+          "jensen_shannon": 0.05257153274161992,
+          "squared_error": 0.11624999999999991,
+          "tvd": 0.27499999999999986
+        },
+        "uniform_panel": {
+          "jensen_shannon": 0.05257153274162001,
+          "squared_error": 0.11625000000000002,
+          "tvd": 0.275
+        }
+      },
+      "outcome_evidence_sha256": "beb51889e165bf93306112001c10445568a37861dd0f7aeaa07dcadca8c96a76",
+      "prediction_sha256": "f08a7d9ecaa750be129c6d47c66cf0e8c87fae25e47b5a668157378e18a6d5c3",
+      "qualification": "descriptive comparison; semantic independence and future performance remain unqualified",
+      "schema_version": "rival.calibration-comparison.v1",
+      "study_id": "l10-held-out-benefit",
+      "tvd_reduction_vs_historical_mean": -4.7641757421057473e-07,
+      "tvd_reduction_vs_raw": 0.27499952358242563
+    },
+    "held-out-harm": {
+      "comparison_sha256": "9d581b3fca2df92f932131888fff3a92814f1724bb39f438e036809f3680db18",
+      "evidence_role": "evaluation",
+      "held_out_from_this_adapter": true,
+      "metrics": {
+        "calibrated": {
+          "jensen_shannon": 0.05257139608813844,
+          "squared_error": 0.11624963608685879,
+          "tvd": 0.27499952358242563
+        },
+        "historical_mean": {
+          "jensen_shannon": 0.05257153274161992,
+          "squared_error": 0.11624999999999991,
+          "tvd": 0.27499999999999986
+        },
+        "raw": {
+          "jensen_shannon": 0.0,
+          "squared_error": 0.0,
+          "tvd": 0.0
+        },
+        "uniform_panel": {
+          "jensen_shannon": 8.881784197001253e-17,
+          "squared_error": 4.179267979320302e-32,
+          "tvd": 1.5959455978986625e-16
+        }
+      },
+      "outcome_evidence_sha256": "a1698f778eb9fa0db0d56379ebcad993b06eb6bba1fdac39e03b46b266cf76f4",
+      "prediction_sha256": "f69f36aa70d9f3e5450f404154c8bb89ad00505868309ae3414079d5e503998e",
+      "qualification": "descriptive comparison; semantic independence and future performance remain unqualified",
+      "schema_version": "rival.calibration-comparison.v1",
+      "study_id": "l10-held-out-harm",
+      "tvd_reduction_vs_historical_mean": 4.764175742244525e-07,
+      "tvd_reduction_vs_raw": -0.27499952358242563
+    }
+  },
+  "http_fixture_calls": 24,
+  "human_accuracy_tested": false,
+  "real_llm_calls": 0,
+  "report_sha256": "518383584852b3c38e1b5946c5caefae3b2f78c1a1738338f6dc57c3387b37ad",
+  "schema_version": "rival.calibration-rehearsal.v1",
+  "scope": "generated engineering fixtures",
+  "studies": [
+    {
+      "completed_draws": 40,
+      "completed_seeds": 6,
+      "elapsed_seconds": 0.49846292300026107,
+      "http_calls": 6,
+      "planned_draws": 40,
+      "planned_seeds": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l10-reference-a"
+    },
+    {
+      "completed_draws": 40,
+      "completed_seeds": 6,
+      "elapsed_seconds": 0.4883979279993582,
+      "http_calls": 6,
+      "planned_draws": 40,
+      "planned_seeds": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l10-reference-b"
+    },
+    {
+      "completed_draws": 40,
+      "completed_seeds": 6,
+      "elapsed_seconds": 0.43078590000004624,
+      "http_calls": 6,
+      "planned_draws": 40,
+      "planned_seeds": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l10-held-out-benefit"
+    },
+    {
+      "completed_draws": 40,
+      "completed_seeds": 6,
+      "elapsed_seconds": 0.3769208539997635,
+      "http_calls": 6,
+      "planned_draws": 40,
+      "planned_seeds": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l10-held-out-harm"
+    }
+  ]
+}

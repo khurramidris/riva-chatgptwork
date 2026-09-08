@@ -1,0 +1,421 @@
+{
+  "audience": {
+    "description": "Six generated example records; no real consumers represented.",
+    "effective_seed_records": 6.0,
+    "eligible_seed_records": 6,
+    "geography": [
+      "example-only"
+    ],
+    "input_seed_records": 6,
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "simulation_draws": 40,
+    "unique_sampled_seed_records": 6
+  },
+  "calibration": {
+    "comparison": {
+      "comparison_sha256": "1942da51a57c5c43185937288028bddaf9a88bb48fb799ec1846cbf3b5bbb990",
+      "evidence_role": "evaluation",
+      "held_out_from_this_adapter": true,
+      "metrics": {
+        "calibrated": {
+          "jensen_shannon": 1.6124220560210886e-13,
+          "squared_error": 4.158927144871354e-13,
+          "tvd": 4.7641757421057473e-07
+        },
+        "historical_mean": {
+          "jensen_shannon": 0.0,
+          "squared_error": 0.0,
+          "tvd": 0.0
+        },
+        "raw": {
+          "jensen_shannon": 0.05257153274161992,
+          "squared_error": 0.11624999999999991,
+          "tvd": 0.27499999999999986
+        },
+        "uniform_panel": {
+          "jensen_shannon": 0.05257153274162001,
+          "squared_error": 0.11625000000000002,
+          "tvd": 0.275
+        }
+      },
+      "outcome_evidence_sha256": "beb51889e165bf93306112001c10445568a37861dd0f7aeaa07dcadca8c96a76",
+      "prediction_sha256": "f08a7d9ecaa750be129c6d47c66cf0e8c87fae25e47b5a668157378e18a6d5c3",
+      "qualification": "descriptive comparison; semantic independence and future performance remain unqualified",
+      "schema_version": "rival.calibration-comparison.v1",
+      "study_id": "l10-held-out-benefit",
+      "tvd_reduction_vs_historical_mean": -4.7641757421057473e-07,
+      "tvd_reduction_vs_raw": 0.27499952358242563
+    },
+    "prediction": {
+      "adapter_sha256": "9dc50947d5c8b734c4e91ff4c00c0b4d981850a0366201f7b4def2ddb0bc84b8",
+      "adapter_version": "rival.ensemble-calibration.v1",
+      "bank_sha256": "5e89bb982b72454c58995a3c1a19e01c8c8133bbb84a5bdaf8389cdf87eb3190",
+      "calibrated_distribution": {
+        "flexible": 0.4999995675849348,
+        "neither": 0.24999995599749106,
+        "standard": 0.2500004764175743
+      },
+      "fit_diagnostics": {
+        "base_mass": 0.5319041010530132,
+        "converged": true,
+        "effective_personas": 5.485636417438065,
+        "final_objective": 1.74145867409605e-07,
+        "initial_objective": 0.09694822912758226,
+        "iterations": 28,
+        "monotone_objective": true,
+        "simplex_gap": 6.162661839725914e-07
+      },
+      "historical_mean_distribution": {
+        "flexible": 0.5,
+        "neither": 0.25,
+        "standard": 0.25
+      },
+      "prediction_sha256": "f08a7d9ecaa750be129c6d47c66cf0e8c87fae25e47b5a668157378e18a6d5c3",
+      "raw_distribution": {
+        "flexible": 0.40000000000000013,
+        "neither": 0.07500000000000004,
+        "standard": 0.5249999999999999
+      },
+      "raw_simulation_sha256": "890eab2451d04dea459d3fe2e51f53bb8c79797bd670add9a509e19bf2f0e49c",
+      "reference_execution": {
+        "attempts": 12,
+        "known_api_cost_usd": 0.0,
+        "new_model_calls_for_fit": 0
+      },
+      "schema_version": "rival.calibrated-prediction.v1",
+      "scope": "fixed panel and choice schema; aggregate research adjustment, not individual or qualified human probabilities",
+      "seed_records": 6,
+      "study_id": "l10-held-out-benefit",
+      "training_groups": 2,
+      "uniform_panel_distribution": {
+        "flexible": 0.39999999999999997,
+        "neither": 0.075,
+        "standard": 0.525
+      }
+    }
+  },
+  "choices": [
+    {
+      "choice_id": "standard",
+      "difference_from_reference_pp": 0.0,
+      "label": "Standard delivery",
+      "simulated_share": 0.5249999999999999
+    },
+    {
+      "choice_id": "flexible",
+      "difference_from_reference_pp": -12.499999999999979,
+      "label": "Flexible delivery",
+      "simulated_share": 0.40000000000000013
+    },
+    {
+      "choice_id": "neither",
+      "difference_from_reference_pp": -44.999999999999986,
+      "label": "Neither plan",
+      "simulated_share": 0.07500000000000004
+    }
+  ],
+  "confidence": {
+    "abstain": true,
+    "label": "unqualified",
+    "lower_tvd": 0.0,
+    "upper_tvd": 1.0
+  },
+  "created_at": "2026-09-08T10:08:24.857893+00:00",
+  "decision": "Explore how two delivery plans compare in a generated audience.",
+  "evaluation": {
+    "created_at": "2026-09-08T10:08:24.903588Z",
+    "evaluation_id": "eval_f6b9dd9d52214417",
+    "metrics": {
+      "jensen_shannon": 0.052571532741619936,
+      "mae_percentage_points": 18.333333333333325,
+      "spearman": 0.0,
+      "tvd": 0.27499999999999986,
+      "variance_ratio": 2.5899999999999994
+    },
+    "observed_distribution": {
+      "flexible": 0.5,
+      "neither": 0.25,
+      "standard": 0.25
+    },
+    "outcome_available_at": null,
+    "preregistration_hash": "3ed0eb9b646bb921f4dae197a4b023dd66dd11f9e0d0e14dbfcf12124d24c36e",
+    "run_id": "run_69495ce9ced647b0",
+    "subgroup_metrics": {}
+  },
+  "evidence": {
+    "assignment": {
+      "group_id": "l10-held-out-benefit",
+      "role": "evaluation",
+      "source_reference": "Generated engineering example; no independent human evidence."
+    },
+    "excluded_history_entries": 0,
+    "import_verification": {
+      "bundle_sha256": [
+        "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977"
+      ],
+      "raw_bytes_and_conversion_verified": true,
+      "scope": "local source-byte and normalization verification; origin, rights and dates remain declarations"
+    },
+    "information_cutoff": "2026-09-08T10:08:24.507929+00:00",
+    "local_manifest_verified": true,
+    "manifest_sha256": "4e86217ad86113488b7d462092daccc22f16c3a1abbc9c496be393b8bd6cd8dc",
+    "protected_comparison_verified": true,
+    "retrieval_audit_sha256": "d57d56504caac066850ba6274d470fa41646158f5f1a3d3f0727b488727dbd3c",
+    "sources": [
+      {
+        "collected_at": "2026-08-01T00:00:00Z",
+        "geography": [
+          "example-only"
+        ],
+        "name": "Rival generated workflow example",
+        "permitted_uses": [
+          "simulation"
+        ],
+        "rights_reference": "Generated in Rival for testing.",
+        "sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "source_id": "generated-example",
+        "source_type": "synthetic"
+      }
+    ],
+    "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"
+  },
+  "execution": {
+    "accounting": {
+      "attempts": 6,
+      "known_cost_usd": 0.0,
+      "mode": "managed",
+      "reserved_usd": 0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "measurements": {
+      "accepted_seed_requests": 6,
+      "accounting": {
+        "attempts": 6,
+        "known_cost_usd": 0.0,
+        "mode": "managed",
+        "reserved_usd": 0,
+        "total_cost_usd": 0.0,
+        "unresolved_attempts": 0
+      },
+      "attempt_outcomes": {
+        "DONE": 6
+      },
+      "audit_sha256": "5e99c4e34ef2b686fab3c1162feec94c99bca0b135d3edaf9df21267a9b87681",
+      "complete": true,
+      "elicitation": {
+        "ssr_degenerate": 0,
+        "ssr_tied_maxima": 0,
+        "ssr_tied_minima": 0
+      },
+      "latency_scope": "client monotonic HTTP duration; excludes backoff, local embedding, setup and unreturned requests",
+      "planned_draws": 40,
+      "planned_seed_requests": 6,
+      "response_models": [
+        "generated-calibration-fixture"
+      ],
+      "response_providers": [],
+      "response_system_fingerprints": [],
+      "schema_version": "rival.model-execution-audit.v1",
+      "scope": "execution measurements, including billed failed attempts; no human-accuracy measurement",
+      "study_id": "l10-held-out-benefit",
+      "tokens": {
+        "completion_tokens": {
+          "reported": 30.0,
+          "reporting_attempts": 6
+        },
+        "prompt_tokens": {
+          "reported": 60.0,
+          "reporting_attempts": 6
+        },
+        "total_tokens": {
+          "reported": 90.0,
+          "reporting_attempts": 6
+        }
+      },
+      "transport_latency_ms": {
+        "measured_attempts": 6,
+        "median": 1.0787749997689389,
+        "p95": 1.4845602504465205,
+        "total": 6.768458000806277,
+        "unmeasured_attempts": 0
+      },
+      "unaccepted_seed_requests": 0
+    },
+    "mode": "managed",
+    "model_specification": {
+      "identity_scope": "declared revision with checked response metadata; remote weights are not independently attested",
+      "replication_scope": "journal replay reuses outputs; fresh repeatability requires a separately executed study",
+      "runtime": {
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.3.5",
+          "pydantic": "2.13.4"
+        },
+        "platform": "Linux",
+        "python": "3.12.13"
+      },
+      "schema_version": "rival.model-execution.v1",
+      "settings": {
+        "base_url": "http://127.0.0.1:34127/chat/completions",
+        "budget_usd": 1.0,
+        "elicitation": {
+          "embedding": null,
+          "epsilon": 1e-08,
+          "method": "direct",
+          "temperature": 1.0
+        },
+        "generation_seed": 42,
+        "history_limit": 16,
+        "max_attempts": 6,
+        "max_output_tokens": 300,
+        "max_retries": 1,
+        "mode": "managed",
+        "model": "generated-calibration-fixture",
+        "model_pin": {
+          "expected_response_model": "generated-calibration-fixture",
+          "expected_response_provider": null,
+          "expected_system_fingerprint": null,
+          "kind": "hosted_endpoint",
+          "provider_route": null,
+          "reference": "Deterministic generated HTTP responses; no actual model weights",
+          "revision": "generated-fixture-v1"
+        },
+        "not_after": "2026-09-08T11:08:24.507988Z",
+        "reservation_usd": 0.01,
+        "temperature": 0.2,
+        "timeout_seconds": 60
+      }
+    },
+    "provider": {
+      "configuration_sha256": "870fb4c8b5c4504d1361aa31b30869977c8b932a3e70b914af64dee9a7af0ac1",
+      "endpoint_sha256": "2438b3e80f667b97e4ea862aa79c988d54b430de92fc13ed878ddbd9c219754b",
+      "model": "generated-calibration-fixture",
+      "provider_name": "pinned-direct",
+      "provider_version": "1"
+    },
+    "sample_plan_sha256": "9f6b08ca60f4c65c950c0b9d29fc6d989b6e68550576be7de57e14e506d93bac"
+  },
+  "limitations": [
+    "This study includes generated audience records; it is an engineering demonstration.",
+    "Choice shares describe model outputs for the supplied audience; customer-domain accuracy is not established.",
+    "Resampled draws do not add independent people or human evidence.",
+    "Differences between choice shares are not causal effects of an intervention.",
+    "Source rights, dates, geography and independence are operator declarations, not independently verified facts.",
+    "Confidence remains unqualified; no decision-ready interval or recommendation is issued.",
+    "Declared support checks do not establish population representativeness or validate the scenario's meaning.",
+    "declared revision with checked response metadata; remote weights are not independently attested",
+    "journal replay reuses outputs; fresh repeatability requires a separately executed study",
+    "Calibration was fitted only to its declared reference training groups. New-question support and improvement are unqualified."
+  ],
+  "question": "Which delivery plan suits held-out-benefit?",
+  "reference_choice_id": "standard",
+  "release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev8",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "request_sha256": "85a844febaf80dc7c9b0e28930dc184d41d1169d2419435397b17edf53a63703",
+  "run_id": "run_69495ce9ced647b0",
+  "runtime_release": "0.6.0.dev8",
+  "schema_version": "rival.study-report.v4",
+  "study_id": "l10-held-out-benefit",
+  "support": {
+    "audit_sha256": "66e299730828f6a284420daf8b401a131cf034255e415ea3edf107eb15fbf4f0",
+    "cells": [
+      {
+        "effective_seed_records": 3.0,
+        "label": "Value segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      },
+      {
+        "effective_seed_records": 3.0,
+        "label": "Convenience segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      }
+    ],
+    "conditions": [
+      "grocery-delivery-plans"
+    ],
+    "effective_seed_records": 6.0,
+    "excluded_seed_records": 0,
+    "filtered_seed_records": 6,
+    "geography_counts": {
+      "example-only": 6
+    },
+    "input_seed_records": 6,
+    "issues": [],
+    "missing_attributes": {
+      "segment": 0
+    },
+    "passed": true,
+    "policy_sha256": "a60f70aaad24fdc62b92d02e516efa973853263e3d5aa659fef59a9478b3480d",
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "positive_weight_seed_records": 6,
+    "schema_version": "rival.study-support.v1",
+    "scope": "declared source and seed support; not representativeness, semantic condition validation or predictive qualification",
+    "sources": [
+      {
+        "artifact_sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "bundle_sha256": "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977",
+        "collected_at": "2026-08-01T00:00:00+00:00",
+        "conversion_spec_sha256": "85439a1daa00f70f03f0d1148429222291a37b6ae67856e37ed0e79a0ff949b2",
+        "importer_version": "rival.evidence-importer.v1",
+        "origin": "generated:Rival/evidence-example-v1",
+        "records_sha256": "dbb06ee01bd295b2397e7b07be771af8c7b19eb977d7737123438e7a6b0a77f5",
+        "released_at": "2026-08-02T00:00:00+00:00",
+        "retrieved_after_cutoff": false,
+        "retrieved_at": "2026-08-03T00:00:00+00:00",
+        "revision": "generated-example-v1",
+        "selected_for_audience": true,
+        "source_id": "generated-example"
+      }
+    ],
+    "warnings": []
+  },
+  "title": "Generated calibration rehearsal: held-out-benefit"
+}

@@ -17,7 +17,7 @@ def bind_evidence(payload, catalog_root, bundle_ids, policy):
         records.extend(record.model_dump(mode="json") for record in population)
         sources.append(manifest.source().model_dump(mode="json"))
     version = payload.get("schema_version", "rival.study-request.v2")
-    if version not in {"rival.study-request.v1", "rival.study-request.v2", "rival.study-request.v3"}:
+    if version not in {"rival.study-request.v1", "rival.study-request.v2", "rival.study-request.v3", "rival.study-request.v4"}:
         raise ValueError("unsupported study request version")
     if version == "rival.study-request.v1":
         version = "rival.study-request.v2"

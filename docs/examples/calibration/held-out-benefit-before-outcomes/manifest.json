@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "5c7ccd17da45243cacc5bae21d4ee35268cb39a43c7164a93dcc6b95affd72bb",
+    "report.md": "b68c54c222173592329f21f135eb675d13757b30160442dc5b83aaa5d3999d40"
+  },
+  "request_sha256": "85a844febaf80dc7c9b0e28930dc184d41d1169d2419435397b17edf53a63703",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "l10-held-out-benefit"
+}

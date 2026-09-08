@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "2a975cc070c104b713f94ef7ae705106d6ce81a333b5cd56b6f118b05f87090f",
+    "report.md": "241beda2d06d58787955c7fceeb6c7cd9978d8b80a0e0e7c712ba6f41a434463"
+  },
+  "request_sha256": "0c05d4de7cf7b9f927257273fd7fef179e314d183ee79d49fb091e3e745c1640",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "l10-held-out-harm"
+}

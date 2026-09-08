@@ -1,0 +1,33 @@
+{
+  "baseline": "cead2063e6a6e4e98c8072c9428752f9f5f9e8cb",
+  "v3_scope": "generated completed fixture created using exact L09 source",
+  "versions": {
+    "v1": {
+      "complete": true,
+      "exports_byte_identical": true,
+      "files_sha256": {
+        "manifest.json": "fa2714c5adb236cb3b4edaf9638ff2309d07fe31f38a1716b26425b16177498d",
+        "report.json": "0e430ce4c2884b2d8b1bf47cfc28d6124016bec60765b48764035083364896ef",
+        "report.md": "e28033b48082bcae19bdce29444286216d48f86a5dfe76cb4a08b20ac1e9c24b"
+      }
+    },
+    "v2": {
+      "complete": true,
+      "exports_byte_identical": true,
+      "files_sha256": {
+        "manifest.json": "cbb7921134c1bd6ca0178bc3068bb2d83176f36db6be3616d92501dadb7af452",
+        "report.json": "01ffa38f15f16cbcef06bc6b9324d23fc7358f3e1541e129ea13f90ab76d32ba",
+        "report.md": "ffd1ad1c50b46909cc00ec45b57d5a076857b4ddcc68886a57de0c9acacff3a9"
+      }
+    },
+    "v3": {
+      "complete": true,
+      "exports_byte_identical": true,
+      "files_sha256": {
+        "manifest.json": "53001859c25203ab5aa85ccf270da0b750184ae2a37375449b2fe5fe57a6e0b7",
+        "report.json": "9fd932eb663ad766200f304faaf3768520f9eec54545c0a4ff24609d7511b556",
+        "report.md": "19b7c7c88b0c82f960b98d993a9be346241b34bc48de4ecb6613aabf2caa37b8"
+      }
+    }
+  }
+}

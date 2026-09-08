@@ -1,7 +1,7 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Current version: `0.6.0.dev7`. Branch: `codex/phase-two-model-execution`.
+Current version: `0.6.0.dev8`. Branch: `codex/phase-two-calibration`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
@@ -10,10 +10,9 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 
 Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
 Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
-Phase two is L07–L10. L07–L09 are implemented and locally verified:
-**9 of 14 engineering tasks complete; 5 later tasks pending** as of 2026-09-08. Phase two has
-three of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
-and [latest verification record](verification/phase_two_model_execution.json). Statistical
+Phase two is L07–L10. All four are implemented and locally verified:
+**10 of 14 engineering tasks complete; 4 later tasks pending** as of 2026-09-08. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [latest verification record](verification/phase_two_calibration.json). Statistical
 qualification and customer launch remain later gates.
 
 ## Delivery board
@@ -29,7 +28,7 @@ qualification and customer launch remain later gates.
 | L07 One integrated study workflow | Complete, locally verified | Versioned input; signed preparation and evidence role; journaled execution and crash recovery; sealed predictions; aggregate report; protected outcome comparison; installed-package rehearsal |
 | L08 Public evidence and population support | Complete, locally verified | Replayable pinned CSV/JSONL imports; v2 evidence binding; cutoff, geography, condition and subgroup checks; effective counts; 2,058-row public demographic import rehearsal |
 | L09 Model execution and elicitation | Complete engineering milestone, locally verified | Pinned v3 execution, fair SSR ties, 196 tests and two real local SSR runs/repeat/recovery; small-model direct probabilities correctly rejected; no production accuracy claim |
-| L10 Runtime calibration | Pending | Reference bank and adapter identity; fit/validation separation; SYN-DIGITS integration |
+| L10 Runtime calibration | Complete engineering milestone, locally verified | Signed training banks; model/evidence/panel binding; v4 prediction seals and protected comparisons; SYN-DIGITS objective parity; 215 tests and retrospective public-data comparison |
 | L11 Qualified uncertainty and abstention | Pending | Independent study-level training, untouched calibration/evaluation splits, coverage and selective-risk tests |
 | L12 Frozen qualification | Pending | Relevant untouched public data, classical baselines, missingness and failure denominators, operational measurements |
 | L13 Operator interface and reports | Pending | Complete study-to-report flow, uncertainty and unsupported-use presentation |
@@ -192,8 +191,8 @@ worker has stopped and the journal confirms no unresolved remote attempt.
   are separate release work.
 - Automatic confidence fitting is disabled. The evidence registry supports a
   protected research fit, but cannot establish study independence or qualified
-  coverage. Calibration, shrinkage, coverage and selective-risk tests still need
-  the L10–L12 workflow and untouched data.
+  coverage. L10 adds runtime calibration; shrinkage, coverage and selective-risk
+  tests still need L11–L12 and untouched data.
 - Frozen v1 benchmark reports, earlier qualification artifacts and their release
   labels remain historical. Reanalysis does not turn development data into
   confirmation evidence. No E/F reference calls or adapters were executed.

@@ -24,8 +24,9 @@ source and execution identities, limitations and comparison metrics when observe
 outcomes are available. The built-in browser screen uses generated demo people,
 anchors and outcomes; it is not yet the customer study interface.
 The `study` operator commands implement the first integrated workflow. Their
-reports currently contain raw simulated choice shares; runtime calibration is
-L10 work. See [phase-two development](PHASE_TWO_DEVELOPMENT.md).
+reports contain raw simulated choice shares. The v4 contract adds calibration from
+compatible protected training studies, preserving both outputs and scoring them
+against the same outcomes. See [runtime calibration](RUNTIME_CALIBRATION.md). See [phase-two development](PHASE_TWO_DEVELOPMENT.md).
 
 The v2 study contract binds public/licensed/human inputs to verified local evidence
 imports and an explicit population support policy. Geography is applied to the

@@ -4,19 +4,41 @@ Phase one (L01–L06) completed at `c67da54`, with Linux and Windows CI passing.
 Phase two develops L07–L10. L07 completed on `codex/phase-two-study-workflow` at
 `50e7494`, with Linux and Windows CI passing on draft PR #6. L08 completed at
 `07ec73e`, with Linux and Windows CI passing on draft PR #7. L09 builds on that
-commit on `codex/phase-two-model-execution` (draft PR #8). The current development
-version is `0.6.0.dev7`; three of four phase-two engineering tasks are complete.
+commit on `codex/phase-two-model-execution` (draft PR #8), completing at `cead206`
+with Linux and Windows CI passing. L10 builds on it on `codex/phase-two-calibration`.
+The current development version is `0.6.0.dev8`; all four phase-two engineering
+tasks are complete. Empirical qualification and the full operator GUI remain later work.
 
 | Task | Phase-two acceptance | Current position |
 |---|---|---|
 | L07 Integrated study workflow | Save and validate a versioned brief, audience, sources, evidence role, execution policy and preregistration; execute and recover through the request journal; seal predictions; export an aggregate report; optionally compare authenticated outcomes | Complete; 152 local tests and isolated installed-wheel verification pass |
 | L08 Public evidence and population support | Import permitted public or licensed evidence with traceable versions and dates; enforce declared audience and condition support; expose missing support | Complete for local CSV/JSONL snapshots and explicit support policies; 172 tests and a 2,058-row public demographic import rehearsal pass |
 | L09 Model execution and elicitation | Run a pinned real model through the complete workflow; verify elicitation, reproducibility, failures, cost and latency | Complete engineering milestone: pinned real local SSR runs, fresh repeat, failures/cost/latency and recovery verified; the small model failed direct-probability validation |
-| L10 Runtime calibration | Bind the reference bank and calibration model to evidence and provider identities; keep fitting separate from held-out studies; integrate and compare calibration in the workflow | Pending |
+| L10 Runtime calibration | Bind the reference bank and calibration model to evidence and provider identities; keep fitting separate from held-out studies; integrate and compare calibration in the workflow | Complete engineering milestone: protected training banks, pinned v4 raw/calibrated outputs, held-out comparisons, numerical parity and 215 local tests |
 
 L11–L12 establish qualified uncertainty and performance on untouched studies.
 L13–L14 complete the operator interface and delivery rehearsal. Passing the new
 workflow's engineering tests does not complete those later tasks.
+
+## Fourth increment: runtime calibration
+
+L10 integrates the SYN-DIGITS distributional objective into saved studies, with
+an explicit extension for probability responses. References must be complete,
+protected training studies from the same panel and model. New targets bind an
+immutable adapter at preparation, save both predictions before reveal and report
+when calibration helps or hurts. All 215 local tests pass, including 19 new
+calibration tests and archived-source numerical checks.
+
+The generated HTTP rehearsal completes two training and two evaluation studies,
+including a harmful adjustment. A separate retrospective comparison on 489 public
+OpinionQA questions finds mean TVD 0.166793, versus raw 0.331125, historical mean
+0.226775 and prior research calibration 0.169495. These data were already used in
+development. All five numerical fits reached their iteration limit; their gaps
+are retained. No current provider or customer accuracy claim follows.
+
+See [runtime calibration](RUNTIME_CALIBRATION.md), [the verification record](verification/phase_two_calibration.json)
+and [the generated example](examples/calibration/held-out-benefit/report.md).
+L11 is next: qualified uncertainty and abstention using separate evidence groups.
 
 ## Third increment: pinned model execution and elicitation
 
@@ -36,8 +58,8 @@ This completes L09's engineering acceptance through the real SSR route. It does
 not qualify this small model for production. Direct elicitation still needs a
 model/endpoint that reliably follows its response contract; domain accuracy and
 production cost/latency require their own qualification. No human outcomes were
-used. The next phase-two milestone is L10: reference-bank identity and runtime
-calibration with fit/evaluation separation.
+used. L10 now adds reference-bank identity and runtime calibration with fit/evaluation
+separation as described above.
 
 See [model execution](MODEL_EXECUTION.md), the [real-run receipt](examples/model-execution/rehearsal.json),
 and [the L09 verification record](verification/phase_two_model_execution.json).
@@ -57,7 +79,7 @@ See [the evidence guide](EVIDENCE_IMPORTS.md) for the full workflow, its explici
 declaration/semantic limits, public-data recipe and compatibility behavior.
 Existing completed v1 workspaces remain readable; incomplete studies still require
 their pinned runtime. New nonsynthetic studies require the v2 evidence contract.
-L09 now has the execution evidence below; L10 runtime calibration remains pending.
+L09 and L10 add the execution and calibration evidence described above.
 
 ## First increment: one study from input to report
 

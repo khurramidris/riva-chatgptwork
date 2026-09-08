@@ -11,7 +11,8 @@ from .mathx import canonical_hash
 from .readiness import release_claims
 
 
-def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None, *, model_execution=None):
+def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None, *, model_execution=None,
+                       calibration=None, calibration_comparison=None):
     claims = release_claims()
     claims["release"] = prepared["release"]
     reference = request.brief.choices[0].choice_id
@@ -79,6 +80,14 @@ def build_study_report(request, prepared, simulation, sealed, accounting, evalua
                          prepared["model_execution"]["replication_scope"]])
         if model_execution.get("elicitation", {}).get("ssr_degenerate", 0):
             warnings.append("Some SSR responses had no distinguishing embedding signal and received uniform mass; inspect the execution audit.")
+    if "calibration" in prepared:
+        if calibration is None:
+            raise ValueError("calibration prediction evidence is missing")
+        report["schema_version"] = "rival.study-report.v4"
+        report["calibration"] = {"prediction": calibration, "comparison": calibration_comparison}
+        warnings.append("Calibration was fitted only to its declared reference training groups. New-question support and improvement are unqualified.")
+        if not calibration["fit_diagnostics"]["converged"]:
+            warnings.append("Calibration reached its iteration limit before the declared simplex-gap tolerance; inspect fit diagnostics.")
     return report
 
 
@@ -135,6 +144,22 @@ def study_markdown(report):
             f"- Measured HTTP time: {measured['transport_latency_ms']['total'] / 1000:.2f} seconds across {measured['transport_latency_ms']['measured_attempts']} attempts.",
             "- Saved model outputs are reused on resume. A fresh repeat is a separate study and may differ.",
             "- This measures model execution; accuracy against real people remains unqualified."])
+    if "calibration" in report:
+        prediction = report["calibration"]["prediction"]
+        lines.extend(["", "## Calibration", "",
+            f"Fitted to {prediction['training_groups']} training groups using a fixed panel of {prediction['seed_records']} seeds. Both predictions were saved before outcome reveal.", "",
+            "| Choice | Raw simulation | Calibrated | Training mean baseline |", "|---|---:|---:|---:|"])
+        for choice in report["choices"]:
+            identifier = choice["choice_id"]
+            lines.append(f"| {_text(choice['label'])} | {prediction['raw_distribution'][identifier]:.1%} | {prediction['calibrated_distribution'][identifier]:.1%} | {prediction['historical_mean_distribution'][identifier]:.1%} |")
+        comparison = report["calibration"]["comparison"]
+        if comparison:
+            lines.extend(["", "| Compared with protected outcomes | TVD (lower is better) |", "|---|---:|"])
+            for method, metrics in comparison["metrics"].items():
+                lines.append(f"| {_text(method)} | {metrics['tvd']:.4f} |")
+            lines.append(f"\nTVD reduction versus raw: {comparison['tvd_reduction_vs_raw']:+.4f}. A negative value means calibration made this study worse.")
+        else:
+            lines.append("\nNo protected outcome comparison yet; these adjustments are not evidence of better accuracy.")
     lines.extend(["", "## Limitations", "", *["- " + _text(item) for item in report["limitations"]],
         "", f"Study: {_text(report['study_id'])}. Input fingerprint: `{report['request_sha256']}`.", ""])
     return "\n".join(lines)

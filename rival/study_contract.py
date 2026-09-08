@@ -12,6 +12,7 @@ from .evidence_catalog import EvidenceImportManifest, records_digest
 from .mathx import canonical_hash
 from .study_support import StudySupportPolicy, validate_filters
 from .model_contract import ElicitationSpec, ModelPin
+from .runtime_calibration import CalibrationPin
 
 
 class StudyBrief(StrictModel):
@@ -219,11 +220,22 @@ class StudyRequestV3(StudyRequestV2):
         return self
 
 
+class StudyRequestV4(StudyRequestV3):
+    schema_version: Literal["rival.study-request.v4"] = "rival.study-request.v4"
+    calibration: CalibrationPin
+
+    def scenario(self):
+        scenario = super().scenario()
+        return scenario.model_copy(update={"metadata": {**scenario.metadata,
+            "calibration_adapter_sha256": self.calibration.adapter_sha256}})
+
+
 def parse_study_request(payload):
     if not isinstance(payload, dict):
         raise ValueError("study input must be a JSON object")
     model = {"rival.study-request.v2": StudyRequestV2,
-             "rival.study-request.v3": StudyRequestV3}.get(payload.get("schema_version"), StudyRequest)
+             "rival.study-request.v3": StudyRequestV3,
+             "rival.study-request.v4": StudyRequestV4}.get(payload.get("schema_version"), StudyRequest)
     return model.model_validate(payload)
 
 
