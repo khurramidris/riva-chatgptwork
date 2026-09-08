@@ -2,7 +2,7 @@
 
 from .evidence_catalog import EvidenceCatalog
 from .mathx import canonical_hash
-from .study_contract import StudyRequestV2
+from .study_contract import StudyRequestV2, parse_study_request
 from .study_support import StudySupportPolicy
 
 
@@ -16,10 +16,15 @@ def bind_evidence(payload, catalog_root, bundle_ids, policy):
         manifests.append(manifest.model_dump(mode="json"))
         records.extend(record.model_dump(mode="json") for record in population)
         sources.append(manifest.source().model_dump(mode="json"))
-    payload = {**payload, "schema_version": "rival.study-request.v2", "imports": manifests,
+    version = payload.get("schema_version", "rival.study-request.v2")
+    if version not in {"rival.study-request.v1", "rival.study-request.v2", "rival.study-request.v3"}:
+        raise ValueError("unsupported study request version")
+    if version == "rival.study-request.v1":
+        version = "rival.study-request.v2"
+    payload = {**payload, "schema_version": version, "imports": manifests,
                "support": StudySupportPolicy.model_validate(policy).model_dump(mode="json"),
                "audience": {**payload["audience"], "records": records, "sources": sources}}
-    return StudyRequestV2.model_validate(payload)
+    return parse_study_request(payload)
 
 
 def verify_imports(request, catalog_root):

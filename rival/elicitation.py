@@ -14,10 +14,7 @@ import numpy as np
 from .mathx import canonical_hash
 from .providers import PredictionProvider, ProviderError, ProviderPrediction
 from .schemas import PopulationRecord, ProviderIdentity, ScenarioSpec
-from .vendor.semantic_similarity_rating.compute import (
-    response_embeddings_to_pmf,
-    scale_pmf,
-)
+from .vendor.semantic_similarity_rating.compute import cosine_similarity_matrix
 
 
 class TextEmbedder(Protocol):
@@ -137,7 +134,11 @@ class SSRScale:
 
 
 class SemanticSimilarityRater:
-    """Paper-exact SSR computation with fail-safe numerical handling."""
+    """SSR with permutation-invariant ties and explicit degeneracy diagnostics.
+
+    Unique minima use the upstream equation. Tied minima share epsilon equally;
+    flat similarities return uniform mass. Vendored historical code is unchanged.
+    """
 
     def __init__(
         self,
@@ -155,11 +156,14 @@ class SemanticSimilarityRater:
         self.temperature = float(temperature)
         self.epsilon = float(epsilon)
         self._anchor_embeddings: np.ndarray | None = None
+        self._ratings: dict[str, tuple[np.ndarray, dict[str, float]]] = {}
 
     @property
     def identity(self) -> dict[str, object]:
         return {
             "algorithm": "pymc-labs.semantic-similarity-rating",
+            "adapter_version": "rival.ssr.v2",
+            "tie_policy": "split-minimum-epsilon-and-zero-temperature-maxima",
             "upstream_commit": "86dcd2597c7824e4fd6546b884c5500c43a4b022",
             "embedder": self.embedder.identity,
             "temperature": self.temperature,
@@ -174,34 +178,56 @@ class SemanticSimilarityRater:
             values = np.asarray(self.embedder.encode(self.scale.anchors), dtype=float)
             if values.ndim != 2 or values.shape[0] != len(self.scale.anchors):
                 raise ValueError("embedder returned an invalid anchor matrix")
+            if values.shape[1] == 0 or not np.all(np.isfinite(values)):
+                raise ValueError("anchor embeddings must be finite and nonempty")
             self._anchor_embeddings = values
         return self._anchor_embeddings
 
-    def rate_array(self, response: str) -> np.ndarray:
+    def _rate(self, response: str):
+        if not isinstance(response, str) or not response.strip():
+            raise ValueError("SSR requires nonempty response text")
         response_matrix = np.asarray(self.embedder.encode([response]), dtype=float)
         anchors = self._anchors()
         if response_matrix.ndim != 2 or response_matrix.shape[0] != 1:
             raise ValueError("embedder returned an invalid response matrix")
         if response_matrix.shape[1] != anchors.shape[1]:
             raise ValueError("response and anchor embedding dimensions differ")
+        if not np.all(np.isfinite(response_matrix)):
+            raise ValueError("response embeddings must be finite")
+        diagnostics = {"ssr_degenerate": 0.0, "ssr_tied_minima": 0.0, "ssr_tied_maxima": 0.0}
         with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
-            pmf = response_embeddings_to_pmf(
-                response_matrix, anchors.T, epsilon=self.epsilon
-            )[0]
-        if (
-            pmf.shape != (len(self.scale.choice_ids),)
-            or not np.all(np.isfinite(pmf))
-            or np.any(pmf < 0)
-            or float(pmf.sum()) <= 0
-        ):
-            pmf = np.full(len(self.scale.choice_ids), 1.0 / len(self.scale.choice_ids))
+            similarities = cosine_similarity_matrix(response_matrix, anchors.T)[0]
+        if not np.all(np.isfinite(similarities)) or np.ptp(similarities) <= 1e-12:
+            diagnostics["ssr_degenerate"] = 1.0
+            return np.full(len(self.scale.choice_ids), 1.0 / len(self.scale.choice_ids)), diagnostics
+        minima = np.isclose(similarities, similarities.min(), atol=1e-12, rtol=0)
+        diagnostics["ssr_tied_minima"] = float(minima.sum() > 1)
+        mass = similarities - similarities.min()
+        mass[minima] = 0.0
+        mass[minima] += self.epsilon / minima.sum()
+        pmf = mass / mass.sum()
+        maxima = np.isclose(pmf, pmf.max(), atol=1e-12, rtol=0)
+        diagnostics["ssr_tied_maxima"] = float(maxima.sum() > 1)
+        if self.temperature == 0:
+            scaled = maxima.astype(float)
         else:
-            pmf = pmf / pmf.sum()
-        with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
-            scaled = np.asarray(scale_pmf(pmf, self.temperature), dtype=float)
-        if not np.all(np.isfinite(scaled)) or float(scaled.sum()) <= 0:
-            scaled = np.full(len(pmf), 1.0 / len(pmf))
-        return scaled / scaled.sum()
+            scaled = np.zeros_like(pmf)
+            positive = pmf > 0
+            log_mass = np.log(pmf[positive])
+            with np.errstate(over="ignore", under="ignore"):
+                scaled[positive] = np.exp((log_mass - log_mass.max()) / self.temperature)
+        return scaled / scaled.sum(), diagnostics
+
+    def rate_array(self, response: str) -> np.ndarray:
+        probabilities, _ = self.rate_with_diagnostics(response)
+        return np.asarray(list(probabilities.values()), dtype=float)
+
+    def rate_with_diagnostics(self, response: str):
+        key = canonical_hash({"response": response, "rating": self.identity})
+        if key not in self._ratings:
+            self._ratings[key] = self._rate(response)
+        values, diagnostics = self._ratings[key]
+        return dict(zip(self.scale.choice_ids, map(float, values), strict=True)), dict(diagnostics)
 
     def rate(self, response: str) -> dict[str, float]:
         values = self.rate_array(response)
@@ -330,21 +356,24 @@ class SSRElicitationProvider(PredictionProvider):
         self.embedder = embedder or HashingTextEmbedder()
         self.temperature = temperature
         self.epsilon = epsilon
+        self._raters = {}
 
     def _rater(self, scenario: ScenarioSpec) -> SemanticSimilarityRater:
-        return SemanticSimilarityRater(
-            SSRScale.from_scenario(scenario),
-            self.embedder,
-            temperature=self.temperature,
-            epsilon=self.epsilon,
-        )
+        scale = SSRScale.from_scenario(scenario)
+        key = canonical_hash({"choices": scale.choice_ids, "anchors": scale.anchors,
+            "embedder": self.embedder.identity, "temperature": self.temperature, "epsilon": self.epsilon})
+        if key not in self._raters:
+            self._raters[key] = SemanticSimilarityRater(scale, self.embedder,
+                temperature=self.temperature, epsilon=self.epsilon)
+        return self._raters[key]
 
     def predict(self, person: PopulationRecord, scenario: ScenarioSpec) -> ProviderPrediction:
         generated = self.generator.generate(person, scenario)
-        probabilities = self._rater(scenario).rate(generated.text)
+        probabilities, rating_diagnostics = self._rater(scenario).rate_with_diagnostics(generated.text)
         return ProviderPrediction(
             probabilities=probabilities,
-            diagnostics={**generated.diagnostics, "ssr_response_characters": float(len(generated.text))},
+            diagnostics={**generated.diagnostics, **rating_diagnostics,
+                         "ssr_response_characters": float(len(generated.text))},
             provider_request_id=generated.request_id,
             attempts=generated.attempts,
             latency_ms=generated.latency_ms,
@@ -358,10 +387,11 @@ class SSRElicitationProvider(PredictionProvider):
             "temperature": self.temperature,
             "epsilon": self.epsilon,
             "ssr_upstream_commit": "86dcd2597c7824e4fd6546b884c5500c43a4b022",
+            "ssr_adapter": "rival.ssr.v2",
         }
         return ProviderIdentity(
             provider_name=self.name,
-            provider_version="1",
+            provider_version="2",
             model=str(self.generator.identity.get("model", "text-generator+SSR")),
             configuration_sha256=canonical_hash(configuration),
         )

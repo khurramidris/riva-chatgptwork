@@ -11,6 +11,7 @@ from .schemas import (ChoiceSpec, EvidenceSource, PopulationRecord, PopulationTa
 from .evidence_catalog import EvidenceImportManifest, records_digest
 from .mathx import canonical_hash
 from .study_support import StudySupportPolicy, validate_filters
+from .model_contract import ElicitationSpec, ModelPin
 
 
 class StudyBrief(StrictModel):
@@ -198,10 +199,31 @@ class StudyRequestV2(StudyRequest):
         })
 
 
+class StudyModelExecution(StudyExecution):
+    mode: Literal["managed"] = "managed"
+    model_pin: ModelPin
+    elicitation: ElicitationSpec = Field(default_factory=ElicitationSpec)
+    generation_seed: StrictInt = Field(ge=0, le=2**31 - 1)
+
+
+class StudyRequestV3(StudyRequestV2):
+    schema_version: Literal["rival.study-request.v3"] = "rival.study-request.v3"
+    execution: StudyModelExecution
+
+    @model_validator(mode="after")
+    def model_boundary(self):
+        embedding = self.execution.elicitation.embedding
+        if embedding and embedding.kind == "hashing":
+            if self.evidence.role != "development" or any(source.source_type != "synthetic" for source in self.audience.sources):
+                raise ValueError("hashing embeddings are restricted to generated development rehearsals")
+        return self
+
+
 def parse_study_request(payload):
     if not isinstance(payload, dict):
         raise ValueError("study input must be a JSON object")
-    model = StudyRequestV2 if payload.get("schema_version") == "rival.study-request.v2" else StudyRequest
+    model = {"rival.study-request.v2": StudyRequestV2,
+             "rival.study-request.v3": StudyRequestV3}.get(payload.get("schema_version"), StudyRequest)
     return model.model_validate(payload)
 
 

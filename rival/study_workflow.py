@@ -24,7 +24,7 @@ from .providers import HeuristicChoiceProvider, OpenAICompatibleProvider
 from .schemas import (EvaluationResult, PredictionContext, SealedStudyManifest,
                       SimulationResult, utc_now)
 from .store import EvidenceStore
-from .study_contract import StudyRequest, StudyRequestV2, parse_study_request
+from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, parse_study_request
 from .study_evidence import verify_imports
 from .study_support import require_support, validate_filters
 from .version import __version__
@@ -41,6 +41,10 @@ def _provider(request, execution=None, api_key=None, *, preparing=False):
     options = request.execution
     if options.mode == "offline":
         return HeuristicChoiceProvider()
+    if isinstance(request, StudyRequestV3):
+        from .model_providers import model_provider
+        return model_provider(options, execution,
+            "preparation-only-no-network" if preparing else api_key)
     return OpenAICompatibleProvider(model=options.model, base_url=options.base_url,
         api_key="preparation-only-no-network" if preparing else api_key,
         execution=execution, temperature=options.temperature,
@@ -96,6 +100,16 @@ def _make_plan(request):
         }
         if support is not None:
             plan["support_audit"] = support
+        if isinstance(request, StudyRequestV3):
+            from .model_providers import runtime_identity
+            embedding = request.execution.elicitation.embedding
+            plan["model_execution"] = {
+                "schema_version": "rival.model-execution.v1",
+                "settings": request.execution.model_dump(mode="json"),
+                "runtime": runtime_identity(bool(embedding and embedding.kind == "sentence_transformer")),
+                "identity_scope": "declared revision with checked response metadata; remote weights are not independently attested",
+                "replication_scope": "journal replay reuses outputs; fresh repeatability requires a separately executed study",
+            }
         return plan
     finally:
         engine.store.close()
@@ -207,7 +221,7 @@ class _Workspace:
             requests = [dict(row) for row in journal.connection.execute("SELECT * FROM requests ORDER BY work_id")]
             attempts = [dict(row) for row in journal.connection.execute("SELECT * FROM attempts ORDER BY work_id, ordinal")]
             summary = {"mode": "managed", **journal.summary()}
-        return {"accounting": summary, "requests": requests,
+        return {"accounting": summary, "requests": requests, "attempts": attempts,
                 "digest": canonical_hash({"requests": requests, "attempts": attempts})}
 
     def simulation(self):
@@ -388,6 +402,8 @@ def run_study(root, *, api_key=None):
                 scenario, workspace.request.audience.targets)
             verify_locked_context(locked, expected)
             if result is None:
+                if hasattr(provider, "prepare_local"):
+                    provider.prepare_local(scenario)
                 result = engine.simulate(workspace.request.audience.records, scenario,
                     workspace.request.audience.targets, locked_context=locked)
             sealed = workspace.seal(result)
@@ -396,6 +412,9 @@ def run_study(root, *, api_key=None):
                     or {row["work_id"] for row in snapshot["requests"]} != set(workspace.prepared["request_draw_counts"])
                     or any(row["state"] != "DONE" for row in snapshot["requests"])):
                 raise IntegrityError("not every planned model request has resolved accounting")
+            if isinstance(workspace.request, StudyRequestV3):
+                from .study_execution_audit import execution_audit
+                workspace.put("model_execution_evidence", execution_audit(workspace, snapshot, result))
             workspace.put("completed", {"simulation_sha256": canonical_hash(result),
                 "manifest_sha256": canonical_hash(sealed), "journal_sha256": snapshot["digest"],
                 "accounting": snapshot["accounting"]})
@@ -463,5 +482,6 @@ def export_study(root, output):
         if event["to_phase"] == "evaluated":
             evaluation = workspace.store.phase_evidence(event["payload_sha256"])["payload"]
         report = build_study_report(workspace.request, workspace.prepared, result, sealed,
-                                    snapshot["accounting"], evaluation)
+                                    snapshot["accounting"], evaluation,
+                                    model_execution=workspace.read("model_execution_evidence"))
         return export_report(report, output, workspace.root)

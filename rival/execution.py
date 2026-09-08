@@ -32,6 +32,10 @@ class ReconciliationRequired(ExecutionError):
     pass
 
 
+class TerminalResponseError(ExecutionError):
+    """A known unusable response must not trigger another paid retry."""
+
+
 def reported_cost(payload: dict[str, Any]) -> float | None:
     usage = payload.get("usage")
     if not isinstance(usage, dict):
@@ -184,11 +188,15 @@ class AttemptJournal:
                 raise ReconciliationRequired("remote outcome or billing unknown; reconcile before resuming") from exc
 
             cost = reported_cost(payload)
+            terminal = False
             try:
                 accept(payload)
                 accepted = True
-            except (ValueError, RuntimeError, KeyError, TypeError, IndexError):
+            except (ValueError, RuntimeError, KeyError, TypeError, IndexError) as exc:
                 accepted = False
+                terminal = isinstance(exc, TerminalResponseError)
+                if isinstance(payload.get("_rival_transport"), dict):
+                    payload["_rival_transport"]["rejection_type"] = type(exc).__name__
             state = "UNKNOWN" if cost is None else ("DONE" if accepted else "REJECTED")
             with self._transaction():
                 encoded = json.dumps(payload, sort_keys=True)
@@ -198,7 +206,7 @@ class AttemptJournal:
                 """, (state, cost, str(payload.get("id", "")), encoded,
                       datetime.now(timezone.utc).isoformat(), work_id, ordinal))
                 final_state = "UNKNOWN" if cost is None else ("DONE" if accepted else "RUNNING")
-                if not accepted and ordinal == max_attempts and cost is not None:
+                if not accepted and (terminal or ordinal == max_attempts) and cost is not None:
                     final_state = "FAILED"
                 self.connection.execute("UPDATE requests SET state=?, payload=? WHERE work_id=?",
                                         (final_state, encoded, work_id))
@@ -206,6 +214,8 @@ class AttemptJournal:
                 raise ReconciliationRequired("provider omitted cost; response preserved for reconciliation")
             if accepted:
                 return payload
+            if terminal:
+                raise TerminalResponseError("completion rejected; inspect execution audit before preparing a new study")
             if ordinal < max_attempts:
                 retry_after = payload.get("_retry_after", 0)
                 if not isinstance(retry_after, (float, int)) or not math.isfinite(retry_after):

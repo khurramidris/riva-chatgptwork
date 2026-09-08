@@ -48,6 +48,10 @@ class ExecutionSession:
                      **({"Authorization": f"Bearer {provider.api_key}"} if provider.api_key else {})}, method="POST")
 
         def send():
+            started_attempt = time.perf_counter()
+            def measured(value):
+                value["_rival_transport"] = {"latency_ms": (time.perf_counter() - started_attempt) * 1000}
+                return value
             try:
                 with urllib.request.urlopen(request, timeout=provider.timeout_seconds) as response:
                     raw = json.loads(response.read().decode("utf-8"))
@@ -62,21 +66,28 @@ class ExecutionSession:
                     retry_after = float(exc.headers.get("Retry-After", 0))
                 except (TypeError, ValueError, AttributeError):
                     retry_after = 0
-                return {"id": raw.get("id"), "usage": raw.get("usage"),
-                        "error": {"http_status": exc.code}, "_retry_after": retry_after}
+                return measured({"id": raw.get("id"), "usage": raw.get("usage"),
+                        "error": {"http_status": exc.code}, "_retry_after": retry_after})
             if not isinstance(raw, dict):
                 raise ValueError("provider response must be an object")
             # Error strings may echo credentials; retain only the error signal.
             if "error" in raw:
-                return {"id": raw.get("id"), "usage": raw.get("usage"), "error": {"present": True}}
-            return {key: raw[key] for key in ("id", "usage", "choices") if key in raw}
+                return measured({"id": raw.get("id"), "usage": raw.get("usage"), "error": {"present": True}})
+            return measured({key: raw[key] for key in
+                ("id", "usage", "choices", "model", "provider", "system_fingerprint") if key in raw})
+
+        def validated(raw):
+            if hasattr(provider, "validate_response"):
+                provider.validate_response(raw)
+            return accept(raw)
 
         reserved_ordinals = []
         started = time.perf_counter()
-        raw = self.journal.execute(work_id, request_identity, send, accept,
+        raw = self.journal.execute(work_id, request_identity, send, validated,
             budget_usd=self.budget_usd, not_after=self.not_after,
             reservation_usd=self.reservation_usd, max_attempts=provider.max_retries,
             max_total_attempts=self.max_total_attempts, reserved_ordinals=reserved_ordinals)
+        validated(raw)  # Recheck cached and operator-reconciled completions too.
         attempts = self.journal.attempts_for(work_id)
         # Attribute only attempts reserved by this invocation, including when
         # another process completed the work just before our cached read.

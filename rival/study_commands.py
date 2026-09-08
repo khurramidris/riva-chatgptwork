@@ -8,7 +8,8 @@ from pathlib import Path
 import sqlite3
 import sys
 
-from .study_contract import StudyRequest, StudyRequestV2, load_study_request
+from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, load_study_request
+from .study_execution_audit import audit_study_execution, compare_studies
 from .study_evidence import bind_evidence
 from .study_support import UnsupportedStudy
 from .evidence_catalog import read_bounded, strict_json
@@ -49,7 +50,7 @@ def main(argv=None):
         command = commands.add_parser(name, help=f"write the study {name}")
         command.add_argument("--output", type=Path, required=True)
         if name == "schema":
-            command.add_argument("--version", choices=("v1", "v2"), default="v2")
+            command.add_argument("--version", choices=("v1", "v2", "v3"), default="v3")
     bind = commands.add_parser("bind-evidence", help="bind verified imports and a support policy to a study brief")
     for name in ("input", "catalog", "support", "output"):
         bind.add_argument("--" + name, type=Path, required=True)
@@ -61,17 +62,19 @@ def main(argv=None):
     check = commands.add_parser("check", help="inspect evidence and audience support without executing or saving a study")
     check.add_argument("--input", type=Path, required=True)
     check.add_argument("--catalog", type=Path)
-    for name in ("run", "status", "export", "evaluate"):
+    for name in ("run", "status", "export", "evaluate", "execution-audit", "compare-runs"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", type=Path, required=True)
         if name == "export":
             command.add_argument("--output", type=Path, required=True)
         if name == "evaluate":
             command.add_argument("--vault", type=Path, required=True)
+        if name == "compare-runs":
+            command.add_argument("--replicate", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command in {"example", "schema"}:
-            model = StudyRequest if getattr(args, "version", None) == "v1" else StudyRequestV2
+            model = {"v1": StudyRequest, "v2": StudyRequestV2, "v3": StudyRequestV3}.get(getattr(args, "version", None), StudyRequestV3)
             payload = example_request() if args.command == "example" else model.model_json_schema()
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with args.output.open("x", encoding="utf-8") as handle:
@@ -92,6 +95,10 @@ def main(argv=None):
             result = run_study(args.workspace)
         elif args.command == "status":
             result = study_status(args.workspace)
+        elif args.command == "execution-audit":
+            result = audit_study_execution(args.workspace)
+        elif args.command == "compare-runs":
+            result = compare_studies(args.workspace, args.replicate)
         elif args.command == "export":
             result = export_study(args.workspace, args.output)
         else:

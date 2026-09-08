@@ -11,7 +11,7 @@ from .mathx import canonical_hash
 from .readiness import release_claims
 
 
-def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None):
+def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None, *, model_execution=None):
     claims = release_claims()
     claims["release"] = prepared["release"]
     reference = request.brief.choices[0].choice_id
@@ -69,6 +69,16 @@ def build_study_report(request, prepared, simulation, sealed, accounting, evalua
         report["evidence"]["import_verification"] = prepared["import_verification"]
         warnings.extend(prepared["support_audit"]["warnings"])
         warnings.append("Declared support checks do not establish population representativeness or validate the scenario's meaning.")
+    if "model_execution" in prepared:
+        if model_execution is None:
+            raise ValueError("model execution evidence is missing")
+        report["schema_version"] = "rival.study-report.v3"
+        report["execution"]["model_specification"] = prepared["model_execution"]
+        report["execution"]["measurements"] = model_execution
+        warnings.extend([prepared["model_execution"]["identity_scope"],
+                         prepared["model_execution"]["replication_scope"]])
+        if model_execution.get("elicitation", {}).get("ssr_degenerate", 0):
+            warnings.append("Some SSR responses had no distinguishing embedding signal and received uniform mass; inspect the execution audit.")
     return report
 
 
@@ -116,6 +126,15 @@ def study_markdown(report):
         lines.append(f"- Protected outcome comparison TVD: {report['evaluation']['metrics']['tvd']:.4f}; verified against the local sealed ledger.")
     else:
         lines.append("- No observed-outcome comparison is available for this study.")
+    if "measurements" in report["execution"]:
+        measured = report["execution"]["measurements"]
+        settings = report["execution"]["model_specification"]["settings"]
+        lines.extend(["", "## Model execution", "",
+            f"- Requested model: {_text(settings['model'])}; elicitation: {_text(settings['elicitation']['method'])}.",
+            f"- Accepted seed requests: {measured['accepted_seed_requests']}/{measured['planned_seed_requests']}.",
+            f"- Measured HTTP time: {measured['transport_latency_ms']['total'] / 1000:.2f} seconds across {measured['transport_latency_ms']['measured_attempts']} attempts.",
+            "- Saved model outputs are reused on resume. A fresh repeat is a separate study and may differ.",
+            "- This measures model execution; accuracy against real people remains unqualified."])
     lines.extend(["", "## Limitations", "", *["- " + _text(item) for item in report["limitations"]],
         "", f"Study: {_text(report['study_id'])}. Input fingerprint: `{report['request_sha256']}`.", ""])
     return "\n".join(lines)
