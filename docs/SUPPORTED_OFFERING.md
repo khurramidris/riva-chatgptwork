@@ -36,6 +36,12 @@ audit. These checks establish which evidence was used and its declared scope;
 they do not independently establish rights, representativeness, semantic relevance
 or statistical confidence. See [evidence imports](EVIDENCE_IMPORTS.md).
 
+The v3 contract adds explicit model/revision declarations, checked returned model
+identities and selectable direct or text/SSR elicitation. Execution audits expose
+failures, cost, tokens and latency; fresh-run comparisons measure repeatability
+separately from cached recovery. This does not qualify model probabilities or
+semantic scores against human behavior. See [model execution](MODEL_EXECUTION.md).
+
 ## Acceptance before offering decision support (L07–L14)
 
 Before viewing qualification outcomes, record the intended audience, geography,

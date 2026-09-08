@@ -281,6 +281,16 @@ class ModelExecutionTests(unittest.TestCase):
         with self.assertRaises(TerminalResponseError):
             provider.validate_response(self.completion(provider='Other Provider'))
 
+    def test_unexpected_response_metadata_is_not_echoed_in_aggregate_audit(self):
+        self.prepare()
+        with patch('urllib.request.urlopen', return_value=Response(self.completion(model='private-test-secret'))):
+            with self.assertRaises(TerminalResponseError):
+                run_study(self.workspace, api_key='private-test-secret')
+        audit = audit_study_execution(self.workspace)
+        self.assertNotIn('private-test-secret', json.dumps(audit))
+        self.assertEqual(audit['response_models'], [])
+        self.assertEqual(len(audit['unverified_response_metadata_sha256']['model']), 1)
+
 
 class SSRTieTests(unittest.TestCase):
     def rater(self, anchors, vectors, **options):

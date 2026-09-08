@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "ca8c8961371f682399a2b8882e976c754cf48d9052a19abc005aa8a0062fe692",
+    "report.md": "ad679cc1ecf6305c2dbb665773cd565e21065bdc5b9709f4659c1a980d4fc5a8"
+  },
+  "request_sha256": "6cfb737e4babc046f1319e99aed27a94e59d7e9ff2c470a315a96b9bfc6c9acb",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "l09-local-ssr-1"
+}

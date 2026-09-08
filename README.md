@@ -5,7 +5,7 @@ and proposed scenarios for a declared audience. The first output is simulated
 population choice shares. Individual synthetic responses are intermediate model
 outputs; they are not verified predictions of real people.
 
-`0.6.0.dev6` is a research development release. See the
+`0.6.0.dev7` is a research development release. The [model execution guide](docs/MODEL_EXECUTION.md) covers pinned models, direct/SSR elicitation, execution audits and fresh repeats. See the
 [delivery board](docs/CUSTOMER_READINESS.md),
 [supported offering](docs/SUPPORTED_OFFERING.md), and
 [phase-one acceptance evidence](docs/verification/phase_one.json).
@@ -111,7 +111,7 @@ python -m rival qualify-integrity
 python -m rival qualify-research-components
 python -m rival qualify-all --output-dir reports/current --compact
 python -m pip wheel . --no-deps --wheel-dir dist
-python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev6-py3-none-any.whl --output reports/installed_wheel.json
+python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev7-py3-none-any.whl --output reports/installed_wheel.json
 ```
 
 `qualify-all` fails when a reproduction or engineering check fails. A PASS means

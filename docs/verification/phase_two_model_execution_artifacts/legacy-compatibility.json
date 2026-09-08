@@ -1,0 +1,10 @@
+[
+  {
+    "schema": "v1",
+    "export_bytes_identical": true
+  },
+  {
+    "schema": "v2",
+    "export_bytes_identical": true
+  }
+]

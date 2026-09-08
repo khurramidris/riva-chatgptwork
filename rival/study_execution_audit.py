@@ -17,6 +17,10 @@ def execution_audit(workspace, snapshot, simulation=None):
     requests = snapshot["requests"]
     planned = workspace.prepared["planned_unique_seeds"]
     latency, usages, outcomes, models, providers, fingerprints = [], [], Counter(), set(), set(), set()
+    pin = workspace.request.execution.model_pin
+    expected = {"model": pin.expected_response_model, "provider": pin.expected_response_provider,
+                "system_fingerprint": pin.expected_system_fingerprint}
+    unexpected = {}
     for attempt in attempts:
         payload = json.loads(attempt["payload"] or "{}")
         measured = payload.get("_rival_transport", {})
@@ -32,7 +36,12 @@ def execution_audit(workspace, snapshot, simulation=None):
         for key, values in (("model", models), ("provider", providers), ("system_fingerprint", fingerprints)):
             value = payload.get(key)
             if isinstance(value, str) and value:
-                values.add(value)
+                if value == expected[key]:
+                    values.add(value)
+                else:
+                    # Unexpected metadata may echo submitted text or secrets.
+                    # Keep exact bytes in the private journal, hashes in exports.
+                    unexpected.setdefault(key, set()).add(canonical_hash(value))
     accepted = sum(row["state"] == "DONE" for row in requests)
     result = {"schema_version": "rival.model-execution-audit.v1",
         "study_id": workspace.request.brief.study_id,
@@ -51,6 +60,8 @@ def execution_audit(workspace, snapshot, simulation=None):
                    for key in ("prompt_tokens", "completion_tokens", "total_tokens")},
         "scope": "execution measurements, including billed failed attempts; no human-accuracy measurement",
         "latency_scope": "client monotonic HTTP duration; excludes backoff, local embedding, setup and unreturned requests"}
+    if unexpected:
+        result["unverified_response_metadata_sha256"] = {key: sorted(values) for key, values in unexpected.items()}
     if simulation is not None:
         predictions = {item.person_id.rsplit("__draw_", 1)[0]: item for item in simulation.predictions}
         result["elicitation"] = {key: sum(item.diagnostics.get(key, 0) for item in predictions.values())

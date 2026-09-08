@@ -2,20 +2,47 @@
 
 Phase one (L01–L06) completed at `c67da54`, with Linux and Windows CI passing.
 Phase two develops L07–L10. L07 completed on `codex/phase-two-study-workflow` at
-`50e7494`, with Linux and Windows CI passing on draft PR #6. L08 builds on that
-commit on `codex/phase-two-evidence-support`. The current development version is
-`0.6.0.dev6`; two of the four phase-two engineering tasks are complete.
+`50e7494`, with Linux and Windows CI passing on draft PR #6. L08 completed at
+`07ec73e`, with Linux and Windows CI passing on draft PR #7. L09 builds on that
+commit on `codex/phase-two-model-execution` (draft PR #8). The current development
+version is `0.6.0.dev7`; three of four phase-two engineering tasks are complete.
 
 | Task | Phase-two acceptance | Current position |
 |---|---|---|
 | L07 Integrated study workflow | Save and validate a versioned brief, audience, sources, evidence role, execution policy and preregistration; execute and recover through the request journal; seal predictions; export an aggregate report; optionally compare authenticated outcomes | Complete; 152 local tests and isolated installed-wheel verification pass |
 | L08 Public evidence and population support | Import permitted public or licensed evidence with traceable versions and dates; enforce declared audience and condition support; expose missing support | Complete for local CSV/JSONL snapshots and explicit support policies; 172 tests and a 2,058-row public demographic import rehearsal pass |
-| L09 Model execution and elicitation | Run a pinned real model through the complete workflow; verify elicitation, reproducibility, failures, cost and latency | Managed HTTP transport works with test responses; real-model execution and elicitation work remain pending |
+| L09 Model execution and elicitation | Run a pinned real model through the complete workflow; verify elicitation, reproducibility, failures, cost and latency | Complete engineering milestone: pinned real local SSR runs, fresh repeat, failures/cost/latency and recovery verified; the small model failed direct-probability validation |
 | L10 Runtime calibration | Bind the reference bank and calibration model to evidence and provider identities; keep fitting separate from held-out studies; integrate and compare calibration in the workflow | Pending |
 
 L11–L12 establish qualified uncertainty and performance on untouched studies.
 L13–L14 complete the operator interface and delivery rehearsal. Passing the new
 workflow's engineering tests does not complete those later tasks.
+
+## Third increment: pinned model execution and elicitation
+
+L09 adds the v3 study contract, selectable direct/SSR elicitation, checked returned
+model identities, bound generation/runtime settings, execution measurements and
+fresh-run comparisons. The SSR wrapper fixes order-dependent ties and underflow,
+exposes degenerate signals, and reuses embeddings. The vendored source is unchanged.
+
+The recorded CPU rehearsal made 14 real Qwen2.5-0.5B-Instruct calls: two direct
+attempts failed because the returned probabilities totaled 1.1; both SSR studies
+completed all six seed requests and 40 draws. The fresh SSR replicate matched
+all six per-seed distributions exactly (aggregate TVD 0). Resume made no new calls.
+The two complete runs took 48.39 and 47.26 seconds including local embedding work.
+API fees were zero; compute/electricity and production hosted costs are unmeasured.
+
+This completes L09's engineering acceptance through the real SSR route. It does
+not qualify this small model for production. Direct elicitation still needs a
+model/endpoint that reliably follows its response contract; domain accuracy and
+production cost/latency require their own qualification. No human outcomes were
+used. The next phase-two milestone is L10: reference-bank identity and runtime
+calibration with fit/evaluation separation.
+
+See [model execution](MODEL_EXECUTION.md), the [real-run receipt](examples/model-execution/rehearsal.json),
+and [the L09 verification record](verification/phase_two_model_execution.json).
+The local suite has 196 passing tests; installed-wheel verification exercises
+both direct and SSR routes through loopback HTTP fixtures.
 
 ## Second increment: evidence and support
 
@@ -30,7 +57,7 @@ See [the evidence guide](EVIDENCE_IMPORTS.md) for the full workflow, its explici
 declaration/semantic limits, public-data recipe and compatibility behavior.
 Existing completed v1 workspaces remain readable; incomplete studies still require
 their pinned runtime. New nonsynthetic studies require the v2 evidence contract.
-L09 real-model execution and L10 calibration remain pending.
+L09 now has the execution evidence below; L10 runtime calibration remains pending.
 
 ## First increment: one study from input to report
 

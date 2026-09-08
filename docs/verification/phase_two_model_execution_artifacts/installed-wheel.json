@@ -1,0 +1,24 @@
+{
+  "archived_protocol_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0",
+  "checks": [
+    "installed imports",
+    "all frozen witnesses",
+    "complete notices",
+    "E/F design resources",
+    "offline demo",
+    "research confidence",
+    "historical claims separation",
+    "real stage loader",
+    "freeze algorithm",
+    "local HTTP health, demo page and demo execution",
+    "study preparation, execution, recovery and report export",
+    "pinned evidence import, population support and v2 study execution",
+    "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery",
+    "installed module CLI commands",
+    "installed console entry point"
+  ],
+  "package_location": "/tmp/rival-installed-142qmkki/installed/rival",
+  "paid_calls": 0,
+  "status": "PASS",
+  "version": "0.6.0.dev7"
+}

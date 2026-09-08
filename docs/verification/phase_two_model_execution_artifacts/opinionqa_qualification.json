@@ -1,0 +1,140 @@
+{
+  "benchmark": "OpinionQA distribution calibration",
+  "claim_scope": "Population response distributions for five-choice Pew OpinionQA items; not individual prediction and not a universal behavior claim.",
+  "dataset": {
+    "human_responses_per_question": {
+      "maximum": 10221,
+      "median": 3436,
+      "minimum": 1014
+    },
+    "human_responses_total": 1853229,
+    "license": "MIT for SYN-DIGITS code; source survey/data terms preserved upstream",
+    "personas": 2058,
+    "questions": 489,
+    "source_hashes": {
+      "persona_answers.csv": "6b89f71dc1f5b3a669479b88d8b4d8a51000779d2a8da27b54950f2723c215aa",
+      "questions.json": "7e632b57e9a0767c5d7350b4fc699d528ec482f665d94d1d8d752d6162192956"
+    }
+  },
+  "folds": [
+    {
+      "base_mass": 0.6045631995739174,
+      "calibrated_mean_tvd": 0.1638045286005615,
+      "effective_personas": 505.6935261226435,
+      "final_training_objective": 0.10224273884756717,
+      "fold": 0,
+      "global_history_mean_tvd": 0.21594829720974126,
+      "raw_mean_tvd": 0.3362304997468032,
+      "test_questions": 98,
+      "train_questions": 391,
+      "win_rate": 0.8367346938775511,
+      "win_rate_vs_global_history": 0.7142857142857143
+    },
+    {
+      "base_mass": 0.617738779379819,
+      "calibrated_mean_tvd": 0.17355272929154203,
+      "effective_personas": 530.177147366029,
+      "final_training_objective": 0.09987211941786105,
+      "fold": 1,
+      "global_history_mean_tvd": 0.2304905898245944,
+      "raw_mean_tvd": 0.31411812156633867,
+      "test_questions": 98,
+      "train_questions": 391,
+      "win_rate": 0.8469387755102041,
+      "win_rate_vs_global_history": 0.7448979591836735
+    },
+    {
+      "base_mass": 0.6117340979272476,
+      "calibrated_mean_tvd": 0.15709361897520518,
+      "effective_personas": 587.1263341589157,
+      "final_training_objective": 0.10531689277937577,
+      "fold": 2,
+      "global_history_mean_tvd": 0.2178397215779413,
+      "raw_mean_tvd": 0.34233622476934017,
+      "test_questions": 97,
+      "train_questions": 392,
+      "win_rate": 0.9175257731958762,
+      "win_rate_vs_global_history": 0.7422680412371134
+    },
+    {
+      "base_mass": 0.6080031440123163,
+      "calibrated_mean_tvd": 0.16895246880376757,
+      "effective_personas": 582.6587118359464,
+      "final_training_objective": 0.10223873675483511,
+      "fold": 3,
+      "global_history_mean_tvd": 0.22228332086169936,
+      "raw_mean_tvd": 0.3273225679559488,
+      "test_questions": 98,
+      "train_questions": 391,
+      "win_rate": 0.8571428571428571,
+      "win_rate_vs_global_history": 0.673469387755102
+    },
+    {
+      "base_mass": 0.6190794184172842,
+      "calibrated_mean_tvd": 0.1839459956979342,
+      "effective_personas": 516.319081054653,
+      "final_training_objective": 0.09697899407717954,
+      "fold": 4,
+      "global_history_mean_tvd": 0.24722020137423517,
+      "raw_mean_tvd": 0.335730001479839,
+      "test_questions": 98,
+      "train_questions": 391,
+      "win_rate": 0.7959183673469388,
+      "win_rate_vs_global_history": 0.7040816326530612
+    }
+  ],
+  "generated_at": "2026-09-08T04:36:00.300568+00:00",
+  "limitations": [
+    "Persona answers are released model outputs, not live Rival provider calls.",
+    "All items have five response choices; transfer to other response formats is untested.",
+    "The benchmark evaluates aggregate distributions, not person-level fidelity.",
+    "Question-family grouping reduces lexical leakage but cannot prove semantic independence."
+  ],
+  "metrics": {
+    "calibrated_jensen_shannon": {
+      "mean": 0.02694764814524508,
+      "median": 0.01953910080616481,
+      "p90": 0.05973123979461058
+    },
+    "calibrated_tvd": {
+      "mean": 0.16949517757707122,
+      "median": 0.15822917407037937,
+      "p90": 0.2816304624745606
+    },
+    "global_history_tvd": {
+      "mean": 0.22677466073935948,
+      "median": 0.20515776054704457,
+      "p90": 0.3925366032023746
+    },
+    "mean_base_weight_mass": 0.6122237278621169,
+    "mean_effective_personas": 544.3949601076376,
+    "median_question_relative_tvd_reduction": 0.5273554415959862,
+    "question_win_rate": 0.8507157464212679,
+    "question_win_rate_vs_global_history": 0.7157464212678937,
+    "raw_jensen_shannon": {
+      "mean": 0.1081931500017133,
+      "median": 0.0913114338200429,
+      "p90": 0.20994125152322932
+    },
+    "raw_tvd": {
+      "mean": 0.33112460224135193,
+      "median": 0.31933051768472914,
+      "p90": 0.541898874134096
+    },
+    "relative_mean_tvd_reduction": 0.48812266914093977,
+    "relative_mean_tvd_reduction_vs_global_history": 0.25258326029697686
+  },
+  "protocol": {
+    "calibration": "KL mirror descent over persona and shared base weights",
+    "family_count": 464,
+    "folds": 5,
+    "iterations": 150,
+    "learning_rate": 1.0,
+    "outcome_access": "human distributions used only in training families",
+    "split_manifest_sha256": "2fae83e0f1e1e1d703ee18e670bc0c6da7fe7a909bad134ad5416d24c19521d6",
+    "split_unit": "canonical/TF-IDF question family"
+  },
+  "report_sha256": "e1e348c06fbfce1ffcc9097f60d798b41d5b924ffd638506ec595007aa58b626",
+  "schema_version": "rival.qualification.v1",
+  "status": "real-data, family-held-out"
+}

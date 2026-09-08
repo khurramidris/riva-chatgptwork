@@ -1,0 +1,124 @@
+{
+  "accuracy_improvement_established": false,
+  "artifacts_sha256": {
+    "docs/examples/model-execution/l09-local-ssr-1/manifest.json": "ffb56623c767e8b0f21ea4d51ab15a9762e659e5f71bc5d50dd99dda085f71f6",
+    "docs/examples/model-execution/l09-local-ssr-1/report.json": "ca8c8961371f682399a2b8882e976c754cf48d9052a19abc005aa8a0062fe692",
+    "docs/examples/model-execution/l09-local-ssr-1/report.md": "ad679cc1ecf6305c2dbb665773cd565e21065bdc5b9709f4659c1a980d4fc5a8",
+    "docs/examples/model-execution/l09-local-ssr-2/manifest.json": "b69dc014aae60f56465eb38e08053822817231b32e2019cb5920cd734b0d570a",
+    "docs/examples/model-execution/l09-local-ssr-2/report.json": "2c485a0797552faebc858b762900c11668eddaaa1f2a584be71b6f8ae19f0708",
+    "docs/examples/model-execution/l09-local-ssr-2/report.md": "c3efd4147b76868bd959a1ff5657d4fb7de3e3ffe70c184ac14b002c0ed20cb6",
+    "docs/examples/model-execution/rehearsal.json": "5aa8e663445d1ea0186ac9043b40ea7eaed0bd27b389e212f255a040a29bf362",
+    "docs/verification/phase_two_model_execution_artifacts/installed-wheel.json": "e1f0fef142ff003d4420c13f51f0b5287710dfc364ff08ca1539fb4e385fc04e",
+    "docs/verification/phase_two_model_execution_artifacts/integrity_qualification.json": "ff8b7824301e80809203ca0a22e3bffba62c5d66069f4a4e3f66e2e76dfe84ef",
+    "docs/verification/phase_two_model_execution_artifacts/legacy-compatibility.json": "4d4b8d6fcf7edc390bcd2f33942b709375cd047f093f75a0de82e6fd42a95402",
+    "docs/verification/phase_two_model_execution_artifacts/local-model.log": "5d5173bf381eb12aa5bcdf419dd8eda3b3ee7e4ba08aebaefe4fb9eba2738cd1",
+    "docs/verification/phase_two_model_execution_artifacts/opinionqa_qualification.json": "c054275d31c9c2393bf75f4403119b96412fcc88da79eab0ed8cab9a06d68465",
+    "docs/verification/phase_two_model_execution_artifacts/preservation.json": "8729f4ca628c608c56cf835ba941781eb0646ec30db0309d3c05fbf807aaf4ec",
+    "docs/verification/phase_two_model_execution_artifacts/qualification_summary.json": "6c7ae6db27075e535959c939d9f5cfe9d2827e7fb11fff676adef7fef3fb203d",
+    "docs/verification/phase_two_model_execution_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "docs/verification/phase_two_model_execution_artifacts/tests.log": "691d0df8d422db01f4c813d8e1028925117d20a1244707a2f88435635502e7a7",
+    "docs/verification/phase_two_model_execution_artifacts/twin2k_qualification.json": "827d4aacf06276d04aeea0f4e429ecf8a55f07e513ffcc35a8c9dcdba0ee6fc5",
+    "docs/verification/phase_two_model_execution_artifacts/wheel-build.log": "3c05daa096e176b5c8f818eaa64459c84d71a9eef9c8de148fa008ac2f688aa4",
+    "docs/verification/phase_two_model_execution_artifacts/wheel.json": "64aac53e281eb8d1eaea98822651f16476abfda32c89ed519d775d2581528743"
+  },
+  "base_commit": "07ec73e98f898ef6e5a1f09a2e1f6a491c93dc4e",
+  "branch": "codex/phase-two-model-execution",
+  "ci": {
+    "required_platforms": [
+      "ubuntu-latest / Python 3.11",
+      "windows-latest / Python 3.11"
+    ],
+    "status": "see_final_pull_request_record"
+  },
+  "delivery_status": {
+    "complete_engineering_tasks": 9,
+    "phase_one": "complete",
+    "phase_two_tasks_complete": [
+      "L07",
+      "L08",
+      "L09"
+    ],
+    "phase_two_tasks_pending": [
+      "L10"
+    ],
+    "total_tasks": 14
+  },
+  "draft_pr": "https://github.com/khurramidris/riva-chatgptwork/pull/8",
+  "environment": {
+    "os": "Linux",
+    "python": "3.12.13",
+    "test_blas_threads": 1
+  },
+  "generated_at": "2026-09-08T04:43:06.777638+00:00",
+  "installed_wheel": {
+    "checks_passed": 15,
+    "report": "docs/verification/phase_two_model_execution_artifacts/installed-wheel.json",
+    "sha256": "9d518244dee558249b7db9381b01f658ce415d53a9acf378e3b4c537a1cfaa63"
+  },
+  "limitations": [
+    "The recorded local rehearsal uses generated people, one question and a small CPU model.",
+    "The small model failed direct probability elicitation; SSR completion is not proof of semantic or human fidelity.",
+    "Hosted endpoint reliability, provider charges and production latency have not been qualified.",
+    "Zero API fees exclude compute and electricity costs.",
+    "Model revision and hosted response metadata do not independently attest remote weights.",
+    "Calibration, qualified uncertainty, untouched evaluation, full GUI and delivery rehearsal remain pending.",
+    "An earlier session rollback lost unpublished local work; this receipt describes the recovered and rerun checkpoint only."
+  ],
+  "paid_inference_calls": 0,
+  "preservation": {
+    "changed_files": [],
+    "completed_v1_and_v2_exports": "byte-identical",
+    "protected_files": 68
+  },
+  "qualification": {
+    "integrity_checks_passed": 10,
+    "research_component_checks_passed": 8,
+    "scope": "engineering and research reproduction; no new accuracy qualification"
+  },
+  "real_model": {
+    "api_cost_usd": 0.0,
+    "direct_rejections": 2,
+    "draws_per_completed_study": 40,
+    "fresh_ssr_aggregate_tvd": 0.0,
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "reason_for_nonzero_exit": "Both direct studies rejected invalid probability sums; two SSR studies completed.",
+    "recorded_calls": 14,
+    "rehearsal_exit_code": 2,
+    "report": "docs/examples/model-execution/rehearsal.json",
+    "resume_added_calls": 0,
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "ssr_planned_seed_requests_per_study": 6,
+    "ssr_successes": 12
+  },
+  "release": "0.6.0.dev7",
+  "schema_version": "rival.l09-verification.v1",
+  "source_files_sha256": {
+    ".github/workflows/ci.yml": "39e3fa3b99925d17d392fbfe1aa675ccc6b480acb80cf7a11fc09b40ec958768",
+    "README.md": "b5d92a9e015a9cc8b0e02f1098a42cf224d27fbcb97f63fc4d3bf5767c98cabc",
+    "docs/MODEL_EXECUTION.md": "bbab449ecbb6aae201e0042c002401a1bfabec4813fbe1a57e78b0f890ceb669",
+    "docs/SUPPORTED_OFFERING.md": "a1b30221b795eaa29bcbf337e81d304aa6ece3d83801a9ae61534921d1b0ae68",
+    "pyproject.toml": "d746faa3ec7340c7df11853f9cbfa6f36910d769240e86b1f57b6270c6804216",
+    "rival/elicitation.py": "2db1c6bc12cb6c085776e938a1e883ebf10c29ddcccd045e5fb0efe70792dc47",
+    "rival/execution.py": "ee19ff9aeb7c724bcd6c7529ccd57108a68e9a5b52b87962668a6dcbdbe9e448",
+    "rival/managed_execution.py": "7790fb2eeae5ccc6bd4eb66c95e03ff4fb3c4ee979d3360db9efcc484d509cf1",
+    "rival/model_contract.py": "956169a3d4ce9badfb52e546075a00ec95c193e2fc71eb7051015419aba4cbda",
+    "rival/model_providers.py": "32f6ac059d0fd0b677b49dda7a76088e293dae73d0ed5feeb9c799ce02798a1e",
+    "rival/study_commands.py": "6b428ec17f0023f1e55cab955f7d6663c5a458c47dfa4e002d542e2101fa8494",
+    "rival/study_contract.py": "542bb571319c8f1702cd80ccd04c482c880dd2cdf55cbdd1405fea4acfdc5f88",
+    "rival/study_evidence.py": "2ca8c08f260686859a2b15a198ec18f7b39613222761c9de889674f1da6e4d9a",
+    "rival/study_execution_audit.py": "119523954a280963511b4ab334c1588817dd16a1c12215fc08f5fc548137b686",
+    "rival/study_report.py": "bda32a32fe126bfb82ea3b45e98b4f0987172226ab38e06f0f97b808c29a90fa",
+    "rival/study_workflow.py": "9969bf4a19e2140e11707bb4e8f98e3b509655eee87dfecec83bee60e2cf3cbc",
+    "rival/version.py": "9f11b1cc760f4496e11ac1a7cdcbee8ae97e49e8668d4a0b8026f7362a97e213",
+    "scripts/fetch_local_model_assets.py": "f66af97714d56f44f83b274562c412c09fcd0ad1990bfbafdc815476e7aa8460",
+    "scripts/run_local_model_rehearsal.py": "30ffe861b1ce01b15356d0982b705ca97aeb86b6fda1c355c112efd5be37a9c6",
+    "scripts/verify_installed_wheel.py": "43cd54bb900104d86e2a0c5df94d2c3ca31f9314d7e06e3f9a4c28bcf1845cae",
+    "tests/test_model_execution.py": "0b319ab205b829a9ce9f656effa25e93184a84ddc4361f15446ba174ec4b72de"
+  },
+  "status": "L09_ENGINEERING_COMPLETE_SSR_ROUTE",
+  "tests": {
+    "passed": 196,
+    "report": "docs/verification/phase_two_model_execution_artifacts/tests.log",
+    "seconds": 10.351
+  }
+}

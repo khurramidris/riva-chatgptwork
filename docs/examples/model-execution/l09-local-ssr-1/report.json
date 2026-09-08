@@ -1,0 +1,330 @@
+{
+  "audience": {
+    "description": "Six generated example records; no real consumers represented.",
+    "effective_seed_records": 6.0,
+    "eligible_seed_records": 6,
+    "geography": [
+      "example-only"
+    ],
+    "input_seed_records": 6,
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "simulation_draws": 40,
+    "unique_sampled_seed_records": 6
+  },
+  "choices": [
+    {
+      "choice_id": "standard",
+      "difference_from_reference_pp": 0.0,
+      "label": "Standard delivery",
+      "simulated_share": 0.4782385105373113
+    },
+    {
+      "choice_id": "flexible",
+      "difference_from_reference_pp": 4.3522953442831245,
+      "label": "Flexible delivery",
+      "simulated_share": 0.5217614639801426
+    },
+    {
+      "choice_id": "neither",
+      "difference_from_reference_pp": -47.823848505476526,
+      "label": "Neither plan",
+      "simulated_share": 2.5482546090944695e-08
+    }
+  ],
+  "confidence": {
+    "abstain": true,
+    "label": "unqualified",
+    "lower_tvd": 0.0,
+    "upper_tvd": 1.0
+  },
+  "created_at": "2026-09-08T04:37:31.694890+00:00",
+  "decision": "Explore how two delivery plans compare in a generated audience.",
+  "evaluation": null,
+  "evidence": {
+    "assignment": {
+      "group_id": "generated-workflow-example",
+      "role": "development",
+      "source_reference": "Generated engineering example; no independent human evidence."
+    },
+    "excluded_history_entries": 0,
+    "import_verification": {
+      "bundle_sha256": [
+        "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977"
+      ],
+      "raw_bytes_and_conversion_verified": true,
+      "scope": "local source-byte and normalization verification; origin, rights and dates remain declarations"
+    },
+    "information_cutoff": "2026-09-01T00:00:00+00:00",
+    "local_manifest_verified": true,
+    "manifest_sha256": "efa6a92065b2130ad45770d99971b5e35256d80fd2ae50b5f9468040b0e3a4b9",
+    "protected_comparison_verified": false,
+    "retrieval_audit_sha256": "49f634087c4e4e35d4d0f02c9d3ec5b86062ebb6bd41f1b9ef26f4f5acd8eb36",
+    "sources": [
+      {
+        "collected_at": "2026-08-01T00:00:00Z",
+        "geography": [
+          "example-only"
+        ],
+        "name": "Rival generated workflow example",
+        "permitted_uses": [
+          "simulation"
+        ],
+        "rights_reference": "Generated in Rival for testing.",
+        "sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "source_id": "generated-example",
+        "source_type": "synthetic"
+      }
+    ],
+    "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"
+  },
+  "execution": {
+    "accounting": {
+      "attempts": 6,
+      "known_cost_usd": 0.0,
+      "mode": "managed",
+      "reserved_usd": 0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "measurements": {
+      "accepted_seed_requests": 6,
+      "accounting": {
+        "attempts": 6,
+        "known_cost_usd": 0.0,
+        "mode": "managed",
+        "reserved_usd": 0,
+        "total_cost_usd": 0.0,
+        "unresolved_attempts": 0
+      },
+      "attempt_outcomes": {
+        "DONE": 6
+      },
+      "audit_sha256": "c8333d6be40d652faa327c53ec762defccdf8c8fab7c4e279ab321b4418f0ebb",
+      "complete": true,
+      "elicitation": {
+        "ssr_degenerate": 0.0,
+        "ssr_tied_maxima": 0.0,
+        "ssr_tied_minima": 0.0
+      },
+      "latency_scope": "client monotonic HTTP duration; excludes backoff, local embedding, setup and unreturned requests",
+      "planned_draws": 40,
+      "planned_seed_requests": 6,
+      "response_models": [
+        "Qwen/Qwen2.5-0.5B-Instruct"
+      ],
+      "response_providers": [],
+      "response_system_fingerprints": [
+        "4c6e78c63470cb29e1470a8498b3e13d597dd6c6530e6a6c222e77f447925e6e"
+      ],
+      "schema_version": "rival.model-execution-audit.v1",
+      "scope": "execution measurements, including billed failed attempts; no human-accuracy measurement",
+      "study_id": "l09-local-ssr-1",
+      "tokens": {
+        "completion_tokens": {
+          "reported": 249.0,
+          "reporting_attempts": 6
+        },
+        "prompt_tokens": {
+          "reported": 1473.0,
+          "reporting_attempts": 6
+        },
+        "total_tokens": {
+          "reported": 1722.0,
+          "reporting_attempts": 6
+        }
+      },
+      "transport_latency_ms": {
+        "measured_attempts": 6,
+        "median": 7899.525787499442,
+        "p95": 8228.917850498874,
+        "total": 47256.49805399917,
+        "unmeasured_attempts": 0
+      },
+      "unaccepted_seed_requests": 0
+    },
+    "mode": "managed",
+    "model_specification": {
+      "identity_scope": "declared revision with checked response metadata; remote weights are not independently attested",
+      "replication_scope": "journal replay reuses outputs; fresh repeatability requires a separately executed study",
+      "runtime": {
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.3.5",
+          "pydantic": "2.13.4",
+          "sentence-transformers": "4.1.0",
+          "tokenizers": "0.21.4",
+          "torch": "2.8.0+cpu",
+          "transformers": "4.51.3"
+        },
+        "platform": "Linux",
+        "python": "3.12.13"
+      },
+      "schema_version": "rival.model-execution.v1",
+      "settings": {
+        "base_url": "http://127.0.0.1:35151/v1/chat/completions",
+        "budget_usd": 0.1,
+        "elicitation": {
+          "embedding": {
+            "device": "cpu",
+            "dimensions": 512,
+            "kind": "sentence_transformer",
+            "model": "sentence-transformers/all-MiniLM-L6-v2",
+            "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+          },
+          "epsilon": 1e-08,
+          "method": "ssr",
+          "temperature": 1.0
+        },
+        "generation_seed": 42,
+        "history_limit": 16,
+        "max_attempts": 6,
+        "max_output_tokens": 160,
+        "max_retries": 1,
+        "mode": "managed",
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_pin": {
+          "expected_response_model": "Qwen/Qwen2.5-0.5B-Instruct",
+          "expected_response_provider": null,
+          "expected_system_fingerprint": "4c6e78c63470cb29e1470a8498b3e13d597dd6c6530e6a6c222e77f447925e6e",
+          "kind": "checkpoint",
+          "provider_route": null,
+          "reference": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct/tree/7ae557604adf67be50417f59c2c2f167def9a775",
+          "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+        },
+        "not_after": "2026-09-08T05:36:30.176228Z",
+        "reservation_usd": 0.001,
+        "temperature": 0.0,
+        "timeout_seconds": 600
+      }
+    },
+    "provider": {
+      "configuration_sha256": "5f8abbce91a88c578526bee459ec836a602a45d15ba41d9c22392d801cd8bfae",
+      "endpoint_sha256": "2e45e334e8ecbb568db60897d0bcaf4b6892881f353f0e719984eedd0d63548e",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "provider_name": "pinned-ssr",
+      "provider_version": "1"
+    },
+    "sample_plan_sha256": "9f6b08ca60f4c65c950c0b9d29fc6d989b6e68550576be7de57e14e506d93bac"
+  },
+  "limitations": [
+    "This study includes generated audience records; it is an engineering demonstration.",
+    "Choice shares describe model outputs for the supplied audience; customer-domain accuracy is not established.",
+    "Resampled draws do not add independent people or human evidence.",
+    "Differences between choice shares are not causal effects of an intervention.",
+    "Source rights, dates, geography and independence are operator declarations, not independently verified facts.",
+    "Confidence remains unqualified; no decision-ready interval or recommendation is issued.",
+    "Declared support checks do not establish population representativeness or validate the scenario's meaning.",
+    "declared revision with checked response metadata; remote weights are not independently attested",
+    "journal replay reuses outputs; fresh repeatability requires a separately executed study"
+  ],
+  "question": "Which grocery delivery plan would you choose?",
+  "reference_choice_id": "standard",
+  "release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev7",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "request_sha256": "6cfb737e4babc046f1319e99aed27a94e59d7e9ff2c470a315a96b9bfc6c9acb",
+  "run_id": "run_d8f459df3fa747e5",
+  "runtime_release": "0.6.0.dev7",
+  "schema_version": "rival.study-report.v3",
+  "study_id": "l09-local-ssr-1",
+  "support": {
+    "audit_sha256": "66e299730828f6a284420daf8b401a131cf034255e415ea3edf107eb15fbf4f0",
+    "cells": [
+      {
+        "effective_seed_records": 3.0,
+        "label": "Value segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      },
+      {
+        "effective_seed_records": 3.0,
+        "label": "Convenience segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      }
+    ],
+    "conditions": [
+      "grocery-delivery-plans"
+    ],
+    "effective_seed_records": 6.0,
+    "excluded_seed_records": 0,
+    "filtered_seed_records": 6,
+    "geography_counts": {
+      "example-only": 6
+    },
+    "input_seed_records": 6,
+    "issues": [],
+    "missing_attributes": {
+      "segment": 0
+    },
+    "passed": true,
+    "policy_sha256": "a60f70aaad24fdc62b92d02e516efa973853263e3d5aa659fef59a9478b3480d",
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "positive_weight_seed_records": 6,
+    "schema_version": "rival.study-support.v1",
+    "scope": "declared source and seed support; not representativeness, semantic condition validation or predictive qualification",
+    "sources": [
+      {
+        "artifact_sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "bundle_sha256": "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977",
+        "collected_at": "2026-08-01T00:00:00+00:00",
+        "conversion_spec_sha256": "85439a1daa00f70f03f0d1148429222291a37b6ae67856e37ed0e79a0ff949b2",
+        "importer_version": "rival.evidence-importer.v1",
+        "origin": "generated:Rival/evidence-example-v1",
+        "records_sha256": "dbb06ee01bd295b2397e7b07be771af8c7b19eb977d7737123438e7a6b0a77f5",
+        "released_at": "2026-08-02T00:00:00+00:00",
+        "retrieved_after_cutoff": false,
+        "retrieved_at": "2026-08-03T00:00:00+00:00",
+        "revision": "generated-example-v1",
+        "selected_for_audience": true,
+        "source_id": "generated-example"
+      }
+    ],
+    "warnings": []
+  },
+  "title": "Local ssr model engineering rehearsal"
+}

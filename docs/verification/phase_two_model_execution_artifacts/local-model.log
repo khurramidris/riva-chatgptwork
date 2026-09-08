@@ -1,0 +1,11 @@
+Sliding Window Attention is enabled but not implemented for `eager`; unexpected results may be encountered.
+/workspace/scratch/a3e0fea917db/audit-venv/lib/python3.12/site-packages/transformers/generation/configuration_utils.py:631: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/workspace/scratch/a3e0fea917db/audit-venv/lib/python3.12/site-packages/transformers/generation/configuration_utils.py:636: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/workspace/scratch/a3e0fea917db/audit-venv/lib/python3.12/site-packages/transformers/generation/configuration_utils.py:653: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+l09-local-direct-1 blocked ExecutionError
+l09-local-direct-2 blocked ExecutionError
+l09-local-ssr-1 complete 48.39 seconds
+l09-local-ssr-2 complete 47.26 seconds

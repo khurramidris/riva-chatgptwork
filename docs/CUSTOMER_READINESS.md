@@ -1,7 +1,7 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Current version: `0.6.0.dev6`. Branch: `codex/phase-two-evidence-support`.
+Current version: `0.6.0.dev7`. Branch: `codex/phase-two-model-execution`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
@@ -10,10 +10,10 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 
 Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
 Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
-Phase two is L07–L10. L07 and L08 are implemented and locally verified:
-**8 of 14 tasks complete; 6 later tasks pending** as of 2026-09-08. Phase two has
-two of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
-and [latest verification record](verification/phase_two_evidence.json). Statistical
+Phase two is L07–L10. L07–L09 are implemented and locally verified:
+**9 of 14 engineering tasks complete; 5 later tasks pending** as of 2026-09-08. Phase two has
+three of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [latest verification record](verification/phase_two_model_execution.json). Statistical
 qualification and customer launch remain later gates.
 
 ## Delivery board
@@ -28,7 +28,7 @@ qualification and customer launch remain later gates.
 | L06 Installation and release bookkeeping | Complete, locally verified | Installed-wheel archive/resources, offline CLI/HTTP rehearsal, complete notices, truthful qualification exits and full wheel inventory/manifest |
 | L07 One integrated study workflow | Complete, locally verified | Versioned input; signed preparation and evidence role; journaled execution and crash recovery; sealed predictions; aggregate report; protected outcome comparison; installed-package rehearsal |
 | L08 Public evidence and population support | Complete, locally verified | Replayable pinned CSV/JSONL imports; v2 evidence binding; cutoff, geography, condition and subgroup checks; effective counts; 2,058-row public demographic import rehearsal |
-| L09 Model execution and elicitation | Pending | Real pinned checkpoint or endpoint execution, SSR tie handling, reproducibility and measured cost |
+| L09 Model execution and elicitation | Complete engineering milestone, locally verified | Pinned v3 execution, fair SSR ties, 196 tests and two real local SSR runs/repeat/recovery; small-model direct probabilities correctly rejected; no production accuracy claim |
 | L10 Runtime calibration | Pending | Reference bank and adapter identity; fit/validation separation; SYN-DIGITS integration |
 | L11 Qualified uncertainty and abstention | Pending | Independent study-level training, untouched calibration/evaluation splits, coverage and selective-risk tests |
 | L12 Frozen qualification | Pending | Relevant untouched public data, classical baselines, missingness and failure denominators, operational measurements |
@@ -201,3 +201,12 @@ worker has stopped and the journal confirms no unresolved remote attempt.
 Source references for instrument/accounting contracts:
 [official Mega dataset](https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500-Mega-Study),
 [OpenRouter usage accounting](https://openrouter.ai/docs/cookbook/administration/usage-accounting).
+
+
+L09 connects direct/SSR elicitation and model identity checks to the saved workflow.
+Its real CPU rehearsal includes 12 valid SSR completions and two rejected direct
+completions; failures remain in the record. Six generated seed distributions
+matched exactly in the fresh SSR repeat. API cost was zero, with no assertion of
+zero computing cost or production provider qualification. All 68 protected files
+and completed v1/v2 example exports are unchanged. See the
+[model execution guide](MODEL_EXECUTION.md) and [verification record](verification/phase_two_model_execution.json).

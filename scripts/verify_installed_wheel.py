@@ -95,6 +95,60 @@ finally:
     worker.join()
     app.engine.store.close()
 
+# Exercise both installed v3 elicitation paths through real loopback HTTP.
+# Responses here are generated fixtures, not model-accuracy evidence.
+from datetime import timedelta
+from http.server import BaseHTTPRequestHandler
+from rival.schemas import utc_now
+from rival.study_execution_audit import audit_study_execution
+class ModelHandler(BaseHTTPRequestHandler):
+    calls = 0
+    def log_message(self, *args):
+        pass
+    def do_POST(self):
+        payload = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
+        type(self).calls += 1
+        text = ('{"standard":0.6,"flexible":0.3,"neither":0.1}' if 'response_format' in payload
+                else 'I prefer standard delivery.')
+        response = {'id': 'fixture-' + str(type(self).calls), 'model': 'fixture-model',
+            'choices': [{'finish_reason': 'stop', 'message': {'content': text}}],
+            'usage': {'cost': 0.0, 'prompt_tokens': 10, 'completion_tokens': 5}}
+        body = json.dumps(response).encode()
+        self.send_response(200)
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+model_server = ThreadingHTTPServer(('127.0.0.1', 0), ModelHandler)
+model_worker = Thread(target=model_server.serve_forever, daemon=True)
+model_worker.start()
+try:
+    for method in ('direct', 'ssr'):
+        brief = strict_json(example['brief.json'])
+        brief['schema_version'] = 'rival.study-request.v3'
+        brief['brief'].update(study_id='installed-v3-' + method, sample_size=40)
+        brief['execution'] = {'mode': 'managed', 'model': 'fixture-model',
+            'base_url': 'http://127.0.0.1:' + str(model_server.server_address[1]) + '/chat/completions',
+            'budget_usd': 0.1, 'reservation_usd': 0.01, 'max_attempts': 6,
+            'not_after': (utc_now() + timedelta(hours=1)).isoformat(), 'generation_seed': 42,
+            'model_pin': {'kind': 'hosted_endpoint', 'revision': 'generated-fixture-v1',
+                         'reference': 'Test responses, no actual model', 'expected_response_model': 'fixture-model'},
+            'elicitation': {'method': method}}
+        if method == 'ssr':
+            brief['execution']['elicitation']['embedding'] = {'kind': 'hashing'}
+        request = bind_evidence(brief, catalog.root, [bundle.bundle_sha256], strict_json(example['support.json']))
+        workspace = 'workflow-study-v3-' + method
+        prepare_study(workspace, request, catalog_root=catalog.root)
+        assert run_study(workspace, api_key='test-local-key')['complete']
+        count = ModelHandler.calls
+        assert run_study(workspace)['complete'] and ModelHandler.calls == count
+        assert audit_study_execution(workspace)['accepted_seed_requests'] == 6
+        export_study(workspace, 'workflow-report-v3-' + method)
+    assert ModelHandler.calls == 12
+finally:
+    model_server.shutdown()
+    model_server.server_close()
+    model_worker.join()
+
 # A tiny generated fixture exercises the actual installed stage loader/freeze
 # without downloading survey answers or making provider requests.
 root = Path("fixture-stage")
@@ -120,7 +174,8 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
                              "offline demo", "research confidence", "historical claims separation", "real stage loader", "freeze algorithm",
                              "local HTTP health, demo page and demo execution",
                              "study preparation, execution, recovery and report export",
-                             "pinned evidence import, population support and v2 study execution"]}))
+                             "pinned evidence import, population support and v2 study execution",
+                             "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery"]}))
 '''
 
 
