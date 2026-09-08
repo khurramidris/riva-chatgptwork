@@ -1,14 +1,18 @@
 """Operator commands for the versioned study workflow."""
 
 import argparse
+import csv
 import json
 import os
 from pathlib import Path
 import sqlite3
 import sys
 
-from .study_contract import StudyRequest, load_study_request
-from .study_workflow import evaluate_study, export_study, prepare_study, run_study, study_status
+from .study_contract import StudyRequest, StudyRequestV2, load_study_request
+from .study_evidence import bind_evidence
+from .study_support import UnsupportedStudy
+from .evidence_catalog import read_bounded, strict_json
+from .study_workflow import check_study, evaluate_study, export_study, prepare_study, run_study, study_status
 
 
 def example_request():
@@ -44,9 +48,19 @@ def main(argv=None):
     for name in ("example", "schema"):
         command = commands.add_parser(name, help=f"write the study {name}")
         command.add_argument("--output", type=Path, required=True)
+        if name == "schema":
+            command.add_argument("--version", choices=("v1", "v2"), default="v2")
+    bind = commands.add_parser("bind-evidence", help="bind verified imports and a support policy to a study brief")
+    for name in ("input", "catalog", "support", "output"):
+        bind.add_argument("--" + name, type=Path, required=True)
+    bind.add_argument("--bundle", action="append", required=True)
     prepare = commands.add_parser("prepare", help="validate and save a study without model calls")
     prepare.add_argument("--input", type=Path, required=True)
     prepare.add_argument("--workspace", type=Path, required=True)
+    prepare.add_argument("--catalog", type=Path)
+    check = commands.add_parser("check", help="inspect evidence and audience support without executing or saving a study")
+    check.add_argument("--input", type=Path, required=True)
+    check.add_argument("--catalog", type=Path)
     for name in ("run", "status", "export", "evaluate"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", type=Path, required=True)
@@ -57,13 +71,23 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command in {"example", "schema"}:
-            payload = example_request() if args.command == "example" else StudyRequest.model_json_schema()
+            model = StudyRequest if getattr(args, "version", None) == "v1" else StudyRequestV2
+            payload = example_request() if args.command == "example" else model.model_json_schema()
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with args.output.open("x", encoding="utf-8") as handle:
                 handle.write(json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n")
             result = {"output": str(args.output.resolve())}
+        elif args.command == "bind-evidence":
+            request = bind_evidence(strict_json(read_bounded(args.input)), args.catalog, args.bundle,
+                                    strict_json(read_bounded(args.support)))
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            with args.output.open("x", encoding="utf-8") as handle:
+                handle.write(json.dumps(request.model_dump(mode="json"), indent=2, sort_keys=True, allow_nan=False) + "\n")
+            result = {"output": str(args.output.resolve()), "study_id": request.brief.study_id}
         elif args.command == "prepare":
-            result = prepare_study(args.workspace, load_study_request(args.input))
+            result = prepare_study(args.workspace, load_study_request(args.input), catalog_root=args.catalog)
+        elif args.command == "check":
+            result = check_study(load_study_request(args.input), catalog_root=args.catalog)
         elif args.command == "run":
             result = run_study(args.workspace)
         elif args.command == "status":
@@ -77,7 +101,10 @@ def main(argv=None):
             result = evaluate_study(args.workspace, args.vault, key_material=key)
         print(json.dumps(result, indent=2, sort_keys=True, allow_nan=False))
         return 0
-    except (ValueError, RuntimeError, OSError, sqlite3.Error) as exc:
+    except UnsupportedStudy as exc:
+        print(json.dumps(exc.report, indent=2, sort_keys=True, allow_nan=False))
+        return 2
+    except (ValueError, RuntimeError, OSError, sqlite3.Error, csv.Error) as exc:
         print(f"STOPPED: {exc}", file=sys.stderr)
         return 2
 

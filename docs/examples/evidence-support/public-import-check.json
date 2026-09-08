@@ -1,0 +1,229 @@
+{
+  "behavioral_simulation_run": false,
+  "check": {
+    "import_verification": {
+      "bundle_sha256": [
+        "fc4e221c3ad9fb222b23c473a09c8453ea663360a64403c313ecda595a9743ab"
+      ],
+      "raw_bytes_and_conversion_verified": true,
+      "scope": "local source-byte and normalization verification; origin, rights and dates remain declarations"
+    },
+    "passed": true,
+    "planned_draws": 1000,
+    "schema_version": "rival.study-check.v1",
+    "scope": "engineering checks; predictive accuracy remains unqualified",
+    "study_id": "twin2k-demographics-import-rehearsal-v1",
+    "support_audit": {
+      "audit_sha256": "5d72d1b14891146c023db9d78a756baebef43be66a3f61a6ae2997725096527a",
+      "cells": [
+        {
+          "effective_seed_records": 388.0,
+          "label": "Age 18-29",
+          "min_effective_seed_records": 10.0,
+          "min_seed_records": 10,
+          "passed": true,
+          "seed_records": 388
+        },
+        {
+          "effective_seed_records": 735.0,
+          "label": "Age 30-49",
+          "min_effective_seed_records": 10.0,
+          "min_seed_records": 10,
+          "passed": true,
+          "seed_records": 735
+        },
+        {
+          "effective_seed_records": 658.0,
+          "label": "Age 50-64",
+          "min_effective_seed_records": 10.0,
+          "min_seed_records": 10,
+          "passed": true,
+          "seed_records": 658
+        },
+        {
+          "effective_seed_records": 277.0,
+          "label": "Age 65+",
+          "min_effective_seed_records": 10.0,
+          "min_seed_records": 10,
+          "passed": true,
+          "seed_records": 277
+        }
+      ],
+      "conditions": [
+        "demographic-audience-rehearsal"
+      ],
+      "effective_seed_records": 2058.0,
+      "excluded_seed_records": 0,
+      "filtered_seed_records": 2058,
+      "geography_counts": {
+        "Midwest (ND, SD, NE, KS, MN, IA, MO, WI, IL, MI, IN, OH)": 372,
+        "Northeast (PA, NY, NJ, RI, CT, MA, VT, NH, ME)": 342,
+        "Pacific (HI, AK)": 16,
+        "South (TX, OK, AR, LA, KY, TN, MS, AL, WV, DC, MD, DE, VA, NC, SC, GA, FL)": 834,
+        "West (WA, OR, ID, MT, WY, CA, NV, UT, CO, AZ, NM)": 494
+      },
+      "input_seed_records": 2058,
+      "issues": [],
+      "missing_attributes": {
+        "age_band": 0,
+        "sex_at_birth": 0
+      },
+      "passed": true,
+      "policy_sha256": "ad3940d2e04beafd308f6069dc02d8d493f6f121687a16b9627c048596bd4cf0",
+      "population_diagnostics": null,
+      "positive_weight_seed_records": 2058,
+      "schema_version": "rival.study-support.v1",
+      "scope": "declared source and seed support; not representativeness, semantic condition validation or predictive qualification",
+      "sources": [
+        {
+          "artifact_sha256": "fc227b1682e2654fd4b2a8152294b68118c0e3be4d83f4a9af5f3e96df56d3f0",
+          "bundle_sha256": "fc4e221c3ad9fb222b23c473a09c8453ea663360a64403c313ecda595a9743ab",
+          "collected_at": "2025-02-25T23:59:59+00:00",
+          "conversion_spec_sha256": "29f8f5b0068aa6975f75d47d9c3190ad7b477026afe8ac1deb6589f380d2772f",
+          "importer_version": "rival.evidence-importer.v1",
+          "origin": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/f883165a3026fde855dfd448e0cd16443ab257b6/question_catalog_and_human_response_csv/wave1_3_response.csv",
+          "records_sha256": "f665b438664f18e0d882bf1ba12c1aecdaa3aa665832280457a02ece533bf0b4",
+          "released_at": "2026-03-29T00:00:00+00:00",
+          "retrieved_after_cutoff": true,
+          "retrieved_at": "2026-09-07T20:17:00.282397+00:00",
+          "revision": "f883165a3026fde855dfd448e0cd16443ab257b6",
+          "selected_for_audience": true,
+          "source_id": "twin2k-demographics-wave1-v1"
+        }
+      ],
+      "warnings": [
+        "Some source bytes were retrieved after the information cutoff; historical availability is declared, not independently witnessed."
+      ]
+    }
+  },
+  "independent_mapping_check": {
+    "mapped_demographic_fields": 3,
+    "method": "independent positional lookup into the pinned official question catalog for every raw CSV row",
+    "rows_verified": 2058,
+    "unmapped_behavioral_fields_in_population": 0
+  },
+  "manifest": {
+    "bundle_sha256": "fc4e221c3ad9fb222b23c473a09c8453ea663360a64403c313ecda595a9743ab",
+    "importer_version": "rival.evidence-importer.v1",
+    "records_sha256": "f665b438664f18e0d882bf1ba12c1aecdaa3aa665832280457a02ece533bf0b4",
+    "schema_version": "rival.evidence-bundle.v1",
+    "spec": {
+      "artifact_sha256": "fc227b1682e2654fd4b2a8152294b68118c0e3be4d83f4a9af5f3e96df56d3f0",
+      "conditions": [
+        "demographic-audience-rehearsal"
+      ],
+      "csv_mapping": {
+        "attributes": {
+          "age_band": {
+            "categories": {
+              "1": "18-29",
+              "2": "30-49",
+              "3": "50-64",
+              "4": "65+"
+            },
+            "column": "QID13",
+            "kind": "string",
+            "nullable": false
+          },
+          "region": {
+            "categories": {
+              "1": "Northeast (PA, NY, NJ, RI, CT, MA, VT, NH, ME)",
+              "2": "Midwest (ND, SD, NE, KS, MN, IA, MO, WI, IL, MI, IN, OH)",
+              "3": "South (TX, OK, AR, LA, KY, TN, MS, AL, WV, DC, MD, DE, VA, NC, SC, GA, FL)",
+              "4": "West (WA, OR, ID, MT, WY, CA, NV, UT, CO, AZ, NM)",
+              "5": "Pacific (HI, AK)"
+            },
+            "column": "QID11",
+            "kind": "string",
+            "nullable": false
+          },
+          "sex_at_birth": {
+            "categories": {
+              "1": "Male",
+              "2": "Female"
+            },
+            "column": "QID12",
+            "kind": "string",
+            "nullable": false
+          }
+        },
+        "id_column": "pid",
+        "preferences": {},
+        "weight_column": null
+      },
+      "expected_records": 2058,
+      "format": "csv",
+      "geography_attribute": "region",
+      "origin": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/resolve/f883165a3026fde855dfd448e0cd16443ab257b6/question_catalog_and_human_response_csv/wave1_3_response.csv",
+      "released_at": "2026-03-29T00:00:00Z",
+      "retrieved_at": "2026-09-07T20:17:00.282397Z",
+      "revision": "f883165a3026fde855dfd448e0cd16443ab257b6",
+      "schema_version": "rival.evidence-import.v1",
+      "source": {
+        "collected_at": "2025-02-25T23:59:59Z",
+        "contains_personal_data": true,
+        "geography": [
+          "Northeast (PA, NY, NJ, RI, CT, MA, VT, NH, ME)",
+          "Midwest (ND, SD, NE, KS, MN, IA, MO, WI, IL, MI, IN, OH)",
+          "South (TX, OK, AR, LA, KY, TN, MS, AL, WV, DC, MD, DE, VA, NC, SC, GA, FL)",
+          "West (WA, OR, ID, MT, WY, CA, NV, UT, CO, AZ, NM)",
+          "Pacific (HI, AK)"
+        ],
+        "metadata": {
+          "catalog_sha256": "e72e305f0c7c83bb990e97de4c0cf2c718ead18cc197239b7feeb354c9ac1bef",
+          "collection_date_basis": "Conservative upper bound for completed waves 1-3 before the wave-4 invitation on 2025-02-25; this is not an individual measurement timestamp.",
+          "date_source": "https://arxiv.org/html/2505.17479v1#S2",
+          "release_date_basis": "Conservative upper bound: upstream pinned revision was committed on 2026-03-28.",
+          "release_source": "https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500/commit/f883165a3026fde855dfd448e0cd16443ab257b6",
+          "selection": "Only pid, QID11, QID12 and QID13 are mapped. All behavioral responses and other columns remain outside the prediction input."
+        },
+        "name": "Twin-2K-500 released demographics (Toubia et al., 2025)",
+        "period_end": null,
+        "period_start": null,
+        "permitted_uses": [
+          "simulation",
+          "research"
+        ],
+        "prohibited_uses": [],
+        "rights_reference": "CC BY 4.0; https://huggingface.co/datasets/LLM-Digital-Twin/Twin-2K-500#license ; citation: Toubia, Gui, Peng, Merlau, Li and Chen (2025), arXiv:2505.17479.",
+        "sample_frame": "Released US Prolific participants; no new representativeness claim.",
+        "sha256": null,
+        "source_id": "twin2k-demographics-wave1-v1",
+        "source_type": "public"
+      }
+    }
+  },
+  "paid_calls": 0,
+  "predictive_validity_evaluated": false,
+  "preparation": {
+    "accounting": {
+      "attempts": 0,
+      "known_cost_usd": 0.0,
+      "mode": "offline",
+      "reserved_usd": 0.0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "complete": false,
+    "completed_draws": 0,
+    "last_execution_event": {
+      "at": "2026-09-07T20:22:21.995645+00:00",
+      "detail": null,
+      "ordinal": 0,
+      "previous": null,
+      "state": "prepared"
+    },
+    "planned_draws": 1000,
+    "planned_unique_seeds": 795,
+    "prediction_phase": "draft",
+    "request_sha256": "c29ce7c4a3ceaa958c3e92daafefb9894772273557d08a984126d2c6b9290f33",
+    "request_states": {},
+    "schema_version": "rival.study-status.v1",
+    "state": "prepared",
+    "study_id": "twin2k-demographics-import-rehearsal-v1"
+  },
+  "read_scope": "Only the four explicitly mapped columns become population inputs; no wave-4 or Mega artifacts were read by this rehearsal.",
+  "release": "0.6.0.dev6",
+  "schema_version": "rival.public-import-rehearsal.v1",
+  "status": "PASS"
+}

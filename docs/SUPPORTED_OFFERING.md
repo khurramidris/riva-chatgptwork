@@ -27,6 +27,15 @@ The `study` operator commands implement the first integrated workflow. Their
 reports currently contain raw simulated choice shares; runtime calibration is
 L10 work. See [phase-two development](PHASE_TWO_DEVELOPMENT.md).
 
+The v2 study contract binds public/licensed/human inputs to verified local evidence
+imports and an explicit population support policy. Geography is applied to the
+simulation records. Missing declared regions, conditions, attributes or subgroup
+support block preparation, as do failed population controls and low effective
+seed counts under the chosen policy. The report includes the import and support
+audit. These checks establish which evidence was used and its declared scope;
+they do not independently establish rights, representativeness, semantic relevance
+or statistical confidence. See [evidence imports](EVIDENCE_IMPORTS.md).
+
 ## Acceptance before offering decision support (L07–L14)
 
 Before viewing qualification outcomes, record the intended audience, geography,

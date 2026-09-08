@@ -12,6 +12,8 @@ from .readiness import release_claims
 
 
 def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None):
+    claims = release_claims()
+    claims["release"] = prepared["release"]
     reference = request.brief.choices[0].choice_id
     choices = [{"choice_id": choice.choice_id, "label": choice.label,
                 "simulated_share": simulation.distribution[choice.choice_id],
@@ -34,8 +36,8 @@ def build_study_report(request, prepared, simulation, sealed, accounting, evalua
         warnings.insert(0, "Offline heuristic baseline: no language model was called.")
     if request.audience.targets is None:
         warnings.append("No population controls were supplied; results refer to the weighted seed sample.")
-    return {
-        "schema_version": "rival.study-report.v1", "release_claims": release_claims(),
+    report = {
+        "schema_version": "rival.study-report.v1", "release_claims": claims,
         "study_id": request.brief.study_id, "title": request.brief.title,
         "decision": request.brief.decision, "question": request.brief.question,
         "request_sha256": prepared["request_sha256"], "run_id": simulation.run_id,
@@ -61,6 +63,13 @@ def build_study_report(request, prepared, simulation, sealed, accounting, evalua
                      "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"},
         "evaluation": evaluation, "limitations": warnings,
     }
+    if "support_audit" in prepared:
+        report["schema_version"] = "rival.study-report.v2"
+        report["support"] = prepared["support_audit"]
+        report["evidence"]["import_verification"] = prepared["import_verification"]
+        warnings.extend(prepared["support_audit"]["warnings"])
+        warnings.append("Declared support checks do not establish population representativeness or validate the scenario's meaning.")
+    return report
 
 
 def _text(value):
@@ -93,6 +102,16 @@ def study_markdown(report):
         "", "## Evidence", ""])
     for source in report["evidence"]["sources"]:
         lines.append(f"- {_text(source['name'])} ({_text(source['source_type'])}); rights reference: {_text(source['rights_reference'])}")
+    if "support" in report:
+        support = report["support"]
+        lines.extend(["", "## Declared population support", "",
+            f"- Support checks passed: {support['passed']}",
+            f"- Seed records excluded by geography and audience filters: {support['excluded_seed_records']}",
+            "- Source files and conversions were verified at preparation.",
+            "- Condition IDs: " + _text(", ".join(support["conditions"]))])
+        for cell in support["cells"]:
+            lines.append(f"- {_text(cell['label'])}: {cell['seed_records']} seeds; effective count {cell['effective_seed_records']:.1f}.")
+        lines.append("- Checks describe supplied evidence; they do not establish representative sampling or predictive accuracy.")
     if report["evaluation"]:
         lines.append(f"- Protected outcome comparison TVD: {report['evaluation']['metrics']['tvd']:.4f}; verified against the local sealed ledger.")
     else:

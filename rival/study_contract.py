@@ -8,6 +8,9 @@ from pydantic import Field, StrictInt, field_validator, model_validator
 
 from .schemas import (ChoiceSpec, EvidenceSource, PopulationRecord, PopulationTargets,
                       PreregistrationSpec, ScenarioSpec, StrictModel)
+from .evidence_catalog import EvidenceImportManifest, records_digest
+from .mathx import canonical_hash
+from .study_support import StudySupportPolicy, validate_filters
 
 
 class StudyBrief(StrictModel):
@@ -161,7 +164,48 @@ class StudyRequest(StrictModel):
         )
 
 
-def load_study_request(path) -> StudyRequest:
+class StudyRequestV2(StudyRequest):
+    schema_version: Literal["rival.study-request.v2"] = "rival.study-request.v2"
+    imports: list[EvidenceImportManifest] = Field(min_length=1)
+    support: StudySupportPolicy
+
+    @model_validator(mode="after")
+    def bound_imports(self):
+        sources = {source.source_id: source for source in self.audience.sources}
+        declared = [bundle.spec.source.source_id for bundle in self.imports]
+        if len(set(declared)) != len(declared) or set(declared) != set(sources):
+            raise ValueError("each audience source must have exactly one pinned import")
+        for bundle in self.imports:
+            source_id = bundle.spec.source.source_id
+            if canonical_hash(sources[source_id]) != canonical_hash(bundle.source()):
+                raise ValueError("source declaration differs from its import manifest")
+            records = [record for record in self.audience.records if source_id in record.evidence_ids]
+            if any(record.evidence_ids != [source_id] for record in records):
+                raise ValueError("imported records must belong to exactly one source")
+            if len(records) != bundle.spec.expected_records or records_digest(records) != bundle.records_sha256:
+                raise ValueError("audience records differ from the normalized import; select subsets using filters")
+        if self.support.geography_attribute in self.audience.filters:
+            raise ValueError("declare geography in audience.geography; its attribute filter is generated automatically")
+        validate_filters(self.audience.filters, self.audience.records)
+        return self
+
+    def scenario(self):
+        scenario = super().scenario()
+        return scenario.model_copy(update={
+            "population_filter": {**scenario.population_filter, self.support.geography_attribute: self.audience.geography},
+            "metadata": {"support_policy_sha256": canonical_hash(self.support),
+                         "evidence_imports_sha256": canonical_hash(self.imports)},
+        })
+
+
+def parse_study_request(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("study input must be a JSON object")
+    model = StudyRequestV2 if payload.get("schema_version") == "rival.study-request.v2" else StudyRequest
+    return model.model_validate(payload)
+
+
+def load_study_request(path) -> StudyRequest | StudyRequestV2:
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -173,5 +217,5 @@ def load_study_request(path) -> StudyRequest:
     def invalid_constant(value):
         raise ValueError(f"non-finite study input: {value}")
 
-    return StudyRequest.model_validate(json.loads(path.read_text(encoding="utf-8"),
+    return parse_study_request(json.loads(path.read_text(encoding="utf-8"),
         object_pairs_hook=unique, parse_constant=invalid_constant))

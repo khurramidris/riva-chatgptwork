@@ -1,0 +1,13 @@
+{
+  "completed_run_resumed": true,
+  "current_release": "0.6.0.dev6",
+  "export_files_identical": [
+    "report.md",
+    "report.json",
+    "manifest.json"
+  ],
+  "paid_calls": 0,
+  "status": "PASS",
+  "stored_release": "0.6.0.dev5",
+  "study": "existing L07 generated example workspace"
+}

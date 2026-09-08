@@ -1,0 +1,40 @@
+{
+  "audience": {
+    "description": "The 2,058 released Twin-2K respondents with mapped region, age band and sex at birth.",
+    "geography": [
+      "Northeast (PA, NY, NJ, RI, CT, MA, VT, NH, ME)",
+      "Midwest (ND, SD, NE, KS, MN, IA, MO, WI, IL, MI, IN, OH)",
+      "South (TX, OK, AR, LA, KY, TN, MS, AL, WV, DC, MD, DE, VA, NC, SC, GA, FL)",
+      "West (WA, OR, ID, MT, WY, CA, NV, UT, CO, AZ, NM)",
+      "Pacific (HI, AK)"
+    ]
+  },
+  "brief": {
+    "choices": [
+      {
+        "choice_id": "a",
+        "label": "Alternative A"
+      },
+      {
+        "choice_id": "b",
+        "label": "Alternative B"
+      }
+    ],
+    "context": "Engineering preparation rehearsal only; no behavioral validity is claimed.",
+    "decision": "Verify imported evidence and audience support before any behavioral simulation.",
+    "information_cutoff": "2026-09-01T00:00:00Z",
+    "question": "Which of these two hypothetical alternatives would you select?",
+    "sample_size": 1000,
+    "seed": 42,
+    "study_id": "twin2k-demographics-import-rehearsal-v1",
+    "title": "Twin-2K demographic import rehearsal"
+  },
+  "evidence": {
+    "group_id": "twin2k-existing-development-data",
+    "role": "development",
+    "source_reference": "Twin-2K release f883165; already used development evidence, not an untouched evaluation group."
+  },
+  "execution": {
+    "mode": "offline"
+  }
+}

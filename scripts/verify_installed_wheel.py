@@ -51,6 +51,24 @@ study_report = json.loads(Path("workflow-report/report.json").read_text(encoding
 assert study_report["confidence"]["abstain"] is True
 assert study_report["audience"]["simulation_draws"] == 40
 
+from rival.evidence_catalog import EvidenceCatalog, EvidenceImportSpec, strict_json
+from rival.evidence_commands import example_files
+from rival.study_evidence import bind_evidence
+from rival.study_workflow import check_study
+example = example_files()
+Path("evidence-source.csv").write_bytes(example["people.csv"])
+catalog = EvidenceCatalog("workflow-catalog")
+bundle = catalog.import_file("evidence-source.csv", EvidenceImportSpec.model_validate(strict_json(example["import.json"])))
+brief = strict_json(example["brief.json"])
+brief["brief"]["sample_size"] = 40
+request = bind_evidence(brief, catalog.root, [bundle.bundle_sha256], strict_json(example["support.json"]))
+assert check_study(request, catalog_root=catalog.root)["support_audit"]["passed"]
+prepare_study("workflow-study-v2", request, catalog_root=catalog.root)
+assert run_study("workflow-study-v2")["completed_draws"] == 40
+assert run_study("workflow-study-v2")["accounting"]["attempts"] == 0
+export_study("workflow-study-v2", "workflow-report-v2")
+assert json.loads(Path("workflow-report-v2/report.json").read_text())["evidence"]["import_verification"]["raw_bytes_and_conversion_verified"]
+
 # Exercise the real local HTTP surface, without model/network dependencies.
 from http.server import ThreadingHTTPServer
 from threading import Thread
@@ -101,7 +119,8 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
                   "checks": ["installed imports", "all frozen witnesses", "complete notices", "E/F design resources",
                              "offline demo", "research confidence", "historical claims separation", "real stage loader", "freeze algorithm",
                              "local HTTP health, demo page and demo execution",
-                             "study preparation, execution, recovery and report export"]}))
+                             "study preparation, execution, recovery and report export",
+                             "pinned evidence import, population support and v2 study execution"]}))
 '''
 
 

@@ -1,19 +1,36 @@
 # Phase two: a connected research pipeline
 
 Phase one (L01–L06) completed at `c67da54`, with Linux and Windows CI passing.
-Phase two develops L07–L10 on `codex/phase-two-study-workflow`, starting from that
-verified commit. The development version is `0.6.0.dev5`.
+Phase two develops L07–L10. L07 completed on `codex/phase-two-study-workflow` at
+`50e7494`, with Linux and Windows CI passing on draft PR #6. L08 builds on that
+commit on `codex/phase-two-evidence-support`. The current development version is
+`0.6.0.dev6`; two of the four phase-two engineering tasks are complete.
 
 | Task | Phase-two acceptance | Current position |
 |---|---|---|
 | L07 Integrated study workflow | Save and validate a versioned brief, audience, sources, evidence role, execution policy and preregistration; execute and recover through the request journal; seal predictions; export an aggregate report; optionally compare authenticated outcomes | Complete; 152 local tests and isolated installed-wheel verification pass |
-| L08 Public evidence and population support | Import permitted public or licensed evidence with traceable versions and dates; enforce declared audience and condition support; expose missing support | Basic source references and cutoff checks are present; catalog/import and support coverage remain pending |
+| L08 Public evidence and population support | Import permitted public or licensed evidence with traceable versions and dates; enforce declared audience and condition support; expose missing support | Complete for local CSV/JSONL snapshots and explicit support policies; 172 tests and a 2,058-row public demographic import rehearsal pass |
 | L09 Model execution and elicitation | Run a pinned real model through the complete workflow; verify elicitation, reproducibility, failures, cost and latency | Managed HTTP transport works with test responses; real-model execution and elicitation work remain pending |
 | L10 Runtime calibration | Bind the reference bank and calibration model to evidence and provider identities; keep fitting separate from held-out studies; integrate and compare calibration in the workflow | Pending |
 
 L11–L12 establish qualified uncertainty and performance on untouched studies.
 L13–L14 complete the operator interface and delivery rehearsal. Passing the new
 workflow's engineering tests does not complete those later tasks.
+
+## Second increment: evidence and support
+
+L08 adds `rival evidence` for pinned imports and `rival study bind-evidence` /
+`check` for the v2 study contract. Source bytes and their conversion must verify
+at preparation. Geography is applied to the actual audience; missing requested
+regions, conditions, attributes or joint cells stop preparation, along with
+unsupported controls and low effective seed counts under the declared policy.
+The report includes the source, version, dates, hashes and aggregate support audit.
+
+See [the evidence guide](EVIDENCE_IMPORTS.md) for the full workflow, its explicit
+declaration/semantic limits, public-data recipe and compatibility behavior.
+Existing completed v1 workspaces remain readable; incomplete studies still require
+their pinned runtime. New nonsynthetic studies require the v2 evidence contract.
+L09 real-model execution and L10 calibration remain pending.
 
 ## First increment: one study from input to report
 
@@ -65,8 +82,8 @@ The existing outcome firewall filters history before the provider sees it.
 
 These checks establish an input contract. They do not verify source permissions,
 real-world representativeness, interview fidelity, complete semantic leakage
-prevention or independent evidence groups. L08 expands the evidence and support
-checks. Proprietary customer data is not a prerequisite.
+prevention or independent evidence groups. L08's v2 contract expands the evidence
+and support checks as described above. Proprietary customer data is not a prerequisite.
 
 ## Managed execution
 
@@ -134,3 +151,8 @@ All 152 regression tests pass, including 16 new study-workflow tests. The final
 integrity (10/10) and research-component (8/8) checks also pass; their research
 results do not establish improvement in this workflow's predictive accuracy.
 See [the verification checkpoint](verification/phase_two_workflow.json).
+
+The L08 checkpoint adds 20 tests (172 total), verifies the installed v2 workflow,
+and independently checks 2,058 demographic mappings from a pinned public snapshot.
+The old L07 generated export remains byte-identical. See
+[the L08 verification record](verification/phase_two_evidence.json).

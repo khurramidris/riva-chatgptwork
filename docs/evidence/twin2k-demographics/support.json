@@ -1,0 +1,46 @@
+{
+  "cells": [
+    {
+      "filters": {
+        "age_band": "18-29"
+      },
+      "label": "Age 18-29",
+      "min_effective_seed_records": 10,
+      "min_seed_records": 10
+    },
+    {
+      "filters": {
+        "age_band": "30-49"
+      },
+      "label": "Age 30-49",
+      "min_effective_seed_records": 10,
+      "min_seed_records": 10
+    },
+    {
+      "filters": {
+        "age_band": "50-64"
+      },
+      "label": "Age 50-64",
+      "min_effective_seed_records": 10,
+      "min_seed_records": 10
+    },
+    {
+      "filters": {
+        "age_band": "65+"
+      },
+      "label": "Age 65+",
+      "min_effective_seed_records": 10,
+      "min_seed_records": 10
+    }
+  ],
+  "conditions": [
+    "demographic-audience-rehearsal"
+  ],
+  "geography_attribute": "region",
+  "min_effective_seed_records": 2000,
+  "min_seed_records": 2000,
+  "required_attributes": [
+    "age_band",
+    "sex_at_birth"
+  ]
+}

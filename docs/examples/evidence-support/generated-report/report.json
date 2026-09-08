@@ -1,0 +1,219 @@
+{
+  "audience": {
+    "description": "Six generated example records; no real consumers represented.",
+    "effective_seed_records": 6.0,
+    "eligible_seed_records": 6,
+    "geography": [
+      "example-only"
+    ],
+    "input_seed_records": 6,
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "simulation_draws": 1000,
+    "unique_sampled_seed_records": 6
+  },
+  "choices": [
+    {
+      "choice_id": "standard",
+      "difference_from_reference_pp": 0.0,
+      "label": "Standard delivery",
+      "simulated_share": 0.40466442469032954
+    },
+    {
+      "choice_id": "flexible",
+      "difference_from_reference_pp": -0.13884513859236947,
+      "label": "Flexible delivery",
+      "simulated_share": 0.40327597330440584
+    },
+    {
+      "choice_id": "neither",
+      "difference_from_reference_pp": -21.26048226850649,
+      "label": "Neither plan",
+      "simulated_share": 0.19205960200526465
+    }
+  ],
+  "confidence": {
+    "abstain": true,
+    "label": "unqualified",
+    "lower_tvd": 0.0,
+    "upper_tvd": 1.0
+  },
+  "created_at": "2026-09-07T20:28:21.901852+00:00",
+  "decision": "Explore how two delivery plans compare in a generated audience.",
+  "evaluation": null,
+  "evidence": {
+    "assignment": {
+      "group_id": "generated-workflow-example",
+      "role": "development",
+      "source_reference": "Generated engineering example; no independent human evidence."
+    },
+    "excluded_history_entries": 0,
+    "import_verification": {
+      "bundle_sha256": [
+        "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977"
+      ],
+      "raw_bytes_and_conversion_verified": true,
+      "scope": "local source-byte and normalization verification; origin, rights and dates remain declarations"
+    },
+    "information_cutoff": "2026-09-01T00:00:00+00:00",
+    "local_manifest_verified": true,
+    "manifest_sha256": "ceafd51292bb8647458dba57f03409b3d3d275b5e85f5e132a7ab2e35745a9cb",
+    "protected_comparison_verified": false,
+    "retrieval_audit_sha256": "49f634087c4e4e35d4d0f02c9d3ec5b86062ebb6bd41f1b9ef26f4f5acd8eb36",
+    "sources": [
+      {
+        "collected_at": "2026-08-01T00:00:00Z",
+        "geography": [
+          "example-only"
+        ],
+        "name": "Rival generated workflow example",
+        "permitted_uses": [
+          "simulation"
+        ],
+        "rights_reference": "Generated in Rival for testing.",
+        "sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "source_id": "generated-example",
+        "source_type": "synthetic"
+      }
+    ],
+    "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"
+  },
+  "execution": {
+    "accounting": {
+      "attempts": 0,
+      "known_cost_usd": 0.0,
+      "mode": "offline",
+      "reserved_usd": 0.0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "mode": "offline",
+    "provider": {
+      "configuration_sha256": "592132bf1ad3e6a5b858fa36582e810a86866021d4ac78f693972540e88bdca1",
+      "endpoint_sha256": null,
+      "model": "transparent-utility-baseline",
+      "provider_name": "heuristic-v1",
+      "provider_version": "1"
+    },
+    "sample_plan_sha256": "7881f61fd76b16b922d9e17213f68c50072755f5aadaa49b50426e9abd72cdd9"
+  },
+  "limitations": [
+    "Offline heuristic baseline: no language model was called.",
+    "This study includes generated audience records; it is an engineering demonstration.",
+    "Choice shares describe model outputs for the supplied audience; customer-domain accuracy is not established.",
+    "Resampled draws do not add independent people or human evidence.",
+    "Differences between choice shares are not causal effects of an intervention.",
+    "Source rights, dates, geography and independence are operator declarations, not independently verified facts.",
+    "Confidence remains unqualified; no decision-ready interval or recommendation is issued.",
+    "Declared support checks do not establish population representativeness or validate the scenario's meaning."
+  ],
+  "question": "Which grocery delivery plan would you choose?",
+  "reference_choice_id": "standard",
+  "release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev6",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "request_sha256": "d8c776f654e949f8e24a40fb61ceb598bf185f425dd013303fb514fb30b21819",
+  "run_id": "run_1eff0003de934a5b",
+  "runtime_release": "0.6.0.dev6",
+  "schema_version": "rival.study-report.v2",
+  "study_id": "catalog-workflow-example-v1",
+  "support": {
+    "audit_sha256": "66e299730828f6a284420daf8b401a131cf034255e415ea3edf107eb15fbf4f0",
+    "cells": [
+      {
+        "effective_seed_records": 3.0,
+        "label": "Value segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      },
+      {
+        "effective_seed_records": 3.0,
+        "label": "Convenience segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      }
+    ],
+    "conditions": [
+      "grocery-delivery-plans"
+    ],
+    "effective_seed_records": 6.0,
+    "excluded_seed_records": 0,
+    "filtered_seed_records": 6,
+    "geography_counts": {
+      "example-only": 6
+    },
+    "input_seed_records": 6,
+    "issues": [],
+    "missing_attributes": {
+      "segment": 0
+    },
+    "passed": true,
+    "policy_sha256": "a60f70aaad24fdc62b92d02e516efa973853263e3d5aa659fef59a9478b3480d",
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "positive_weight_seed_records": 6,
+    "schema_version": "rival.study-support.v1",
+    "scope": "declared source and seed support; not representativeness, semantic condition validation or predictive qualification",
+    "sources": [
+      {
+        "artifact_sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "bundle_sha256": "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977",
+        "collected_at": "2026-08-01T00:00:00+00:00",
+        "conversion_spec_sha256": "85439a1daa00f70f03f0d1148429222291a37b6ae67856e37ed0e79a0ff949b2",
+        "importer_version": "rival.evidence-importer.v1",
+        "origin": "generated:Rival/evidence-example-v1",
+        "records_sha256": "dbb06ee01bd295b2397e7b07be771af8c7b19eb977d7737123438e7a6b0a77f5",
+        "released_at": "2026-08-02T00:00:00+00:00",
+        "retrieved_after_cutoff": false,
+        "retrieved_at": "2026-08-03T00:00:00+00:00",
+        "revision": "generated-example-v1",
+        "selected_for_audience": true,
+        "source_id": "generated-example"
+      }
+    ],
+    "warnings": []
+  },
+  "title": "Grocery delivery concept example"
+}

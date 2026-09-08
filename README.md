@@ -5,7 +5,7 @@ and proposed scenarios for a declared audience. The first output is simulated
 population choice shares. Individual synthetic responses are intermediate model
 outputs; they are not verified predictions of real people.
 
-`0.6.0.dev5` is a research development release. See the
+`0.6.0.dev6` is a research development release. See the
 [delivery board](docs/CUSTOMER_READINESS.md),
 [supported offering](docs/SUPPORTED_OFFERING.md), and
 [phase-one acceptance evidence](docs/verification/phase_one.json).
@@ -56,6 +56,19 @@ execution, status, recovery, source declarations and protected outcome compariso
 The browser interface remains the generated demo; the operator commands handle
 the new study workflow.
 
+## Evidence and population support
+
+New studies using public, licensed or human evidence use the v2 study contract.
+`rival evidence` imports pinned CSV or native population JSONL files, retains their
+bytes and conversion settings, and checks that normalized records reproduce.
+`rival study bind-evidence` connects those imports to a brief and explicit support
+policy. Preparation verifies source availability, actual geography, required
+attributes, requested groups, population controls and effective seed counts.
+
+See the [evidence import guide](docs/EVIDENCE_IMPORTS.md) for a complete example
+and a pinned Twin-2K demographic import. The old generated v1 example remains
+available. Source declarations and support checks do not establish accuracy.
+
 ## Managed model execution
 
 Current general probability, behavioral-model and text/SSR adapters require an
@@ -98,7 +111,7 @@ python -m rival qualify-integrity
 python -m rival qualify-research-components
 python -m rival qualify-all --output-dir reports/current --compact
 python -m pip wheel . --no-deps --wheel-dir dist
-python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev5-py3-none-any.whl --output reports/installed_wheel.json
+python scripts/verify_installed_wheel.py --wheel dist/rival_sim-0.6.0.dev6-py3-none-any.whl --output reports/installed_wheel.json
 ```
 
 `qualify-all` fails when a reproduction or engineering check fails. A PASS means

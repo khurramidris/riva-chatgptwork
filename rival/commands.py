@@ -73,6 +73,7 @@ def build_parser():
     claims.set_defaults(func=lambda args: print(json.dumps(release_claims(), indent=2)) or 0)
     commands.add_parser("mega-v2", help="portable corrected benchmark commands; use mega-v2 --help")
     commands.add_parser("study", help="prepare, run, resume and report a complete study; use study --help")
+    commands.add_parser("evidence", help="import and verify pinned evidence; use evidence --help")
     run = commands.add_parser("simulate-managed", help="research simulation with durable model request accounting")
     for name in ("input", "output", "journal", "database"):
         run.add_argument("--" + name, type=Path, required=True)
@@ -88,6 +89,9 @@ def build_parser():
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "evidence":
+        from .evidence_commands import main as evidence_main
+        return evidence_main(argv[1:])
     if argv and argv[0] == "study":
         from .study_commands import main as study_main
         return study_main(argv[1:])

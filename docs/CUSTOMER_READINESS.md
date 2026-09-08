@@ -1,7 +1,7 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Current version: `0.6.0.dev5`. Branch: `codex/phase-two-study-workflow`.
+Current version: `0.6.0.dev6`. Branch: `codex/phase-two-evidence-support`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
@@ -10,10 +10,10 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 
 Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
 Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
-Phase two is L07–L10. Its first task, L07, is implemented and locally verified:
-**7 of 14 tasks complete; 7 later tasks pending** as of 2026-09-07. Phase two has
-one of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
-and [verification record](verification/phase_two_workflow.json). Statistical
+Phase two is L07–L10. L07 and L08 are implemented and locally verified:
+**8 of 14 tasks complete; 6 later tasks pending** as of 2026-09-08. Phase two has
+two of its four tasks complete. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [latest verification record](verification/phase_two_evidence.json). Statistical
 qualification and customer launch remain later gates.
 
 ## Delivery board
@@ -27,7 +27,7 @@ qualification and customer launch remain later gates.
 | L05 Request accounting and recovery | Complete, locally verified | General probability, behavioral and text/SSR providers plus Mega v2 use per-attempt journals; budget/expiry, physical attempt limits, cached recovery, unknown-billing quarantine and draw deduplication |
 | L06 Installation and release bookkeeping | Complete, locally verified | Installed-wheel archive/resources, offline CLI/HTTP rehearsal, complete notices, truthful qualification exits and full wheel inventory/manifest |
 | L07 One integrated study workflow | Complete, locally verified | Versioned input; signed preparation and evidence role; journaled execution and crash recovery; sealed predictions; aggregate report; protected outcome comparison; installed-package rehearsal |
-| L08 Public evidence and population support | Pending | Retrieval provenance, timestamp coverage, unsupported population/condition handling |
+| L08 Public evidence and population support | Complete, locally verified | Replayable pinned CSV/JSONL imports; v2 evidence binding; cutoff, geography, condition and subgroup checks; effective counts; 2,058-row public demographic import rehearsal |
 | L09 Model execution and elicitation | Pending | Real pinned checkpoint or endpoint execution, SSR tie handling, reproducibility and measured cost |
 | L10 Runtime calibration | Pending | Reference bank and adapter identity; fit/validation separation; SYN-DIGITS integration |
 | L11 Qualified uncertainty and abstention | Pending | Independent study-level training, untouched calibration/evaluation splits, coverage and selective-risk tests |
@@ -85,6 +85,15 @@ and an OS file lock protect concurrent writers. A provider-side hard spending
 limit remains necessary for a remote ceiling: local reservations use estimates.
 
 ## Verification
+
+L08 passes **172 tests**, including 20 new import/support regressions. The v2
+workflow also prepares a pinned public Twin-2K demographic source, with every one
+of its 2,058 mappings independently checked against the official question catalog.
+The previous L07 completed workspace still resumes and exports byte-identical
+files. See the [L08 verification record](verification/phase_two_evidence.json),
+[evidence guide](EVIDENCE_IMPORTS.md), and
+[generated report with support checks](examples/evidence-support/generated-report/report.md).
+No paid inference or new accuracy result is part of this increment.
 
 Phase two's first increment passes **152 tests**, including a real local HTTP
 retry/recovery test with generated responses, and the offline installed-wheel

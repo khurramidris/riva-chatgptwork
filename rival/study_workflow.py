@@ -24,7 +24,9 @@ from .providers import HeuristicChoiceProvider, OpenAICompatibleProvider
 from .schemas import (EvaluationResult, PredictionContext, SealedStudyManifest,
                       SimulationResult, utc_now)
 from .store import EvidenceStore
-from .study_contract import StudyRequest
+from .study_contract import StudyRequest, StudyRequestV2, parse_study_request
+from .study_evidence import verify_imports
+from .study_support import require_support, validate_filters
 from .version import __version__
 
 
@@ -54,13 +56,25 @@ def _execution(root, request, scope_id):
 
 
 def _make_plan(request):
+    supported_contract = isinstance(request, StudyRequestV2)
+    support = None
     engine = RivalEngine()
     try:
         provider = _provider(request, preparing=True)
         scenario = request.scenario()
         engine.register_provider(scenario.model_family, provider)
-        prepared, diagnostics, _ = engine._prepare(request.audience.records, scenario,
-                                                   request.audience.targets)
+        if supported_contract:
+            validate_filters(scenario.population_filter, request.audience.records)
+        try:
+            prepared, diagnostics, _ = engine._prepare(request.audience.records, scenario,
+                                                       request.audience.targets)
+        except ValueError:
+            if supported_contract:
+                require_support(request)  # Explain unsupported filters/controls.
+            raise
+        if supported_contract:
+            support = require_support(request, prepared_records=prepared.records,
+                                      population_diagnostics=diagnostics)
         if diagnostics and not diagnostics.converged:
             raise ValueError("audience controls did not converge; revise the audience before execution")
         sampled = engine.population.sample(prepared.records, scenario.sample_size, scenario.seed)
@@ -70,7 +84,7 @@ def _make_plan(request):
             identifier = canonical_hash({"study": scenario.scenario_id, "person": seed_id,
                                          "provider_slot": provider.name})
             work[identifier] = work.get(identifier, 0) + 1
-        return {
+        plan = {
             "prediction_context": prepared.context.model_dump(mode="json"),
             "retrieval_audit": prepared.audit.model_dump(mode="json"),
             "population_diagnostics": diagnostics.model_dump(mode="json") if diagnostics else None,
@@ -80,6 +94,9 @@ def _make_plan(request):
             "request_draw_counts": work,
             "sample_plan_sha256": canonical_hash([(person.person_id, person.weight) for person in sampled]),
         }
+        if support is not None:
+            plan["support_audit"] = support
+        return plan
     finally:
         engine.store.close()
 
@@ -96,7 +113,7 @@ class _Workspace:
             self.prepared = self.read("prepared", required=True)
             if self.prepared["workflow_version"] != WORKFLOW_VERSION:
                 raise IntegrityError("unsupported study workflow version")
-            self.request = StudyRequest.model_validate(self.prepared["request"])
+            self.request = parse_study_request(self.prepared["request"])
             if canonical_hash(self.request) != self.prepared["request_sha256"]:
                 raise IntegrityError("study request fingerprint changed")
             self.manager = ProspectiveStudyManager(self.store, self.signer)
@@ -276,10 +293,23 @@ def _workspace(root):
             workspace.close()
 
 
-def prepare_study(root, request: StudyRequest):
+def check_study(request, *, catalog_root=None):
+    """Run the same no-call checks as preparation, without creating a workspace."""
     json.dumps(request.model_dump(mode="python"), default=str, allow_nan=False)
-    request = StudyRequest.model_validate(request.model_dump(mode="json"))
-    plan = _make_plan(request)  # Validate all provider-visible inputs without calls.
+    request = parse_study_request(request.model_dump(mode="json"))
+    if not isinstance(request, StudyRequestV2) and any(source.source_type != "synthetic" for source in request.audience.sources):
+        raise ValueError("new studies with human/public/licensed evidence require a v2 request and verified catalog imports")
+    imports = verify_imports(request, catalog_root)
+    plan = _make_plan(request)
+    return {"schema_version": "rival.study-check.v1", "study_id": request.brief.study_id,
+            "passed": True, "planned_draws": plan["planned_draws"],
+            "support_audit": plan.get("support_audit"), "import_verification": imports,
+            "scope": "engineering checks; predictive accuracy remains unqualified"}
+
+
+def prepare_study(root, request: StudyRequest, *, catalog_root=None):
+    json.dumps(request.model_dump(mode="python"), default=str, allow_nan=False)
+    request = parse_study_request(request.model_dump(mode="json"))
     root = Path(root).resolve()
     with exclusive_run_lock(root.with_name(root.name + ".lock")):
         if root.exists():
@@ -291,6 +321,12 @@ def prepare_study(root, request: StudyRequest):
                     return workspace.status(workspace.journal_snapshot(session))
             finally:
                 workspace.close()
+        if not isinstance(request, StudyRequestV2) and any(source.source_type != "synthetic" for source in request.audience.sources):
+            raise ValueError("new studies with human/public/licensed evidence require a v2 request and verified catalog imports")
+        imported = verify_imports(request, catalog_root)
+        plan = _make_plan(request)  # Validate all provider-visible inputs without calls.
+        if imported is not None:
+            plan["import_verification"] = imported
         root.mkdir(parents=True)
         secret = secrets.token_bytes(64)
         with os.fdopen(os.open(root / "manifest.key", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as handle:

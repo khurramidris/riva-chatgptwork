@@ -1,0 +1,122 @@
+{
+  "accuracy_improvement_established": false,
+  "artifacts_sha256": {
+    "docs/evidence/twin2k-demographics/brief.json": "ec9272ba2a1f49f0d3ec59827ceb233044d102546125532fbfd19714be7d0f3e",
+    "docs/evidence/twin2k-demographics/import.json": "5c1c1b3d08835ea9a0747f0aafda8bebdd6572e5e4deea1c23705e63ae893a76",
+    "docs/evidence/twin2k-demographics/support.json": "cd461150c19d94938200e337a2a69a6c927372d914bc98b4ea943869e1f36114",
+    "docs/examples/evidence-support/generated-report/manifest.json": "cbb7921134c1bd6ca0178bc3068bb2d83176f36db6be3616d92501dadb7af452",
+    "docs/examples/evidence-support/generated-report/report.json": "01ffa38f15f16cbcef06bc6b9324d23fc7358f3e1541e129ea13f90ab76d32ba",
+    "docs/examples/evidence-support/generated-report/report.md": "ffd1ad1c50b46909cc00ec45b57d5a076857b4ddcc68886a57de0c9acacff3a9",
+    "docs/examples/evidence-support/public-import-check.json": "8217c464fbcf6edcfd290b3e180acafb34368b6f1d2825ca2ffeb58f4311a597",
+    "docs/verification/phase_two_evidence_artifacts/installed-wheel.json": "815a8a3fff91f5235486f631bf8c01540c9e0ee34747948b5317563d14b6842a",
+    "docs/verification/phase_two_evidence_artifacts/integrity_qualification.json": "481679dd42bc1b0fdc558bc48e4bd4c1840c5a0e405a9808da9fd5cd628b78bd",
+    "docs/verification/phase_two_evidence_artifacts/legacy-compatibility.json": "8dc7cee59f9a24139c90a3acd301cce28e2d340032f87b42f283d2cc1e555a01",
+    "docs/verification/phase_two_evidence_artifacts/opinionqa_qualification.json": "864ce72294065e67435be18bf171c0089f302e00a75a5dfd2ce7ff4a17bc571d",
+    "docs/verification/phase_two_evidence_artifacts/preservation.json": "4a5ef6a0bb8805096c734e0efb83e63811ea3c005dc0bc7ea2de9083f32a2882",
+    "docs/verification/phase_two_evidence_artifacts/qualification_summary.json": "c15f084656cc69ae27657932f4670db7c8880e0be6de0b002b7b9cc3e3f6c33f",
+    "docs/verification/phase_two_evidence_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "docs/verification/phase_two_evidence_artifacts/tests.log": "1d3c3a9d1add1fe2eabbce27264fd990b685952b7b6b166a143847ca6ea90fbf",
+    "docs/verification/phase_two_evidence_artifacts/twin2k_qualification.json": "fbc8bf537409c50a79db7a22ca3d54d3fd0850ef187b21b3600bfc47a7e4ed2a",
+    "docs/verification/phase_two_evidence_artifacts/wheel-build.log": "db8743a3c1326cd99d4e8a0c4499af29e2653278f077ee23e36de52e4b529f20",
+    "docs/verification/phase_two_evidence_artifacts/wheel.json": "b21b331cd9271572b9425b28515b8b14bfb39f8c1f01430f930f4499c31b00aa"
+  },
+  "base_commit": "50e74949c7ad031dfec118611b4f4a66c9029ed2",
+  "branch": "codex/phase-two-evidence-support",
+  "ci": {
+    "publication_record": "See the L08 draft pull request for final remote verification.",
+    "required_platforms": [
+      "ubuntu-latest / Python 3.11",
+      "windows-latest / Python 3.11"
+    ],
+    "status": "not_part_of_this_local_checkpoint"
+  },
+  "delivery_status": {
+    "complete_tasks": 8,
+    "phase_one": "complete",
+    "phase_two_complete": false,
+    "phase_two_tasks_complete": [
+      "L07",
+      "L08"
+    ],
+    "phase_two_tasks_pending": [
+      "L09",
+      "L10"
+    ],
+    "total_tasks": 14
+  },
+  "environment": {
+    "blas_threads": 1,
+    "os": "Linux",
+    "python": "3.12.13"
+  },
+  "generated_at": "2026-09-08T02:12:04.512778+00:00",
+  "installed_wheel": {
+    "checks_passed": 14,
+    "exit_code": 0,
+    "inventory": "phase_two_evidence_artifacts/wheel.json",
+    "report": "phase_two_evidence_artifacts/installed-wheel.json",
+    "sha256": "9bb9407c1d18b913a8be3ac1e4eb25d4af49949c63baa285c0622805def1cca2"
+  },
+  "limitations": [
+    "Source rights, release dates, condition tags and sampling frames remain operator declarations.",
+    "Support thresholds are engineering policies, not confidence or representativeness guarantees.",
+    "Only explicit conditions and joint cells are checked; semantic relevance is not inferred.",
+    "New nonsynthetic studies require v2 imports; incomplete older studies require their pinned runtime.",
+    "The real public-data rehearsal prepares a study without simulating behavior or evaluating outcomes.",
+    "Real-model validation, runtime calibration, qualified uncertainty and customer launch remain pending."
+  ],
+  "paid_inference_calls": 0,
+  "preservation": {
+    "changed_files": [],
+    "compatibility_report": "phase_two_evidence_artifacts/legacy-compatibility.json",
+    "completed_v1_workspace": "resumed and exported byte-identical files",
+    "protected_files": 68,
+    "report": "phase_two_evidence_artifacts/preservation.json"
+  },
+  "public_import": {
+    "artifact_sha256": "fc227b1682e2654fd4b2a8152294b68118c0e3be4d83f4a9af5f3e96df56d3f0",
+    "behavioral_fields_imported": 0,
+    "model_calls": 0,
+    "report": "../examples/evidence-support/public-import-check.json",
+    "revision": "f883165a3026fde855dfd448e0cd16443ab257b6",
+    "rows_imported": 2058,
+    "rows_independently_checked": 2058,
+    "source": "Twin-2K-500 wave1-3 response CSV, demographics only"
+  },
+  "qualification": {
+    "integrity_checks": 10,
+    "report": "phase_two_evidence_artifacts/qualification_summary.json",
+    "research_component_checks": 8,
+    "scope": "research reproduction and engineering checks; not customer qualification",
+    "status": "PASS"
+  },
+  "release": "0.6.0.dev6",
+  "schema_version": "rival.phase-two-evidence-verification.v1",
+  "scope": "L08 engineering: replayable imports and explicit source/population support, not predictive qualification",
+  "source_sha256": {
+    ".github/workflows/ci.yml": "d71c4097d5dc43f21ba71f4d3601b739ccd0d2d89e0674a1e3dfcabdd1cf724c",
+    "README.md": "46e972940281059f310535e1e4d3b6fdb4a1c525dd206837caba752993483011",
+    "docs/SUPPORTED_OFFERING.md": "8a2b54552346a70852be5af332f9a328168ee2499696464cd9bc6a0bc7385864",
+    "pyproject.toml": "e85cb1b45d2530a967fb0f994860efd202e071ddb0b8ce8ca3e1d0a49bd18e1a",
+    "rival/commands.py": "1207ff40fe7bab4d72900a8914e26cd3e92291d670931f18621b378bba35470d",
+    "rival/evidence_catalog.py": "608878df87b4516e1950387c65ca8a2a4bfa394236a784b02459ed3e892de452",
+    "rival/evidence_commands.py": "02f0e0aef5757c9bd2543026f88bc66481b0a7e134720821cbdf394ccf9db004",
+    "rival/study_commands.py": "09ad301cc47325556b899e54615ddfb0be960076023d567d8949527774de8a84",
+    "rival/study_contract.py": "2a0c21e646cb3e4df3a0b48c5a644fc3371d8421096aa0a16cce0aef106232b0",
+    "rival/study_evidence.py": "395aa1b1f767b405713a321c04a0db489694986fc109d6b6c0473b8def89707d",
+    "rival/study_report.py": "ab3385579de1959d4ed7e43ecd1f81cb586fc4020d0319257a4206a10379ebbb",
+    "rival/study_support.py": "203d9d9fd58ca4edaca44b188f15634363777736376c00cd42a0340839264606",
+    "rival/study_workflow.py": "7f1b2e30620598685a8d15a31ba62733d099eb026d539dc977ca18a825bd363b",
+    "rival/version.py": "3a68cbc9fd337c0a86e2b848b70b76192233adff229397a109b7930b0ff979b7",
+    "scripts/verify_installed_wheel.py": "251bcd3e1e9fa2cc05d2c4a15eba957d2d51d07ee3c935040cdd1b7aa4753106",
+    "tests/test_evidence_support.py": "61a0e4bbff0211a2786fc096715075b3f4491a866988b31938a00c3e2ab20062"
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "log": "phase_two_evidence_artifacts/tests.log",
+    "new_tests": 20,
+    "passed": 172,
+    "seconds": 7.684
+  }
+}

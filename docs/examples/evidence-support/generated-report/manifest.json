@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "01ffa38f15f16cbcef06bc6b9324d23fc7358f3e1541e129ea13f90ab76d32ba",
+    "report.md": "ffd1ad1c50b46909cc00ec45b57d5a076857b4ddcc68886a57de0c9acacff3a9"
+  },
+  "request_sha256": "d8c776f654e949f8e24a40fb61ceb598bf185f425dd013303fb514fb30b21819",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "catalog-workflow-example-v1"
+}
