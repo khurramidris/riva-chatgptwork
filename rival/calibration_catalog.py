@@ -75,11 +75,10 @@ def protected_observation(workspace, sealed):
 
 
 def _harvest(root):
-    from .study_contract import StudyRequestV3, StudyRequestV4
     from .study_workflow import _workspace
     with _workspace(root) as workspace, workspace.execution() as session:
         request = workspace.request
-        if not isinstance(request, StudyRequestV3) or isinstance(request, StudyRequestV4):
+        if request.schema_version != "rival.study-request.v3":
             raise ValueError("reference banks require uncalibrated pinned v3 studies")
         if request.evidence.role != "training":
             raise ValueError("only prospectively assigned training studies may enter a reference bank")
@@ -107,6 +106,8 @@ def _harvest(root):
 
 
 class CalibrationCatalog:
+    schema_prefix = "rival.calibration"
+
     def __init__(self, root):
         self.root = Path(root).resolve()
 
@@ -128,7 +129,7 @@ class CalibrationCatalog:
         envelope = strict_json(read_bounded(self.root / f"{kind}-{identifier}.json"))
         if (not self._signer().verify_attestation(envelope)
                 or canonical_hash(envelope["payload"]) != identifier
-                or envelope["payload"].get("schema_version") != f"rival.calibration-{kind}.v1"):
+                or envelope["payload"].get("schema_version") != f"{self.schema_prefix}-{kind}.v1"):
             raise IntegrityError("calibration artifact hash or local signature is invalid")
         return envelope["payload"]
 

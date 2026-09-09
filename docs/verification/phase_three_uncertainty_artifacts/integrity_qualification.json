@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "detail": "8c653d16bbd6f9aec9116d9444349446ba666e91678eb327ea3efe6943a31b7b",
+      "name": "deterministic_prediction_context",
+      "status": "PASS"
+    },
+    {
+      "detail": "bcd4b84b0565d6231bc9ff4712bccd7edc9be1a9e54854523121469e3ecbb7cf",
+      "name": "retrieval_audit_bound",
+      "status": "PASS"
+    },
+    {
+      "detail": "protected field rejected",
+      "name": "outcome_firewall_fail_closed",
+      "status": "PASS"
+    },
+    {
+      "detail": "changed inputs rejected before provider calls",
+      "name": "locked_context_mismatch_rejected",
+      "status": "PASS"
+    },
+    {
+      "detail": "4503c4d75991c52a0e89a4cffe60b838995e705f1595df204dbf650f497e2925",
+      "name": "manifest_seal_verifies",
+      "status": "PASS"
+    },
+    {
+      "detail": "tamper detected",
+      "name": "manifest_tamper_detected",
+      "status": "PASS"
+    },
+    {
+      "detail": "plaintext absent at rest",
+      "name": "outcome_encrypted_at_rest",
+      "status": "PASS"
+    },
+    {
+      "detail": "early reveal blocked",
+      "name": "time_gate_blocks_early_reveal",
+      "status": "PASS"
+    },
+    {
+      "detail": "676ca7f207f6200f689004f12a591a5448140ff22b6d3049f50b36980c63404a",
+      "name": "authenticated_outcome_reveal",
+      "status": "PASS"
+    },
+    {
+      "detail": "draft -> prediction_locked -> outcomes_revealed -> evaluated",
+      "name": "append_only_phase_chain",
+      "status": "PASS"
+    }
+  ],
+  "report_sha256": "f87e882f70717e6eff5811ce966f0e6cf865aa9fad6ac16e4991dcce41054ff5",
+  "schema_version": "rival.integrity-qualification.v1",
+  "scope": "deterministic engineering controls; not a prospective customer validity result",
+  "status": "PASS"
+}

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any
 
-from .mathx import canonical_hash
+from .mathx import canonical_hash, validate_probabilities
 from .evaluation import evaluate_distribution
 from .outcome_vault import OutcomeVault
 from .schemas import (
@@ -478,7 +478,13 @@ class ProspectiveStudyManager:
             raise IntegrityError("evaluation preregistration hash does not match")
         if prereg.evaluation_protocol != "rival.distribution-evaluation.v2":
             raise IntegrityError("unsupported preregistered evaluation protocol")
-        if canonical_hash(observed) != canonical_hash(evaluation.observed_distribution):
+        # The vault receipt binds the original JSON representation. Evaluation's
+        # typed schema represents all numeric values as floats, so compare that
+        # exact numeric representation after validating the original values.
+        # Do not round, renormalize, accept strings/bools, or alter the receipt.
+        validate_probabilities(observed.values())
+        numeric_observed = {key: float(value) for key, value in observed.items()}
+        if canonical_hash(numeric_observed) != canonical_hash(evaluation.observed_distribution):
             raise IntegrityError("evaluation outcomes differ from the authenticated reveal")
         simulation = self.store.get("runs", sealed.manifest.run_id)
         if simulation is None or canonical_hash(simulation) != sealed.manifest.simulation_sha256:

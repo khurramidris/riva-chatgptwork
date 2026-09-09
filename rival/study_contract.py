@@ -13,6 +13,7 @@ from .mathx import canonical_hash
 from .study_support import StudySupportPolicy, validate_filters
 from .model_contract import ElicitationSpec, ModelPin
 from .runtime_calibration import CalibrationPin
+from .runtime_uncertainty import UncertaintyPin
 
 
 class StudyBrief(StrictModel):
@@ -230,12 +231,26 @@ class StudyRequestV4(StudyRequestV3):
             "calibration_adapter_sha256": self.calibration.adapter_sha256}})
 
 
+class StudyRequestV5(StudyRequestV3):
+    schema_version: Literal["rival.study-request.v5"] = "rival.study-request.v5"
+    calibration: CalibrationPin | None = None
+    uncertainty: UncertaintyPin
+
+    def scenario(self):
+        scenario = super().scenario()
+        metadata = {**scenario.metadata, "uncertainty_assessment_sha256": self.uncertainty.assessment_sha256}
+        if self.calibration:
+            metadata["calibration_adapter_sha256"] = self.calibration.adapter_sha256
+        return scenario.model_copy(update={"metadata": metadata})
+
+
 def parse_study_request(payload):
     if not isinstance(payload, dict):
         raise ValueError("study input must be a JSON object")
     model = {"rival.study-request.v2": StudyRequestV2,
              "rival.study-request.v3": StudyRequestV3,
-             "rival.study-request.v4": StudyRequestV4}.get(payload.get("schema_version"), StudyRequest)
+             "rival.study-request.v4": StudyRequestV4,
+             "rival.study-request.v5": StudyRequestV5}.get(payload.get("schema_version"), StudyRequest)
     return model.model_validate(payload)
 
 

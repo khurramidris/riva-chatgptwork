@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/a3e0fea917db/rival-l11/scripts/run_uncertainty_rehearsal.py", line 144, in <module>
+    print(json.dumps(rehearse(args.workspace, args.output), indent=2, sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a3e0fea917db/rival-l11/scripts/run_uncertainty_rehearsal.py", line 116, in rehearse
+    run_and_evaluate(path, shift=shift, report_name=name)
+  File "/workspace/scratch/a3e0fea917db/rival-l11/scripts/run_uncertainty_rehearsal.py", line 85, in run_and_evaluate
+    evaluate_study(path, vault.path, key_material=key)
+  File "/workspace/scratch/a3e0fea917db/rival-l11/rival/study_workflow.py", line 495, in evaluate_study
+    workspace.manager.record_evaluation(study_id, evaluation)
+  File "/workspace/scratch/a3e0fea917db/rival-l11/rival/integrity.py", line 505, in record_evaluation
+    self._validate_evaluation(sealed, evaluation, observed)
+  File "/workspace/scratch/a3e0fea917db/rival-l11/rival/integrity.py", line 482, in _validate_evaluation
+    raise IntegrityError("evaluation outcomes differ from the authenticated reveal")
+rival.integrity.IntegrityError: evaluation outcomes differ from the authenticated reveal

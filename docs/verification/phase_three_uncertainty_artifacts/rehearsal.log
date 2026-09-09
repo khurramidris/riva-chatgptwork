@@ -1,0 +1,26 @@
+{
+  "customer_qualified": false,
+  "http_fixture_calls": 516,
+  "real_llm_calls": 0,
+  "statistical_gates_passed": true,
+  "target_comparisons": {
+    "changed-process": {
+      "bad_candidate_acceptance": true,
+      "candidate_accept": true,
+      "observed_tvd": 0.925,
+      "outcome_evidence_sha256": "41b1adb56d370e285056b323045d3fa9fc3c8bf324dc47d49e0e76db8d78cf8d",
+      "prediction_sha256": "c14277025c729eb0dc69b03286e813a1b19cccacba0a7e53d9742dc7bc13f9a6",
+      "refitted": false,
+      "research_bound_covered": false
+    },
+    "same-process": {
+      "bad_candidate_acceptance": false,
+      "candidate_accept": true,
+      "observed_tvd": 0.08000000000000002,
+      "outcome_evidence_sha256": "191e811e651f2b571c7899410581d1efcf042323137bf56415c789d6c6ff22a5",
+      "prediction_sha256": "918f9273d5b5d9f71cb2626a9397f86e7c907df77eb9717e91014d260eacfb60",
+      "refitted": false,
+      "research_bound_covered": true
+    }
+  }
+}

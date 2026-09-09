@@ -1,0 +1,175 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "degenerate_guard": {
+          "a": 0.5,
+          "b": 0.5
+        },
+        "pmf": {
+          "agree": 0.7990603147482073,
+          "disagree": 0.20093965063245828,
+          "neutral": 3.4619334451506334e-08
+        }
+      },
+      "name": "semantic_similarity_rating",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "bernstein": {
+          "confidence": 0.95,
+          "estimate": 0.5714285714285714,
+          "lower": -3.6826470451087125,
+          "method": "synthetic-bernstein",
+          "sample_size": 7,
+          "standard_error": 0.20203050891044214,
+          "upper": 4.825504187965855
+        },
+        "clt": {
+          "confidence": 0.95,
+          "estimate": 0.5714285714285714,
+          "lower": 0.011438861559984637,
+          "method": "synthetic-clt",
+          "sample_size": 7,
+          "standard_error": 0.20203050891044214,
+          "upper": 1.131418281297158
+        },
+        "hoeffding": {
+          "confidence": 0.95,
+          "estimate": 0.5714285714285714,
+          "lower": -0.15450722405139639,
+          "method": "synthetic-hoeffding",
+          "sample_size": 7,
+          "standard_error": 0.20203050891044214,
+          "upper": 1.297364366908539
+        }
+      },
+      "name": "uq_survey_numerical_parity",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "missing_after": 0,
+        "shape": [
+          4,
+          3
+        ]
+      },
+      "name": "syn_digits_full_component",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "confidence": 0.95,
+        "effective_sample_size": 12.0,
+        "estimate": 0.12,
+        "lower": 0.11999999999999998,
+        "method": "paired-srct",
+        "pairs": 12,
+        "raw_effect": 0.09999999999999998,
+        "residual_adjustment": 0.020000000000000018,
+        "standard_error": 4.1843104616990316e-18,
+        "upper": 0.12000000000000001
+      },
+      "name": "paired_srct_and_preperiod",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "converged": true,
+        "decision": {
+          "candidates": [
+            {
+              "expected_demand": 500.0,
+              "expected_revenue": 3000.0,
+              "lower_tail_revenue": 2841.72,
+              "price": 10.0,
+              "purchase_probability": 0.5,
+              "score": 3000.0
+            },
+            {
+              "expected_demand": 400.0,
+              "expected_revenue": 3200.0,
+              "lower_tail_revenue": 2982.56,
+              "price": 12.0,
+              "purchase_probability": 0.4,
+              "score": 3200.0
+            },
+            {
+              "expected_demand": 250.0,
+              "expected_revenue": 2750.0,
+              "lower_tail_revenue": 2513.28,
+              "price": 15.0,
+              "purchase_probability": 0.25,
+              "score": 2750.0
+            }
+          ],
+          "expected_demand": 400.0,
+          "expected_revenue": 3200.0,
+          "lower_tail_revenue": 2982.56,
+          "price": 12.0,
+          "purchase_probability": 0.4,
+          "score": 3200.0
+        },
+        "probabilities": [
+          0.15798269354413547,
+          0.17194872198252253,
+          0.15385501620550052
+        ]
+      },
+      "name": "persona_demand_and_pricing",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "history": 2,
+        "person_id": "p1",
+        "protected": "rejected"
+      },
+      "name": "interview_grounded_personas",
+      "status": "PASS"
+    },
+    {
+      "detail": [
+        {
+          "configuration_sha256": "278f5e38cf9e1a5e82e9b16766f46af0d122f637fc83650c28b0d80e1bf06324",
+          "endpoint_sha256": "ca39f607eec8026e331be423f3fab82789a58422535fbb48fc331612657e0b18",
+          "model": "socius-org/Centauri@test-centauri-revision",
+          "provider_name": "centauri",
+          "provider_version": "1"
+        },
+        {
+          "configuration_sha256": "e93f92a98ebd9582d23c2fbdb6ebaf7cfda383de57044206353437a34b94cb95",
+          "endpoint_sha256": "ca39f607eec8026e331be423f3fab82789a58422535fbb48fc331612657e0b18",
+          "model": "Socrates@test-socrates-revision",
+          "provider_name": "socrates",
+          "provider_version": "1"
+        }
+      ],
+      "name": "behavioral_model_adapters",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "source": {
+          "component": "Twin-2K-500 Mega Study MAD evaluation",
+          "integration": "vendored-wrapper",
+          "upstream_commit": "afe2bb933fce377ed196f441a4c12962cb55a53a"
+        },
+        "summary": [
+          0.85,
+          0.065,
+          0.645,
+          1.055
+        ]
+      },
+      "name": "twin2k_official_mad",
+      "status": "PASS"
+    }
+  ],
+  "report_sha256": "5ed1f2226de185d04d2e269bee7108046e5afce25a92646b91b4fb80e7fc481d",
+  "schema_version": "rival.research-integration-qualification.v1",
+  "scope": "component wiring and numerical parity; not external predictive or causal validity",
+  "status": "PASS"
+}

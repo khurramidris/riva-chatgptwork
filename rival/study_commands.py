@@ -8,7 +8,7 @@ from pathlib import Path
 import sqlite3
 import sys
 
-from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, StudyRequestV4, load_study_request
+from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, StudyRequestV4, StudyRequestV5, load_study_request
 from .study_execution_audit import audit_study_execution, compare_studies
 from .study_evidence import bind_evidence
 from .study_support import UnsupportedStudy
@@ -50,7 +50,7 @@ def main(argv=None):
         command = commands.add_parser(name, help=f"write the study {name}")
         command.add_argument("--output", type=Path, required=True)
         if name == "schema":
-            command.add_argument("--version", choices=("v1", "v2", "v3", "v4"), default="v4")
+            command.add_argument("--version", choices=("v1", "v2", "v3", "v4", "v5"), default="v5")
     bind = commands.add_parser("bind-evidence", help="bind verified imports and a support policy to a study brief")
     for name in ("input", "catalog", "support", "output"):
         bind.add_argument("--" + name, type=Path, required=True)
@@ -60,10 +60,12 @@ def main(argv=None):
     prepare.add_argument("--workspace", type=Path, required=True)
     prepare.add_argument("--catalog", type=Path)
     prepare.add_argument("--calibration-catalog", type=Path)
+    prepare.add_argument("--uncertainty-catalog", type=Path)
     check = commands.add_parser("check", help="inspect evidence and audience support without executing or saving a study")
     check.add_argument("--input", type=Path, required=True)
     check.add_argument("--catalog", type=Path)
     check.add_argument("--calibration-catalog", type=Path)
+    check.add_argument("--uncertainty-catalog", type=Path)
     for name in ("run", "status", "export", "evaluate", "execution-audit", "compare-runs"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", type=Path, required=True)
@@ -76,7 +78,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command in {"example", "schema"}:
-            model = {"v1": StudyRequest, "v2": StudyRequestV2, "v3": StudyRequestV3, "v4": StudyRequestV4}.get(getattr(args, "version", None), StudyRequestV4)
+            model = {"v1": StudyRequest, "v2": StudyRequestV2, "v3": StudyRequestV3, "v4": StudyRequestV4, "v5": StudyRequestV5}.get(getattr(args, "version", None), StudyRequestV4)
             payload = example_request() if args.command == "example" else model.model_json_schema()
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with args.output.open("x", encoding="utf-8") as handle:
@@ -91,10 +93,10 @@ def main(argv=None):
             result = {"output": str(args.output.resolve()), "study_id": request.brief.study_id}
         elif args.command == "prepare":
             result = prepare_study(args.workspace, load_study_request(args.input), catalog_root=args.catalog,
-                                   calibration_catalog_root=args.calibration_catalog)
+                                   calibration_catalog_root=args.calibration_catalog, uncertainty_catalog_root=args.uncertainty_catalog)
         elif args.command == "check":
             result = check_study(load_study_request(args.input), catalog_root=args.catalog,
-                                 calibration_catalog_root=args.calibration_catalog)
+                                 calibration_catalog_root=args.calibration_catalog, uncertainty_catalog_root=args.uncertainty_catalog)
         elif args.command == "run":
             result = run_study(args.workspace)
         elif args.command == "status":

@@ -1,0 +1,1396 @@
+{
+  "api_cost_usd": 0,
+  "assessment": {
+    "assessment_sha256": "a743b942e019a4610814df473485676a44ec75e4d9884ee3e83b0a1f4b0f27cb"
+  },
+  "bound": {
+    "bound_sha256": "b2f88780761ba49495c806d355083048cf16c4699b06af5ee1f5d099de70e53a"
+  },
+  "created_at": "2026-09-09T03:26:03.058235+00:00",
+  "elapsed_seconds": 48.91847749000044,
+  "evaluation": {
+    "acceptance_rate": 1.0,
+    "accepted_groups": 60,
+    "accepted_mean_tvd": 0.08000000000000002,
+    "bad_acceptance_rate_upper": 0.06596285901656822,
+    "bad_accepted_groups": 0,
+    "coverage_lower": 0.9340371409834317,
+    "coverage_rate": 1.0,
+    "covered_groups": 60,
+    "failed_groups": 0,
+    "failure_rate_upper": 0.06596285901656822,
+    "gates": {
+      "accepted_error_risk": true,
+      "coverage": true,
+      "failure_rate": true
+    },
+    "interpretation": "fixed-policy study-level evidence; exchangeability and semantic independence are assumptions",
+    "mean_tvd": 0.08000000000000002,
+    "per_gate_tail_error": 0.016666666666666666,
+    "planned_groups": 60,
+    "rows": [
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      {
+        "bad_acceptance": false,
+        "candidate_accept": true,
+        "covered": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "observed_tvd": 0.08000000000000002,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      }
+    ],
+    "scored_groups": 60,
+    "statistical_gates_passed": true
+  },
+  "fit": {
+    "fit_sha256": "088d89f473f17b368a36e2c49673abf916752bee781617fe887875e755751344"
+  },
+  "http_fixture_calls": 516,
+  "plan": {
+    "groups": {
+      "calibration": 19,
+      "evaluation": 60,
+      "training": 5
+    },
+    "plan_sha256": "5024a304ed1697bf23bae2700abfe01ca38a5f36f7efecddd146eb833e5c4211"
+  },
+  "real_llm_calls": 0,
+  "record_sha256": "b9f1705d52c9c86aabc4a9fab7d987b8b089c203b979375bab0e3901789c6048",
+  "schema_version": "rival.uncertainty-rehearsal.v1",
+  "scope": "generated independent engineering fixtures; no human accuracy or domain qualification",
+  "studies": [
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l11-training-00"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l11-training-01"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l11-training-02"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l11-training-03"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "training",
+      "study_id": "l11-training-04"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-00"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-01"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-02"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-03"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-04"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-05"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-06"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-07"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-08"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-09"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-10"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-11"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-12"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-13"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-14"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-15"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-16"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-17"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "calibration",
+      "study_id": "l11-calibration-18"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-00"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-01"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-02"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-03"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-04"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-05"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-06"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-07"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-08"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-09"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-10"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-11"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-12"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-13"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-14"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-15"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-16"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-17"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-18"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-19"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-20"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-21"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-22"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-23"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-24"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-25"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-26"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-27"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-28"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-29"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-30"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-31"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-32"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-33"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-34"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-35"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-36"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-37"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-38"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-39"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-40"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-41"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-42"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-43"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-44"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-45"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-46"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-47"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-48"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-49"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-50"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-51"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-52"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-53"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-54"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-55"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-56"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-57"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-58"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-evaluation-59"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-same-process"
+    },
+    {
+      "completed_draws": 40,
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "role": "evaluation",
+      "study_id": "l11-changed-process"
+    }
+  ],
+  "target_comparisons": {
+    "changed-process": {
+      "bad_candidate_acceptance": true,
+      "candidate_accept": true,
+      "observed_tvd": 0.925,
+      "outcome_evidence_sha256": "41b1adb56d370e285056b323045d3fa9fc3c8bf324dc47d49e0e76db8d78cf8d",
+      "prediction_sha256": "c14277025c729eb0dc69b03286e813a1b19cccacba0a7e53d9742dc7bc13f9a6",
+      "refitted": false,
+      "research_bound_covered": false
+    },
+    "same-process": {
+      "bad_candidate_acceptance": false,
+      "candidate_accept": true,
+      "observed_tvd": 0.08000000000000002,
+      "outcome_evidence_sha256": "191e811e651f2b571c7899410581d1efcf042323137bf56415c789d6c6ff22a5",
+      "prediction_sha256": "918f9273d5b5d9f71cb2626a9397f86e7c907df77eb9717e91014d260eacfb60",
+      "refitted": false,
+      "research_bound_covered": true
+    }
+  }
+}

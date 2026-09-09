@@ -12,7 +12,7 @@ from .readiness import release_claims
 
 
 def build_study_report(request, prepared, simulation, sealed, accounting, evaluation=None, *, model_execution=None,
-                       calibration=None, calibration_comparison=None):
+                       calibration=None, calibration_comparison=None, uncertainty=None, uncertainty_comparison=None):
     claims = release_claims()
     claims["release"] = prepared["release"]
     reference = request.brief.choices[0].choice_id
@@ -88,6 +88,12 @@ def build_study_report(request, prepared, simulation, sealed, accounting, evalua
         warnings.append("Calibration was fitted only to its declared reference training groups. New-question support and improvement are unqualified.")
         if not calibration["fit_diagnostics"]["converged"]:
             warnings.append("Calibration reached its iteration limit before the declared simplex-gap tolerance; inspect fit diagnostics.")
+    if "uncertainty" in prepared:
+        if uncertainty is None:
+            raise ValueError("uncertainty prediction evidence is missing")
+        report["schema_version"] = "rival.study-report.v5"
+        report["uncertainty"] = {"prediction": uncertainty, "comparison": uncertainty_comparison}
+        report["confidence"] = uncertainty["confidence"]
     return report
 
 
@@ -160,6 +166,21 @@ def study_markdown(report):
             lines.append(f"\nTVD reduction versus raw: {comparison['tvd_reduction_vs_raw']:+.4f}. A negative value means calibration made this study worse.")
         else:
             lines.append("\nNo protected outcome comparison yet; these adjustments are not evidence of better accuracy.")
+    if "uncertainty" in report:
+        prediction = report["uncertainty"]["prediction"]
+        research = prediction["research_assessment"]
+        counts = prediction["evidence_counts"]
+        lines.extend(["", "## Reliability research", "",
+            f"Estimated error: {research['expected_tvd']:.4f} TVD. Research error range: [0, {research['upper_tvd']:.4f}].",
+            f"This assesses the {prediction['prediction_kind']} distribution using {counts['training']} training, {counts['calibration']} calibration and {counts['evaluation']} evaluation study groups.",
+            f"Candidate policy would accept: {research['candidate_accept']}. Held-out statistical gates passed: {prediction['statistical_gates_passed']}.",
+            "Customer decision support: abstain. Untouched domain qualification remains pending.",
+            "The research bound assumes comparable independent studies. It does not guarantee accuracy for a specific person, subgroup or changed market."])
+        for reason in prediction["confidence"]["reason_codes"]:
+            lines.append("- " + _text(reason.replace("_", " ")))
+        comparison = report["uncertainty"]["comparison"]
+        if comparison:
+            lines.append(f"Observed error: {comparison['observed_tvd']:.4f}. Research bound covered it: {comparison['research_bound_covered']}. No refitting occurred.")
     lines.extend(["", "## Limitations", "", *["- " + _text(item) for item in report["limitations"]],
         "", f"Study: {_text(report['study_id'])}. Input fingerprint: `{report['request_sha256']}`.", ""])
     return "\n".join(lines)

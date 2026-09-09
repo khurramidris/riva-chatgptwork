@@ -1,7 +1,7 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Current version: `0.6.0.dev8`. Branch: `codex/phase-two-calibration`.
+Current version: `0.6.0.dev9`. Branch: `codex/phase-three-uncertainty`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
@@ -11,8 +11,9 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
 Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
 Phase two is L07–L10. All four are implemented and locally verified:
-**10 of 14 engineering tasks complete; 4 later tasks pending** as of 2026-09-08. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
-and [latest verification record](verification/phase_two_calibration.json). Statistical
+**11 of 14 engineering tasks complete; 3 later tasks pending** as of 2026-09-09.
+L11 adds protected uncertainty experiments and v5 reports; human-domain qualification remains L12. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [latest verification record](verification/phase_three_uncertainty.json). Statistical
 qualification and customer launch remain later gates.
 
 ## Delivery board
@@ -29,7 +30,7 @@ qualification and customer launch remain later gates.
 | L08 Public evidence and population support | Complete, locally verified | Replayable pinned CSV/JSONL imports; v2 evidence binding; cutoff, geography, condition and subgroup checks; effective counts; 2,058-row public demographic import rehearsal |
 | L09 Model execution and elicitation | Complete engineering milestone, locally verified | Pinned v3 execution, fair SSR ties, 196 tests and two real local SSR runs/repeat/recovery; small-model direct probabilities correctly rejected; no production accuracy claim |
 | L10 Runtime calibration | Complete engineering milestone, locally verified | Signed training banks; model/evidence/panel binding; v4 prediction seals and protected comparisons; SYN-DIGITS objective parity; 215 tests and retrospective public-data comparison |
-| L11 Qualified uncertainty and abstention | Pending | Independent study-level training, untouched calibration/evaluation splits, coverage and selective-risk tests |
+| L11 Qualified uncertainty and abstention | Complete engineering milestone; customer qualification remains L12 | Frozen study roster; separate ridge/conformal/evaluation stages; finite-sample coverage and selective-risk gates; v5 reports; generated rehearsal; customer confidence still abstains |
 | L12 Frozen qualification | Pending | Relevant untouched public data, classical baselines, missingness and failure denominators, operational measurements |
 | L13 Operator interface and reports | Pending | Complete study-to-report flow, uncertainty and unsupported-use presentation |
 | L14 Delivery rehearsal and launch | Pending | Access controls, backup/recovery, cost/turnaround measurements and bounded pilot terms |
@@ -209,3 +210,21 @@ matched exactly in the fresh SSR repeat. API cost was zero, with no assertion of
 zero computing cost or production provider qualification. All 68 protected files
 and completed v1/v2 example exports are unchanged. See the
 [model execution guide](MODEL_EXECUTION.md) and [verification record](verification/phase_two_model_execution.json).
+
+## L11 uncertainty milestone
+
+The [runtime uncertainty guide](RUNTIME_UNCERTAINTY.md) describes the new prospective
+cohort workflow. It freezes settings and every study group before execution, keeps
+training/calibration/evaluation separate, counts failures, and binds the resulting
+research assessment to a v5 target before outcomes. Public research reports retain
+missed bounds and harmful candidate acceptances. No generated test can unlock
+customer confidence. A valid integer-valued outcome PMF now compares numerically
+with the typed evaluation while its original vault receipt remains unchanged;
+booleans, strings and altered probabilities still fail.
+
+Verification passes 235 tests and 17 isolated installed-wheel checks. All 68
+protected files and completed v1–v4 example exports are unchanged.
+
+L12 is next: freeze a relevant untouched public-evidence qualification, compare
+strong baselines and measure error, coverage, abstention, failures, cost and time.
+L13–L14 complete the operator GUI and delivery rehearsal.

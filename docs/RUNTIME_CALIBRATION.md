@@ -8,7 +8,8 @@ the same authenticated outcomes score every method.
 L10's engineering milestone is complete in `0.6.0.dev8`. Calibration remains
 research output. Fitted weights and historical scores do not establish customer
 accuracy, individual fidelity, qualified uncertainty or launch readiness.
-L11–L14 remain: uncertainty, untouched qualification, operator GUI and delivery.
+L11 now adds [study-level uncertainty experiments](RUNTIME_UNCERTAINTY.md).
+L12–L14 remain: untouched qualification, operator GUI and delivery.
 
 ## Supported boundary
 

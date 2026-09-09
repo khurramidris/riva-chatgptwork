@@ -38,7 +38,7 @@ are retained. No current provider or customer accuracy claim follows.
 
 See [runtime calibration](RUNTIME_CALIBRATION.md), [the verification record](verification/phase_two_calibration.json)
 and [the generated example](examples/calibration/held-out-benefit/report.md).
-L11 is next: qualified uncertainty and abstention using separate evidence groups.
+L11 engineering is now implemented: [study-level uncertainty and abstention](RUNTIME_UNCERTAINTY.md). L12 untouched domain qualification is next.
 
 ## Third increment: pinned model execution and elicitation
 

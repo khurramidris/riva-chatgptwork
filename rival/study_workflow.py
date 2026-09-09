@@ -24,7 +24,7 @@ from .providers import HeuristicChoiceProvider, OpenAICompatibleProvider
 from .schemas import (EvaluationResult, PredictionContext, SealedStudyManifest,
                       SimulationResult, utc_now)
 from .store import EvidenceStore
-from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, StudyRequestV4, parse_study_request
+from .study_contract import StudyRequest, StudyRequestV2, StudyRequestV3, StudyRequestV5, parse_study_request
 from .study_evidence import verify_imports
 from .study_support import require_support, validate_filters
 from .version import __version__
@@ -271,9 +271,12 @@ class _Workspace:
         if (not self.manager.verify(sealed) or canonical_hash(sealed) != completed["manifest_sha256"]
                 or snapshot["digest"] != completed["journal_sha256"]):
             raise IntegrityError("completed study or accounting no longer verifies")
-        if isinstance(self.request, StudyRequestV4):
+        if getattr(self.request, "calibration", None) is not None:
             from .study_calibration import verify_calibrated_prediction
             verify_calibrated_prediction(self, result, completed)
+        if isinstance(self.request, StudyRequestV5):
+            from .study_uncertainty import verify_uncertainty_prediction
+            verify_uncertainty_prediction(self, result, completed)
         return result, sealed
 
     def status(self, snapshot):
@@ -310,7 +313,7 @@ def _workspace(root):
             workspace.close()
 
 
-def check_study(request, *, catalog_root=None, calibration_catalog_root=None):
+def check_study(request, *, catalog_root=None, calibration_catalog_root=None, uncertainty_catalog_root=None):
     """Run the same no-call checks as preparation, without creating a workspace."""
     json.dumps(request.model_dump(mode="python"), default=str, allow_nan=False)
     request = parse_study_request(request.model_dump(mode="json"))
@@ -318,16 +321,19 @@ def check_study(request, *, catalog_root=None, calibration_catalog_root=None):
         raise ValueError("new studies with human/public/licensed evidence require a v2 request and verified catalog imports")
     imports = verify_imports(request, catalog_root)
     plan = _make_plan(request)
-    if isinstance(request, StudyRequestV4):
+    if getattr(request, "calibration", None) is not None:
         from .calibration_catalog import bind_calibration
-        bind_calibration(request, plan, calibration_catalog_root)
+        plan["calibration"] = bind_calibration(request, plan, calibration_catalog_root)
+    if isinstance(request, StudyRequestV5):
+        from .uncertainty_catalog import bind_uncertainty
+        bind_uncertainty(request, plan, uncertainty_catalog_root)
     return {"schema_version": "rival.study-check.v1", "study_id": request.brief.study_id,
             "passed": True, "planned_draws": plan["planned_draws"],
             "support_audit": plan.get("support_audit"), "import_verification": imports,
             "scope": "engineering checks; predictive accuracy remains unqualified"}
 
 
-def prepare_study(root, request: StudyRequest, *, catalog_root=None, calibration_catalog_root=None):
+def prepare_study(root, request: StudyRequest, *, catalog_root=None, calibration_catalog_root=None, uncertainty_catalog_root=None):
     json.dumps(request.model_dump(mode="python"), default=str, allow_nan=False)
     request = parse_study_request(request.model_dump(mode="json"))
     root = Path(root).resolve()
@@ -345,9 +351,12 @@ def prepare_study(root, request: StudyRequest, *, catalog_root=None, calibration
             raise ValueError("new studies with human/public/licensed evidence require a v2 request and verified catalog imports")
         imported = verify_imports(request, catalog_root)
         plan = _make_plan(request)  # Validate all provider-visible inputs without calls.
-        if isinstance(request, StudyRequestV4):
+        if getattr(request, "calibration", None) is not None:
             from .calibration_catalog import bind_calibration
             plan["calibration"] = bind_calibration(request, plan, calibration_catalog_root)
+        if isinstance(request, StudyRequestV5):
+            from .uncertainty_catalog import bind_uncertainty
+            plan["uncertainty"] = bind_uncertainty(request, plan, uncertainty_catalog_root)
         if imported is not None:
             plan["import_verification"] = imported
         root.mkdir(parents=True)
@@ -415,9 +424,12 @@ def run_study(root, *, api_key=None):
                     provider.prepare_local(scenario)
                 result = engine.simulate(workspace.request.audience.records, scenario,
                     workspace.request.audience.targets, locked_context=locked)
-            if isinstance(workspace.request, StudyRequestV4):
+            if getattr(workspace.request, "calibration", None) is not None:
                 from .study_calibration import calibrated_prediction
                 workspace.put("calibrated_prediction", calibrated_prediction(workspace, result))
+            if isinstance(workspace.request, StudyRequestV5):
+                from .study_uncertainty import uncertainty_prediction
+                workspace.put("uncertainty_prediction", uncertainty_prediction(workspace, result))
             sealed = workspace.seal(result)
             snapshot = workspace.journal_snapshot(session)
             if session is not None and (snapshot["accounting"]["unresolved_attempts"]
@@ -428,8 +440,10 @@ def run_study(root, *, api_key=None):
                 from .study_execution_audit import execution_audit
                 workspace.put("model_execution_evidence", execution_audit(workspace, snapshot, result))
             calibration_seal = ({"calibration_sha256": canonical_hash(workspace.read("calibrated_prediction", required=True))}
-                                if isinstance(workspace.request, StudyRequestV4) else {})
-            workspace.put("completed", {**calibration_seal, "simulation_sha256": canonical_hash(result),
+                                if getattr(workspace.request, "calibration", None) is not None else {})
+            uncertainty_seal = ({"uncertainty_sha256": canonical_hash(workspace.read("uncertainty_prediction", required=True))}
+                                if isinstance(workspace.request, StudyRequestV5) else {})
+            workspace.put("completed", {**calibration_seal, **uncertainty_seal, "simulation_sha256": canonical_hash(result),
                 "manifest_sha256": canonical_hash(sealed), "journal_sha256": snapshot["digest"],
                 "accounting": snapshot["accounting"]})
             workspace.event("complete")
@@ -483,9 +497,12 @@ def evaluate_study(root, vault_path, *, key_material):
             ConfidenceEvidenceRegistry(workspace.manager).admit(study_id)
         if not workspace.manager.verify(sealed):
             raise IntegrityError("evaluated study no longer verifies")
-        if isinstance(workspace.request, StudyRequestV4):
+        if getattr(workspace.request, "calibration", None) is not None:
             from .study_calibration import calibration_comparison
             workspace.put("calibration_comparison", calibration_comparison(workspace, result, sealed))
+        if isinstance(workspace.request, StudyRequestV5):
+            from .study_uncertainty import uncertainty_comparison
+            workspace.put("uncertainty_comparison", uncertainty_comparison(workspace, result, sealed))
         return workspace.status(workspace.journal_snapshot(session))
 
 
@@ -499,7 +516,7 @@ def export_study(root, output):
         if event["to_phase"] == "evaluated":
             evaluation = workspace.store.phase_evidence(event["payload_sha256"])["payload"]
         calibration, comparison = None, None
-        if isinstance(workspace.request, StudyRequestV4):
+        if getattr(workspace.request, "calibration", None) is not None:
             from .study_calibration import calibration_comparison, verify_calibrated_prediction
             calibration = verify_calibrated_prediction(workspace, result, workspace.read("completed", required=True))
             if evaluation is not None:
@@ -507,8 +524,18 @@ def export_study(root, output):
                 saved = workspace.read("calibration_comparison")
                 if saved is not None and canonical_hash(saved) != canonical_hash(comparison):
                     raise IntegrityError("calibration comparison changed")
+        uncertainty, uncertainty_evaluation = None, None
+        if isinstance(workspace.request, StudyRequestV5):
+            from .study_uncertainty import uncertainty_comparison, verify_uncertainty_prediction
+            uncertainty = verify_uncertainty_prediction(workspace, result, workspace.read("completed", required=True))
+            if evaluation is not None:
+                uncertainty_evaluation = uncertainty_comparison(workspace, result, sealed)
+                saved = workspace.read("uncertainty_comparison")
+                if saved is not None and canonical_hash(saved) != canonical_hash(uncertainty_evaluation):
+                    raise IntegrityError("uncertainty comparison changed")
         report = build_study_report(workspace.request, workspace.prepared, result, sealed,
                                     snapshot["accounting"], evaluation,
                                     model_execution=workspace.read("model_execution_evidence"),
-                                    calibration=calibration, calibration_comparison=comparison)
+                                    calibration=calibration, calibration_comparison=comparison,
+                                    uncertainty=uncertainty, uncertainty_comparison=uncertainty_evaluation)
         return export_report(report, output, workspace.root)

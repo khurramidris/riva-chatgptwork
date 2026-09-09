@@ -1,0 +1,136 @@
+{
+  "benchmark": "Twin-2K longitudinal individual response prediction",
+  "claim_scope": "Wave-4 response prediction for the released Twin-2K panel and mapped behavioral questions; not a population-representative universal twin claim.",
+  "dataset": {
+    "evaluated_questions": 126,
+    "license": "CC BY 4.0",
+    "mapped_questions": 126,
+    "source_hashes": {
+      "human_history.csv": "9481ceb03edeae4aac3a93079554c1e34b9e8f2ca23bd6e8e98572a14d186887",
+      "human_outcomes.csv": "ace9258a2029f36283a61b6066aa8c9d59458fedefaac0afcbbe7797f4a3aaea",
+      "llm_predictions.csv": "22937217115db30c064489125e39ceb0539c461b678400d8b3e0827962e5436c",
+      "question_catalog.json": "e72e305f0c7c83bb990e97de4c0cf2c718ead18cc197239b7feeb354c9ac1bef",
+      "wave4_mapping.json": "345f7f6645f80dc23bcb423a9bb7c5ae77dbbd17fe572472fdfeb252bdcfc2c7"
+    },
+    "twins": 2058
+  },
+  "generated_at": "2026-09-09T03:25:42.936781+00:00",
+  "limitations": [
+    "The direct released-LLM benchmark may be retest-grounded and is labeled accordingly.",
+    "The transfer model is a research baseline, not yet a production personalization model.",
+    "Family grouping is lexical/metadata-based and cannot guarantee causal independence.",
+    "Some continuous responses are sparse or heavy-tailed; normalized MAE uses each outcome's 5th\u201395th percentile span.",
+    "Twin-2K is a longitudinal research panel, not a representative customer sample."
+  ],
+  "metrics": {
+    "categorical": {
+      "direct_released_llm": {
+        "mean_accuracy": 0.5411458724329086,
+        "mean_distribution_tvd": 0.27970118317757436
+      },
+      "human_test_retest": {
+        "mean_accuracy": 0.6861023116827288,
+        "mean_distribution_tvd": 0.024824355130657193
+      },
+      "leakage_safe_transfer": {
+        "mean_accuracy": 0.43992436550115216,
+        "mean_distribution_tvd": 0.24416528704021795
+      },
+      "population_baseline": {
+        "mean_accuracy": 0.5282652117717594,
+        "mean_distribution_tvd": 0.47173478822824044
+      }
+    },
+    "categorical_questions": 108,
+    "continuous": {
+      "direct_released_llm": {
+        "mean_normalized_mae": 0.3522131448244198,
+        "mean_spearman": 0.05605572699407503
+      },
+      "human_test_retest": {
+        "mean_normalized_mae": 0.22301756135696005,
+        "mean_spearman": 0.5108527386004115
+      },
+      "leakage_safe_transfer": {
+        "mean_normalized_mae": 0.656200469331729,
+        "mean_spearman": 0.08949280761123607
+      },
+      "population_baseline": {
+        "mean_normalized_mae": 0.2545588249064632,
+        "mean_spearman": null
+      }
+    },
+    "continuous_questions": 18,
+    "heldout_human_anchor": {
+      "anchor_size": 80,
+      "categorical": {
+        "historical_distribution_tvd": {
+          "mean": 0.025365499164159068,
+          "median": 0.01870576339737111,
+          "p90": 0.052933171470441284
+        },
+        "human_anchor_only_tvd": {
+          "mean": 0.06230374469372628,
+          "median": 0.06024086079265331,
+          "p90": 0.11935507409070496
+        },
+        "hybrid_relative_mean_reduction_vs_raw": 0.7366931335672626,
+        "hybrid_win_rate_vs_human_anchor_only": 0.35185185185185186,
+        "hybrid_win_rate_vs_raw": 0.9814814814814815,
+        "prediction_powered_hybrid_tvd": {
+          "mean": 0.07352039420340876,
+          "median": 0.054967138523761394,
+          "p90": 0.15802578361981803
+        },
+        "questions": 108,
+        "raw_released_llm_tvd": {
+          "mean": 0.27921943396105775,
+          "median": 0.2103260595399722,
+          "p90": 0.5657637063547283
+        }
+      },
+      "continuous": {
+        "historical_normalized_mean_error": {
+          "mean": 0.022548360506339373,
+          "median": 0.017843865954731062,
+          "p90": 0.0355740714072095
+        },
+        "human_anchor_only_normalized_mean_error": {
+          "mean": 0.0334167576644966,
+          "median": 0.030153393720316737,
+          "p90": 0.05945080766264861
+        },
+        "prediction_powered_hybrid_normalized_mean_error": {
+          "mean": 0.03915090660095523,
+          "median": 0.042413612045184394,
+          "p90": 0.06162855067716717
+        },
+        "questions": 18,
+        "raw_released_llm_normalized_mean_error": {
+          "mean": 0.21676061441599503,
+          "median": 0.1569785938000937,
+          "p90": 0.37246350278792967
+        }
+      },
+      "interpretation": "The hybrid removes most released-model distribution bias, but in this repeated-question panel the human-only anchor and full historical distribution remain stronger baselines.",
+      "seed": 20260827,
+      "test_people_per_question": "all valid minus 80"
+    },
+    "mean_historical_distribution_tvd": 0.024824355130657193
+  },
+  "protocol": {
+    "direct_released_llm": "released GPT-4.1-mini imputation; may include target-history context",
+    "family_count": 18,
+    "family_manifest_sha256": "b8ca1b54fcbf515d07ec102772573927411c791647779c6f0993a378463fedf9",
+    "human_test_retest": "same person's wave-1/3 response to mapped item",
+    "leakage_safe_transfer": "fixed-alpha ridge trained only on released LLM cross-person response relationships, then applied to human history donors",
+    "outcome": "human wave-4 response",
+    "population_baseline": "wave-1/3 modal category or median value",
+    "ridge_alpha": 10.0,
+    "target_family_exclusion": "target item, same QuestionID, normalized block variants, and semantic siblings are excluded from every transfer donor matrix",
+    "wave4_used_for_training": false
+  },
+  "report_sha256": "fb41caee9d10a7432d7de14e42e97644b7efaaa3544d5a5e8656488e4f9887ea",
+  "schema_version": "rival.qualification.v1",
+  "status": "real-data, target-family-excluded transfer"
+}

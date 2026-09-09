@@ -1,0 +1,9 @@
+{
+  "files": {
+    "report.json": "f02954088a4ab2430938abd41cca3d794990c31a61c01c0c9bc3a49e0d7ac991",
+    "report.md": "734f096dc9c27687ec2e917fdb6d66175909260e8c789f0830dda543e90020c5"
+  },
+  "request_sha256": "3da14e587e81a2b554e5686f674dc0703819386ab759d75978d85c72fcd94cf5",
+  "schema_version": "rival.study-export.v1",
+  "study_id": "l11-same-process"
+}

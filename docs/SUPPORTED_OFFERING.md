@@ -26,7 +26,11 @@ anchors and outcomes; it is not yet the customer study interface.
 The `study` operator commands implement the first integrated workflow. Their
 reports contain raw simulated choice shares. The v4 contract adds calibration from
 compatible protected training studies, preserving both outputs and scoring them
-against the same outcomes. See [runtime calibration](RUNTIME_CALIBRATION.md). See [phase-two development](PHASE_TWO_DEVELOPMENT.md).
+against the same outcomes. See [runtime calibration](RUNTIME_CALIBRATION.md). The v5 contract adds a pinned
+research uncertainty assessment learned, calibrated and tested on separate study
+groups. Its candidate acceptance policy is evaluated explicitly; customer confidence
+continues to abstain pending L12. See [runtime uncertainty](RUNTIME_UNCERTAINTY.md)
+and [phase-two development](PHASE_TWO_DEVELOPMENT.md).
 
 The v2 study contract binds public/licensed/human inputs to verified local evidence
 imports and an explicit population support policy. Geography is applied to the

@@ -189,6 +189,51 @@ try:
             assert report['calibration']['comparison']['tvd_reduction_vs_raw'] > 0.3
             assert report['confidence']['label'] == 'unqualified'
     assert ModelHandler.calls == 30
+    # Freeze a whole cohort before any of its responses, then enforce ordering.
+    from rival.uncertainty_catalog import UncertaintyCatalog
+    uncertainty = UncertaintyCatalog('workflow-uncertainty')
+    groups = {role: [] for role in ('training', 'calibration', 'evaluation')}
+    for role, count in (('training', 5), ('calibration', 1), ('evaluation', 1)):
+        for i in range(count):
+            payload = model_requests['direct'].model_dump(mode='json')
+            identifier = 'installed-uq-' + role + '-' + str(i)
+            payload['brief'].update(study_id=identifier, question='Which plan fits ' + identifier + '?')
+            payload['evidence'].update(role=role, group_id=identifier)
+            prepare_study(identifier, parse_study_request(payload), catalog_root=catalog.root)
+            groups[role].append(identifier)
+    settings = {'max_tvd': 0.4, 'required_coverage': 0.8, 'max_bad_acceptance_rate': 0.1, 'max_failure_rate': 0.1}
+    plan = uncertainty.plan([w for partition in groups.values() for w in partition], settings)
+    for role, identifiers in groups.items():
+        for identifier in identifiers:
+            assert run_study(identifier, api_key='test-local-key')['complete']
+            with _workspace(identifier) as workspace, workspace.execution() as session:
+                _, sealed = workspace.require_complete(workspace.journal_snapshot(session))
+            vault = OutcomeVault(identifier + '-vault.sqlite3')
+            try:
+                vault.deposit(identifier, study_hash(sealed), {'distribution': {'standard': 0.5, 'flexible': 0.3, 'neither': 0.2},
+                    'source': 'Generated uncertainty fixture'}, 'installed-uq-key', utc_now() - timedelta(seconds=1))
+            finally:
+                vault.close()
+            evaluate_study(identifier, vault.path, key_material='installed-uq-key')
+        if role == 'training':
+            error_fit = uncertainty.fit(plan['plan_sha256'], identifiers)
+        elif role == 'calibration':
+            error_bound = uncertainty.calibrate(error_fit['fit_sha256'], identifiers)
+        else:
+            assessment = uncertainty.evaluate(error_bound['bound_sha256'], identifiers)
+    payload = model_requests['direct'].model_dump(mode='json')
+    payload.update(schema_version='rival.study-request.v5', uncertainty=assessment)
+    payload['brief'].update(study_id='installed-v5', question='Which plan fits the new use?', information_cutoff=utc_now().isoformat())
+    payload['evidence'].update(role='evaluation', group_id='installed-v5')
+    prepare_study('installed-v5', parse_study_request(payload), catalog_root=catalog.root, uncertainty_catalog_root=uncertainty.root)
+    assert run_study('installed-v5', api_key='test-local-key')['complete']
+    assert ModelHandler.calls == 78
+    assert run_study('installed-v5')['complete'] and ModelHandler.calls == 78
+    export_study('installed-v5', 'workflow-uncertainty-report')
+    report = json.loads(Path('workflow-uncertainty-report/report.json').read_text())
+    assert report['schema_version'] == 'rival.study-report.v5'
+    assert report['confidence']['abstain'] is True
+    assert report['uncertainty']['prediction']['research_assessment']['upper_tvd'] == 1
 finally:
     model_server.shutdown()
     model_server.server_close()
@@ -221,7 +266,8 @@ print(json.dumps({"status": "PASS", "version": __version__, "package_location": 
                              "study preparation, execution, recovery and report export",
                              "pinned evidence import, population support and v2 study execution",
                              "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery",
-                             "protected training bank, runtime calibration, v4 sealing and held-out comparison"]}))
+                             "protected training bank, runtime calibration, v4 sealing and held-out comparison",
+                             "prospective uncertainty cohort, independent stages, v5 seal/report and recovery"]}))
 '''
 
 

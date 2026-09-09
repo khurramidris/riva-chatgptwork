@@ -1,0 +1,394 @@
+{
+  "audience": {
+    "description": "Six generated example records; no real consumers represented.",
+    "effective_seed_records": 6.0,
+    "eligible_seed_records": 6,
+    "geography": [
+      "example-only"
+    ],
+    "input_seed_records": 6,
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "simulation_draws": 40,
+    "unique_sampled_seed_records": 6
+  },
+  "choices": [
+    {
+      "choice_id": "standard",
+      "difference_from_reference_pp": 0.0,
+      "label": "Standard delivery",
+      "simulated_share": 0.5249999999999999
+    },
+    {
+      "choice_id": "flexible",
+      "difference_from_reference_pp": -12.499999999999979,
+      "label": "Flexible delivery",
+      "simulated_share": 0.40000000000000013
+    },
+    {
+      "choice_id": "neither",
+      "difference_from_reference_pp": -44.999999999999986,
+      "label": "Neither plan",
+      "simulated_share": 0.07500000000000004
+    }
+  ],
+  "confidence": {
+    "abstain": true,
+    "label": "unqualified",
+    "lower_tvd": 0.0,
+    "reason_codes": [
+      "customer_domain_qualification_pending_L12"
+    ],
+    "upper_tvd": 1.0
+  },
+  "created_at": "2026-09-09T03:26:02.916829+00:00",
+  "decision": "Explore how two delivery plans compare in a generated audience.",
+  "evaluation": null,
+  "evidence": {
+    "assignment": {
+      "group_id": "l11-changed-process",
+      "role": "evaluation",
+      "source_reference": "Generated engineering example; no independent human evidence."
+    },
+    "excluded_history_entries": 0,
+    "import_verification": {
+      "bundle_sha256": [
+        "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977"
+      ],
+      "raw_bytes_and_conversion_verified": true,
+      "scope": "local source-byte and normalization verification; origin, rights and dates remain declarations"
+    },
+    "information_cutoff": "2026-09-09T03:26:02.501793+00:00",
+    "local_manifest_verified": true,
+    "manifest_sha256": "be54e8baad7e8bc0b9b426b670db2b21678cd7d61194520af335572d18d8ad13",
+    "protected_comparison_verified": false,
+    "retrieval_audit_sha256": "fe9cbdf159118548e4b28f3d7cd298d6039704327952e5b6f136e2b2823a2cbb",
+    "sources": [
+      {
+        "collected_at": "2026-08-01T00:00:00Z",
+        "geography": [
+          "example-only"
+        ],
+        "name": "Rival generated workflow example",
+        "permitted_uses": [
+          "simulation"
+        ],
+        "rights_reference": "Generated in Rival for testing.",
+        "sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "source_id": "generated-example",
+        "source_type": "synthetic"
+      }
+    ],
+    "verification_scope": "workspace-local signature and ledger; key custody and host clock remain trusted"
+  },
+  "execution": {
+    "accounting": {
+      "attempts": 6,
+      "known_cost_usd": 0.0,
+      "mode": "managed",
+      "reserved_usd": 0,
+      "total_cost_usd": 0.0,
+      "unresolved_attempts": 0
+    },
+    "measurements": {
+      "accepted_seed_requests": 6,
+      "accounting": {
+        "attempts": 6,
+        "known_cost_usd": 0.0,
+        "mode": "managed",
+        "reserved_usd": 0,
+        "total_cost_usd": 0.0,
+        "unresolved_attempts": 0
+      },
+      "attempt_outcomes": {
+        "DONE": 6
+      },
+      "audit_sha256": "32dc8925a4b2fe8dd92cc398bd1d75a991f6b366918d9d436b9475ecf7149903",
+      "complete": true,
+      "elicitation": {
+        "ssr_degenerate": 0,
+        "ssr_tied_maxima": 0,
+        "ssr_tied_minima": 0
+      },
+      "latency_scope": "client monotonic HTTP duration; excludes backoff, local embedding, setup and unreturned requests",
+      "planned_draws": 40,
+      "planned_seed_requests": 6,
+      "response_models": [
+        "generated-calibration-fixture"
+      ],
+      "response_providers": [],
+      "response_system_fingerprints": [],
+      "schema_version": "rival.model-execution-audit.v1",
+      "scope": "execution measurements, including billed failed attempts; no human-accuracy measurement",
+      "study_id": "l11-changed-process",
+      "tokens": {
+        "completion_tokens": {
+          "reported": 30.0,
+          "reporting_attempts": 6
+        },
+        "prompt_tokens": {
+          "reported": 60.0,
+          "reporting_attempts": 6
+        },
+        "total_tokens": {
+          "reported": 90.0,
+          "reporting_attempts": 6
+        }
+      },
+      "transport_latency_ms": {
+        "measured_attempts": 6,
+        "median": 1.3448569998217863,
+        "p95": 1.46607349961414,
+        "total": 8.043776999329566,
+        "unmeasured_attempts": 0
+      },
+      "unaccepted_seed_requests": 0
+    },
+    "mode": "managed",
+    "model_specification": {
+      "identity_scope": "declared revision with checked response metadata; remote weights are not independently attested",
+      "replication_scope": "journal replay reuses outputs; fresh repeatability requires a separately executed study",
+      "runtime": {
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.3.5",
+          "pydantic": "2.13.5"
+        },
+        "platform": "Linux",
+        "python": "3.12.14"
+      },
+      "schema_version": "rival.model-execution.v1",
+      "settings": {
+        "base_url": "http://127.0.0.1:40587/chat/completions",
+        "budget_usd": 1.0,
+        "elicitation": {
+          "embedding": null,
+          "epsilon": 1e-08,
+          "method": "direct",
+          "temperature": 1.0
+        },
+        "generation_seed": 42,
+        "history_limit": 16,
+        "max_attempts": 6,
+        "max_output_tokens": 300,
+        "max_retries": 1,
+        "mode": "managed",
+        "model": "generated-calibration-fixture",
+        "model_pin": {
+          "expected_response_model": "generated-calibration-fixture",
+          "expected_response_provider": null,
+          "expected_system_fingerprint": null,
+          "kind": "hosted_endpoint",
+          "provider_route": null,
+          "reference": "Generated loopback fixture; no model weights",
+          "revision": "generated-fixture-v1"
+        },
+        "not_after": "2026-09-09T04:26:02.501805Z",
+        "reservation_usd": 0.01,
+        "temperature": 0.2,
+        "timeout_seconds": 60
+      }
+    },
+    "provider": {
+      "configuration_sha256": "f040adfc9f512504c7caa06888b19cd9c2eab3dd3cecbd59e6b82a200cc8c595",
+      "endpoint_sha256": "c217acc1fa7f325a79ade966522c45893ed2f3061b95fb15c66e9393d44ec0f3",
+      "model": "generated-calibration-fixture",
+      "provider_name": "pinned-direct",
+      "provider_version": "1"
+    },
+    "sample_plan_sha256": "9f6b08ca60f4c65c950c0b9d29fc6d989b6e68550576be7de57e14e506d93bac"
+  },
+  "limitations": [
+    "This study includes generated audience records; it is an engineering demonstration.",
+    "Choice shares describe model outputs for the supplied audience; customer-domain accuracy is not established.",
+    "Resampled draws do not add independent people or human evidence.",
+    "Differences between choice shares are not causal effects of an intervention.",
+    "Source rights, dates, geography and independence are operator declarations, not independently verified facts.",
+    "Confidence remains unqualified; no decision-ready interval or recommendation is issued.",
+    "Declared support checks do not establish population representativeness or validate the scenario's meaning.",
+    "declared revision with checked response metadata; remote weights are not independently attested",
+    "journal replay reuses outputs; fresh repeatability requires a separately executed study"
+  ],
+  "question": "Which delivery plan fits l11-changed-process?",
+  "reference_choice_id": "standard",
+  "release_claims": {
+    "confidence_qualified": false,
+    "customer_launch_ready": false,
+    "decision_support_qualified": false,
+    "estimand": "aggregate choice shares for a declared audience and scenario",
+    "individual_fidelity_qualified": false,
+    "limitations": [
+      "Simulation draws are not independent human participants.",
+      "The bundled demo uses generated people, outcomes and anchors.",
+      "Historical benchmark results do not qualify the current release or a new audience."
+    ],
+    "mode": "research",
+    "offering": "supervised concept and message scenario comparisons",
+    "release": "0.6.0.dev9",
+    "required_evidence": "untouched relevant studies, classical baselines, coverage and operating measurements",
+    "schema_version": "rival.release-claims.v1"
+  },
+  "request_sha256": "1919bec5e6a62a13daa0213c83cd9d8da42afeb2ff2581f0f025b01a922f152f",
+  "run_id": "run_c9c1844df12f4124",
+  "runtime_release": "0.6.0.dev9",
+  "schema_version": "rival.study-report.v5",
+  "study_id": "l11-changed-process",
+  "support": {
+    "audit_sha256": "66e299730828f6a284420daf8b401a131cf034255e415ea3edf107eb15fbf4f0",
+    "cells": [
+      {
+        "effective_seed_records": 3.0,
+        "label": "Value segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      },
+      {
+        "effective_seed_records": 3.0,
+        "label": "Convenience segment",
+        "min_effective_seed_records": 1.0,
+        "min_seed_records": 3,
+        "passed": true,
+        "seed_records": 3
+      }
+    ],
+    "conditions": [
+      "grocery-delivery-plans"
+    ],
+    "effective_seed_records": 6.0,
+    "excluded_seed_records": 0,
+    "filtered_seed_records": 6,
+    "geography_counts": {
+      "example-only": 6
+    },
+    "input_seed_records": 6,
+    "issues": [],
+    "missing_attributes": {
+      "segment": 0
+    },
+    "passed": true,
+    "policy_sha256": "a60f70aaad24fdc62b92d02e516efa973853263e3d5aa659fef59a9478b3480d",
+    "population_diagnostics": {
+      "converged": true,
+      "effective_sample_ratio": 1.0,
+      "effective_sample_size": 6.0,
+      "iterations": 1,
+      "marginal_errors": {
+        "segment": {
+          "convenience": 0.0,
+          "value": 0.0
+        }
+      },
+      "max_absolute_margin_error": 0.0,
+      "unsupported_categories": {}
+    },
+    "positive_weight_seed_records": 6,
+    "schema_version": "rival.study-support.v1",
+    "scope": "declared source and seed support; not representativeness, semantic condition validation or predictive qualification",
+    "sources": [
+      {
+        "artifact_sha256": "5c812cb44efe1bd2ff6cea765c7a11758ce07b55aeac0aababac45003f9fca2d",
+        "bundle_sha256": "a52bcb29a6f32aa9a7b90801675f65b66e97fed2b55a3bb3d52a040d1eaba977",
+        "collected_at": "2026-08-01T00:00:00+00:00",
+        "conversion_spec_sha256": "85439a1daa00f70f03f0d1148429222291a37b6ae67856e37ed0e79a0ff949b2",
+        "importer_version": "rival.evidence-importer.v1",
+        "origin": "generated:Rival/evidence-example-v1",
+        "records_sha256": "dbb06ee01bd295b2397e7b07be771af8c7b19eb977d7737123438e7a6b0a77f5",
+        "released_at": "2026-08-02T00:00:00+00:00",
+        "retrieved_after_cutoff": false,
+        "retrieved_at": "2026-08-03T00:00:00+00:00",
+        "revision": "generated-example-v1",
+        "selected_for_audience": true,
+        "source_id": "generated-example"
+      }
+    ],
+    "warnings": []
+  },
+  "title": "Generated uncertainty rehearsal: l11-changed-process",
+  "uncertainty": {
+    "comparison": null,
+    "prediction": {
+      "assessment_sha256": "a743b942e019a4610814df473485676a44ec75e4d9884ee3e83b0a1f4b0f27cb",
+      "confidence": {
+        "abstain": true,
+        "label": "unqualified",
+        "lower_tvd": 0.0,
+        "reason_codes": [
+          "customer_domain_qualification_pending_L12"
+        ],
+        "upper_tvd": 1.0
+      },
+      "distribution": {
+        "flexible": 0.40000000000000013,
+        "neither": 0.07500000000000004,
+        "standard": 0.5249999999999999
+      },
+      "evidence_counts": {
+        "calibration": 19,
+        "evaluation": 60,
+        "training": 5
+      },
+      "held_out_metrics": {
+        "acceptance_rate": 1.0,
+        "accepted_groups": 60,
+        "accepted_mean_tvd": 0.08000000000000002,
+        "bad_acceptance_rate_upper": 0.06596285901656822,
+        "bad_accepted_groups": 0,
+        "coverage_lower": 0.9340371409834317,
+        "coverage_rate": 1.0,
+        "covered_groups": 60,
+        "failed_groups": 0,
+        "failure_rate_upper": 0.06596285901656822,
+        "gates": {
+          "accepted_error_risk": true,
+          "coverage": true,
+          "failure_rate": true
+        },
+        "interpretation": "fixed-policy study-level evidence; exchangeability and semantic independence are assumptions",
+        "mean_tvd": 0.08000000000000002,
+        "per_gate_tail_error": 0.016666666666666666,
+        "planned_groups": 60,
+        "scored_groups": 60,
+        "statistical_gates_passed": true
+      },
+      "prediction_kind": "raw",
+      "prediction_sha256": "c14277025c729eb0dc69b03286e813a1b19cccacba0a7e53d9742dc7bc13f9a6",
+      "raw_simulation_sha256": "94cede2690c2c0073f0aa9a00bfa856627e7eb6e796e73f0e54ebd7601caf683",
+      "research_assessment": {
+        "candidate_accept": true,
+        "expected_tvd": 0.08000000000000002,
+        "lower_tvd": 0.0,
+        "nominal_marginal_coverage": 0.9,
+        "reasons": [],
+        "upper_tvd": 0.08000000000000002,
+        "within_feature_support": true
+      },
+      "schema_version": "rival.uncertainty-prediction.v1",
+      "scope": "research error bound relative to observed study distributions; no individual, subgroup or causal guarantee",
+      "settings": {
+        "family_error_rate": 0.05,
+        "max_bad_acceptance_rate": 0.1,
+        "max_failure_rate": 0.1,
+        "max_tvd": 0.2,
+        "nominal_coverage": 0.9,
+        "required_coverage": 0.85,
+        "ridge": 1.0
+      },
+      "statistical_gates_passed": true,
+      "study_id": "l11-changed-process"
+    }
+  }
+}
