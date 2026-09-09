@@ -1,0 +1,393 @@
+{
+  "acceptance_rate_lower": 0.0,
+  "accepted_groups": 0,
+  "audience": "Six generated example records; no real consumers represented.",
+  "bad_acceptance_rate_upper": 1.0,
+  "bad_accepted_groups": 0,
+  "baseline_comparisons": {
+    "classical_multinomial": {
+      "conservative_mean_improvement": -0.375,
+      "improvement_lower": -1.0,
+      "planned_groups": 4
+    },
+    "human_only": {
+      "conservative_mean_improvement": -0.375,
+      "improvement_lower": -1.0,
+      "planned_groups": 4
+    },
+    "synthetic_only": {
+      "conservative_mean_improvement": -0.3208333333333334,
+      "improvement_lower": -1.0,
+      "planned_groups": 4
+    },
+    "weighted_history": {
+      "conservative_mean_improvement": -0.375,
+      "improvement_lower": -1.0,
+      "planned_groups": 4
+    }
+  },
+  "baselines_sha256": "455a324283991e670cb0a0f59132fd4c38df737dc3518e802fe1753112df0be2",
+  "coverage_lower": 0.11497690858055376,
+  "covered_groups": 3,
+  "customer_qualified": false,
+  "design_feasibility": {
+    "interpretation": "Optimistic mathematical feasibility only. Passing requires measured evidence; this is not a power calculation.",
+    "maximum_improvement_lower": -0.6113591857326861,
+    "perfect_coverage_lower": 0.2730120862709067,
+    "possible": {
+      "absolute_error": false,
+      "acceptance_rate": true,
+      "accepted_error_risk": false,
+      "baseline_improvement": false,
+      "coverage": false,
+      "failure_rate": false
+    },
+    "statistical_gates_possible": false,
+    "zero_error_mean_upper": 0.805679592866343,
+    "zero_failure_rate_upper": 0.7269879137290935
+  },
+  "failed_groups": 1,
+  "failure_rate_upper": 0.8850230914194464,
+  "fresh_historical_groups": 0,
+  "gates": {
+    "absolute_error": false,
+    "acceptance_rate": false,
+    "accepted_error_risk": false,
+    "classical_fit_converged": true,
+    "coverage": false,
+    "failure_rate": false,
+    "improvement_over_classical_multinomial": false,
+    "improvement_over_human_only": false,
+    "improvement_over_synthetic_only": false,
+    "improvement_over_weighted_history": false,
+    "missingness": false,
+    "operating_cost_and_time": false,
+    "priority_subgroups": true,
+    "prospective_human_evidence": false,
+    "untouched_historical_evidence": false
+  },
+  "geography": [
+    "example-only"
+  ],
+  "groups_with_unknown_api_total": 0,
+  "intended_decision": "Verify qualification accounting",
+  "known_api_cost_usd": 0.0,
+  "limits": [
+    "Public historical evidence can still be in model pretraining; local freezing does not prove contamination freedom.",
+    "Human roster, source truth, weights, semantic independence and non-journal costs are custodian declarations.",
+    "Each declared study group counts once. More synthetic draws do not increase independent evidence.",
+    "Coverage refers to the observed human distribution; it is not a latent population or subgroup interval.",
+    "Missingness bounds concern the frozen eligible sample, not selection bias outside that sample.",
+    "Human-only uses a separate full-quota sample under the same budget cap; realized spending need not be equal.",
+    "Mean-error and improvement bounds use Hoeffding; binomial gates assume independent exchangeable study groups.",
+    "Priority subgroup claims require separate protected evidence; this increment cannot qualify them.",
+    "No model, threshold, or feature search may reuse this final evaluation set."
+  ],
+  "mean_missingness_adjusted_tvd": 0.4166666666666667,
+  "mean_tvd_upper": 1.0,
+  "per_gate_tail_error": 0.005555555555555556,
+  "plan_sha256": "e49df49822c6a11bec1a65e8ba7048ab9f4b1a9a68129f46e68b769fab48c39d",
+  "planned_groups": 4,
+  "prediction_pins": {
+    "calibration": "d64c733242d1873221cd570a7d7551bf5c8152e28f869d295c0cc51387d8f2fc",
+    "uncertainty": "d950a42e6016ae4f18ba8912004d4bdfeb5b5cf4cbb00818e11a7e9a9fbfc718"
+  },
+  "prospective_human_groups": 0,
+  "release_status": "research; delivery authorization is separate",
+  "rows": [
+    {
+      "anchor_sample": {
+        "distribution": [
+          0.25,
+          0.5,
+          0.25
+        ],
+        "effective_observed_units": 4.0,
+        "eligible_units": 4,
+        "missing_rate": 0.0,
+        "missing_units": 0,
+        "missing_weight_fraction": 0.0,
+        "observed_units": 4
+      },
+      "baseline_improvement": {
+        "classical_multinomial": -4.764175742522081e-07,
+        "human_only": -4.764175742522081e-07,
+        "synthetic_only": 0.27499952358242563,
+        "weighted_history": -4.764175742522081e-07
+      },
+      "baseline_tvd": {
+        "classical_multinomial": 0.0,
+        "human_only": 0.0,
+        "synthetic_only": 0.27499999999999986,
+        "weighted_history": 0.0
+      },
+      "bound_covers_observed_distribution": true,
+      "candidate_accept": false,
+      "candidate_total_cost_usd": 1.0,
+      "candidate_turnaround_seconds": 0.326937,
+      "candidate_tvd": 4.764175742522081e-07,
+      "evidence_origin": "generated",
+      "human_only_total_cost_usd": 4.0,
+      "human_sample": {
+        "distribution": [
+          0.25,
+          0.5,
+          0.25
+        ],
+        "effective_observed_units": 4.0,
+        "eligible_units": 4,
+        "missing_rate": 0.0,
+        "missing_units": 0,
+        "missing_weight_fraction": 0.0,
+        "observed_units": 4
+      },
+      "missingness_gate": true,
+      "missingness_tvd_upper": 4.764175742522081e-07,
+      "operating_gate": true,
+      "outcome_access": "inspected",
+      "outcome_evidence_sha256": "9aa8010cf4ce4c4084d6a6a1edd93d56d1719a9d875bdfbd2c393164a4f4cb52",
+      "prediction_sha256": "39eef2827405e5b84b626fdba2bddd85e426381794972e5207c577f52626d565",
+      "research_upper_tvd": 1.0,
+      "source_reference": "Generated fixture l12-benefit",
+      "status": "SCORED",
+      "study_id": "l12-benefit",
+      "timing": "historical"
+    },
+    {
+      "anchor_sample": {
+        "distribution": [
+          0.25,
+          0.5,
+          0.25
+        ],
+        "effective_observed_units": 4.0,
+        "eligible_units": 4,
+        "missing_rate": 0.0,
+        "missing_units": 0,
+        "missing_weight_fraction": 0.0,
+        "observed_units": 4
+      },
+      "baseline_improvement": {
+        "classical_multinomial": 4.400250894209812e-08,
+        "human_only": 4.400250894209812e-08,
+        "synthetic_only": -0.14999995599749116,
+        "weighted_history": 4.400250894209812e-08
+      },
+      "baseline_tvd": {
+        "classical_multinomial": 0.25,
+        "human_only": 0.25,
+        "synthetic_only": 0.09999999999999991,
+        "weighted_history": 0.25
+      },
+      "bound_covers_observed_distribution": true,
+      "candidate_accept": false,
+      "candidate_total_cost_usd": 1.0,
+      "candidate_turnaround_seconds": 0.70008,
+      "candidate_tvd": 0.24999995599749106,
+      "evidence_origin": "generated",
+      "human_only_total_cost_usd": 4.0,
+      "human_sample": {
+        "distribution": [
+          0.5,
+          0.5,
+          0.0
+        ],
+        "effective_observed_units": 4.0,
+        "eligible_units": 4,
+        "missing_rate": 0.0,
+        "missing_units": 0,
+        "missing_weight_fraction": 0.0,
+        "observed_units": 4
+      },
+      "missingness_gate": true,
+      "missingness_tvd_upper": 0.24999995599749106,
+      "operating_gate": true,
+      "outcome_access": "inspected",
+      "outcome_evidence_sha256": "c1858e49d893b72a31c1e417bb2d55a9ac73169ac7aad85281e6dae9e9b76e61",
+      "prediction_sha256": "b0b5272475d8599d4ec0157c4babd1981b6d6d4e42e34d07f26283465c7197b5",
+      "research_upper_tvd": 1.0,
+      "source_reference": "Generated fixture l12-harm",
+      "status": "SCORED",
+      "study_id": "l12-harm",
+      "timing": "historical"
+    },
+    {
+      "anchor_sample": {
+        "distribution": [
+          0.25,
+          0.5,
+          0.25
+        ],
+        "effective_observed_units": 4.0,
+        "eligible_units": 4,
+        "missing_rate": 0.0,
+        "missing_units": 0,
+        "missing_weight_fraction": 0.0,
+        "observed_units": 4
+      },
+      "baseline_improvement": {
+        "classical_multinomial": 4.324150652823544e-07,
+        "human_only": 4.324150652823544e-07,
+        "synthetic_only": 0.09166709908173198,
+        "weighted_history": 4.324150652823544e-07
+      },
+      "baseline_tvd": {
+        "classical_multinomial": 0.16666666666666666,
+        "human_only": 0.16666666666666666,
+        "synthetic_only": 0.25833333333333336,
+        "weighted_history": 0.16666666666666666
+      },
+      "bound_covers_observed_distribution": true,
+      "candidate_accept": false,
+      "candidate_total_cost_usd": 1.0,
+      "candidate_turnaround_seconds": 1.072829,
+      "candidate_tvd": 0.16666623425160138,
+      "evidence_origin": "generated",
+      "human_only_total_cost_usd": 4.0,
+      "human_sample": {
+        "distribution": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "effective_observed_units": 3.0,
+        "eligible_units": 4,
+        "missing_rate": 0.25,
+        "missing_units": 1,
+        "missing_weight_fraction": 0.25,
+        "observed_units": 3
+      },
+      "missingness_gate": false,
+      "missingness_tvd_upper": 0.4166662342516014,
+      "operating_gate": true,
+      "outcome_access": "inspected",
+      "outcome_evidence_sha256": "d1f93f92dbe0bb56bfdd4d9b54ae2feda2c07dce371f235e24b599560e3650a2",
+      "prediction_sha256": "851a906093aa39be7cabb7bf3d47bbb3dc3c95745c55d2fc7ac9d234f51071e3",
+      "research_upper_tvd": 1.0,
+      "source_reference": "Generated fixture l12-missing-response",
+      "status": "SCORED",
+      "study_id": "l12-missing-response",
+      "timing": "historical"
+    },
+    {
+      "all_roster_error_penalty": 1.0,
+      "candidate_tvd": null,
+      "evidence_origin": "generated",
+      "failure": "incomplete_execution",
+      "outcome_access": "inspected",
+      "source_reference": "Generated fixture l12-unfinished",
+      "status": "FAILURE",
+      "study_id": "l12-unfinished",
+      "timing": "historical"
+    }
+  ],
+  "schema_version": "rival.qualification-report.v1",
+  "scored_groups": 3,
+  "status": "FAIL",
+  "status_scope": "one frozen aggregate study-family evaluation under declared custody and independence assumptions",
+  "study_family": "Generated delivery preference cases"
+}
+{
+  "api_cost_usd": 0.0,
+  "assessment": {
+    "assessment_sha256": "417997984ae3c77eaf19cc1da2d754d4381112ae60859dbeb04c753480d23c62"
+  },
+  "created_at": "2026-09-09T16:56:44.927602+00:00",
+  "customer_qualified": false,
+  "elapsed_seconds": 4.837190907000149,
+  "executed_studies": [
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-1"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-2"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-1"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-2"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-3"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-4"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-calibration-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-evaluation-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-benefit"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-harm"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-missing-response"
+    }
+  ],
+  "failed_qualification_groups": 1,
+  "http_fixture_calls": 78,
+  "planned_qualification_groups": 4,
+  "qualification_plan": {
+    "design_feasibility": {
+      "interpretation": "Optimistic mathematical feasibility only. Passing requires measured evidence; this is not a power calculation.",
+      "maximum_improvement_lower": -0.6113591857326861,
+      "perfect_coverage_lower": 0.2730120862709067,
+      "possible": {
+        "absolute_error": false,
+        "acceptance_rate": true,
+        "accepted_error_risk": false,
+        "baseline_improvement": false,
+        "coverage": false,
+        "failure_rate": false
+      },
+      "statistical_gates_possible": false,
+      "zero_error_mean_upper": 0.805679592866343,
+      "zero_failure_rate_upper": 0.7269879137290935
+    },
+    "plan_sha256": "e49df49822c6a11bec1a65e8ba7048ab9f4b1a9a68129f46e68b769fab48c39d"
+  },
+  "real_llm_calls": 0,
+  "schema_version": "rival.qualification-rehearsal.v1",
+  "scope": "Generated pipeline and accounting fixtures. No human accuracy or business cost evidence.",
+  "scored_qualification_groups": 3,
+  "simulated_draws": 520,
+  "status": "FAIL"
+}

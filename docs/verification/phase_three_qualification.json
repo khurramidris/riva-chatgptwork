@@ -1,0 +1,110 @@
+{
+  "artifact_files_sha256": {
+    "docs/examples/qualification/manifest.json": "884134dedc3b451a756412b8dd45d256a485259140b589e8dcc9d8b17254b740",
+    "docs/examples/qualification/rehearsal.json": "3eb7486f9e696e05e08761ddc2e8bb73b18fae12e750651422612344225312bd",
+    "docs/examples/qualification/report.json": "811a918886d992bf6cf88b0dd19e4f40d4630e95074140c3dcae20269beba1de",
+    "docs/examples/qualification/report.md": "5dc51aea4821311a3c5e26c4a96130073eb34801b392fb80c8f7adbe1dae07c4",
+    "docs/verification/phase_three_qualification_artifacts/initial-focused-tests.log": "88c8d3193a193ee3fc9f30e63b0d5a8244504d8bfc926fe57a52cb739f252ecc",
+    "docs/verification/phase_three_qualification_artifacts/installed-wheel.json": "3f26ccb62468db3be285932f0c94e77be0bf787a766439112adb4ed5aa2c5513",
+    "docs/verification/phase_three_qualification_artifacts/installed-wheel.log": "a17602f207db3b2956fec3cc98691091648a7d642b114281b1f3763231cb8dc2",
+    "docs/verification/phase_three_qualification_artifacts/integrity_qualification.json": "fbe74cd717734262bbed14581974468fe955d97e3bb6cdfa55d3c535b01a948a",
+    "docs/verification/phase_three_qualification_artifacts/legacy-compatibility.json": "72aa2a6ca353471cc0d87b792db72317695f61a38392603b88112994db2baa67",
+    "docs/verification/phase_three_qualification_artifacts/opinionqa_qualification.json": "93c7619ab0168fef3fc9964382d77468ce4669fa2366ff4d8d3540bdf347413d",
+    "docs/verification/phase_three_qualification_artifacts/preservation.json": "996c8c9066fc36bd0b908b5853e8acdb79f88ccc17c15f2007ea711013e501df",
+    "docs/verification/phase_three_qualification_artifacts/qualification_summary.json": "4d973538cce8e3f3397cabb64a8a3cd6504f6345f8f6cbbffd9822630d7c30a0",
+    "docs/verification/phase_three_qualification_artifacts/rehearsal.log": "9f410474ee9e76f15150a925b1a373a3e23bbfbafd62c9d295398f28463ce762",
+    "docs/verification/phase_three_qualification_artifacts/reproduction.log": "4d973538cce8e3f3397cabb64a8a3cd6504f6345f8f6cbbffd9822630d7c30a0",
+    "docs/verification/phase_three_qualification_artifacts/research_components_qualification.json": "a9237ef1396171fe1f42b9fb3a348d17e2cc80f568895368ee8fc580351e1906",
+    "docs/verification/phase_three_qualification_artifacts/tests.log": "1f633e283a149780bc31868f165edd0d5ffc73e005172866db9e31269607be30",
+    "docs/verification/phase_three_qualification_artifacts/twin2k_qualification.json": "3d39c14f4568e8e61ada79eeca995a3f975e2a1189260a16f2a5ea89bf831c99",
+    "docs/verification/phase_three_qualification_artifacts/wheel-build.log": "dd2d731aa23b9cd7b53d343d150a8338c234c2b13a7ba708a75e8bbabca3a621",
+    "docs/verification/phase_three_qualification_artifacts/wheel.json": "4217282bc3a21c0dba6bb45fb5673638b5809e0f1c08ba095cc91a57eeefad9e"
+  },
+  "base_commit": "da719165f48f9466741ef87486879a439607a776",
+  "created_at": "2026-09-09T17:03:38.871382+00:00",
+  "environment": {
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "final_review": "Added preflight audience/geography binding and finite baseline prediction validation. Final full suite includes both. Aggregate Markdown also explicitly labels evidence origins; final wheel/source checks and installed rehearsal verify its export.",
+  "frozen_experiments": "Original Wave-4/Mega v1/E-F files are unchanged; none were executed, revealed or reanalyzed.",
+  "initial_focused_test_failure": "One cross-catalog test omitted its copied baseline artifact and correctly hit FileNotFoundError. The fixture now copies the signed catalog and verifies that the shared workspace reservation blocks a changed policy.",
+  "milestones": {
+    "completed": 11,
+    "in_progress": [
+      "L12"
+    ],
+    "pending": [
+      "L13",
+      "L14"
+    ]
+  },
+  "new_human_outcomes_inspected": false,
+  "public_source_status": "Metadata-only candidate screen; no final evidence set admitted or frozen.",
+  "rehearsal": {
+    "api_cost_usd": 0.0,
+    "customer_qualified": false,
+    "elapsed_seconds": 4.837190907000149,
+    "failed_qualification_groups": 1,
+    "http_fixture_calls": 78,
+    "planned_qualification_groups": 4,
+    "real_llm_calls": 0,
+    "scored_qualification_groups": 3,
+    "simulated_draws": 520,
+    "status": "FAIL"
+  },
+  "rehearsal_interpretation": "Controlled generated responses, human-sample rows and non-API cost receipts. Correctly retains benefit, harm, missing responses and unfinished execution. No human accuracy or business economics claim.",
+  "remaining": [
+    "Audit and pin relevant answer-free instruments and source mappings before opening final human outcomes.",
+    "Obtain compatible human training and uncertainty evidence and freeze a statistically feasible qualification design.",
+    "Execute the fixed model with actual operating receipts and truly future human fieldwork.",
+    "Protected subgroup qualification where requested, full operator GUI and delivery rehearsal remain.",
+    "Local HMAC, clock, source truth, unit identity, semantic independence and non-journal costs remain custodian assumptions."
+  ],
+  "schema_version": "rival.l12-verification.v1",
+  "source_files_sha256": {
+    ".github/workflows/ci.yml": "83fdc99722e473dacf81d401ce75592c2cea42903fd55890abb446c2fcefee43",
+    "README.md": "0516b3b04b1b3f0cf9b77cfc9fbeeb250eef8b94e9edd40d33bddf7f65a7f50d",
+    "docs/CUSTOMER_READINESS.md": "883f4e1f27919f914a3293d8eb45362823540b60b6bac6f699dcd87143531334",
+    "docs/FROZEN_QUALIFICATION.md": "1bf227b590adecb6ea21460d48c30e46e6b290e75a49e455cbd64cc3b337e313",
+    "docs/PUBLIC_QUALIFICATION_EVIDENCE.md": "feebdc5ae166bae7dd1f2cd7e0d4bbf90c82428a113b0da2564d7d239a8c3a91",
+    "pyproject.toml": "8e9779f58313f6f9787a0f9c733502a3ef927302bfba987fdc87d9f8222540aa",
+    "rival/commands.py": "af8254d06f6b7ded95020bdaa1585b0df3ce14e1109271fc7671b32de87e09c9",
+    "rival/qualification_baselines.py": "b642598c94619357954604e14dcd0fc088f07f4c6653d8e90fd0e0c3a92e3db9",
+    "rival/qualification_catalog.py": "9087f060e34f358cbbbf082b4b6eba62a80a65ebcaf0176c012a1206f80c27a0",
+    "rival/qualification_commands.py": "d9215c0bcf34f3df892736e37d6c048064dfd0e61b1e28907248925e6f5eafbe",
+    "rival/qualification_contract.py": "5eb547efce65d796bc5c32181715ee806a557b34ee270f7d936fc31676fa25a2",
+    "rival/qualification_report.py": "7c5d3c765f13fd730c5d4a1a0fc91054458ed0815223af4b293fec4b7e78bd34",
+    "rival/version.py": "bb4a037d4e9902184f4f4c485070adbb4eeedff4628fbbe47325accd41388e4b",
+    "scripts/run_qualification_rehearsal.py": "ab9b335ff51ccab58d1ab333e4b79bac1c8599bc440d03acd6058b46e3d51e61",
+    "scripts/verify_installed_wheel.py": "dd3d062e7de14d2a03feeb594b2e1d6fa17a1156ea71088a49cc3ab768ebb2cb",
+    "tests/test_frozen_qualification.py": "0431e0da4883ac2c7aad45d58564e80dbe1924a4fc16077654a1c8c81819fa11"
+  },
+  "status": "IMPLEMENTATION_VERIFIED_L12_EMPIRICAL_QUALIFICATION_PENDING",
+  "verification": {
+    "compile": "PASS",
+    "diff_check": "PASS",
+    "historical_reproduction": "PASS; existing development data only, not new human evidence",
+    "installed_checks_passed": 18,
+    "integrity_checks_passed": 10,
+    "legacy_versions_byte_identical": [
+      "v1",
+      "v2",
+      "v3",
+      "v4",
+      "v5"
+    ],
+    "new_tests": 19,
+    "preserved_files": 68,
+    "research_component_checks_passed": 8,
+    "test_seconds": 100.427,
+    "tests_passed": 254
+  },
+  "version": "0.6.0.dev10",
+  "wheel": {
+    "files": 175,
+    "python_source_files_verified": 124,
+    "sha256": "3cf94538dca36cc1c8e03397021394775011b3ba95e37e51aea3b631f126fab0",
+    "wheel": "rival_sim-0.6.0.dev10-py3-none-any.whl"
+  }
+}

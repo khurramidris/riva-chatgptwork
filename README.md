@@ -5,7 +5,7 @@ and proposed scenarios for a declared audience. The first output is simulated
 population choice shares. Individual synthetic responses are intermediate model
 outputs; they are not verified predictions of real people.
 
-`0.6.0.dev9` is a research development release. The [uncertainty guide](docs/RUNTIME_UNCERTAINTY.md) covers independent study cohorts, research error bounds, abstention tests and v5 reports. The [runtime calibration guide](docs/RUNTIME_CALIBRATION.md) covers protected training banks and raw/calibrated outcome comparisons. The [model execution guide](docs/MODEL_EXECUTION.md) covers pinned models, direct/SSR elicitation, execution audits and fresh repeats. See the
+`0.6.0.dev10` is a research development release. The [qualification guide](docs/FROZEN_QUALIFICATION.md) covers frozen human-evidence protocols, classical baselines, separate human samples and complete failure accounting. L12 is in progress; no new human accuracy result is claimed. The [uncertainty guide](docs/RUNTIME_UNCERTAINTY.md) covers independent study cohorts, research error bounds, abstention tests and v5 reports. The [runtime calibration guide](docs/RUNTIME_CALIBRATION.md) covers protected training banks and raw/calibrated outcome comparisons. The [model execution guide](docs/MODEL_EXECUTION.md) covers pinned models, direct/SSR elicitation, execution audits and fresh repeats. See the
 [delivery board](docs/CUSTOMER_READINESS.md),
 [supported offering](docs/SUPPORTED_OFFERING.md), and
 [phase-one acceptance evidence](docs/verification/phase_one.json).

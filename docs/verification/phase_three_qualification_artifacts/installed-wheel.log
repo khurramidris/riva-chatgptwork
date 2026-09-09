@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "version": "0.6.0.dev10",
+  "package_location": "/tmp/rival-installed-nrcktdg3/installed/rival",
+  "archived_protocol_sha256": "5fa5cdf8ee9e1e802a18f7c03b0fb756b0359011add037df42728a425aff05c0",
+  "paid_calls": 0,
+  "checks": [
+    "installed imports",
+    "all frozen witnesses",
+    "complete notices",
+    "E/F design resources",
+    "offline demo",
+    "research confidence",
+    "historical claims separation",
+    "real stage loader",
+    "freeze algorithm",
+    "local HTTP health, demo page and demo execution",
+    "study preparation, execution, recovery and report export",
+    "pinned evidence import, population support and v2 study execution",
+    "pinned v3 direct/SSR HTTP workflow, measurements and cached recovery",
+    "protected training bank, runtime calibration, v4 sealing and held-out comparison",
+    "prospective uncertainty cohort, independent stages, v5 seal/report and recovery",
+    "frozen qualification, classical/human baselines, failure denominator and aggregate export",
+    "installed module CLI commands",
+    "installed console entry point"
+  ]
+}

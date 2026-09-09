@@ -1,0 +1,8 @@
+{
+  "assessment_sha256": "417997984ae3c77eaf19cc1da2d754d4381112ae60859dbeb04c753480d23c62",
+  "files": {
+    "report.json": "811a918886d992bf6cf88b0dd19e4f40d4630e95074140c3dcae20269beba1de",
+    "report.md": "5dc51aea4821311a3c5e26c4a96130073eb34801b392fb80c8f7adbe1dae07c4"
+  },
+  "plan_sha256": "e49df49822c6a11bec1a65e8ba7048ab9f4b1a9a68129f46e68b769fab48c39d"
+}

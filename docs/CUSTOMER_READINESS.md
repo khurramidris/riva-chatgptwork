@@ -1,7 +1,7 @@
 # Rival customer-readiness implementation
 
 Started 2026-09-06 from main `902a3eb975b9e765f5a0c41e66afb6abe2ead5c6`.
-Current version: `0.6.0.dev9`. Branch: `codex/phase-three-uncertainty`.
+Current version: `0.6.0.dev10`. Branch: `codex/phase-three-qualification`.
 
 Rival's target remains population and behavior simulation for comparing proposed
 concepts, messages and scenarios. The first delivery target is a supervised study
@@ -11,9 +11,11 @@ customer accuracy, Aaru/Simile parity, or readiness for paid decision support.
 Phase one is L01–L06. Its engineering work completed at `c67da54`, with Linux and
 Windows CI passing on [draft PR #5](https://github.com/khurramidris/riva-chatgptwork/pull/5).
 Phase two is L07–L10. All four are implemented and locally verified:
-**11 of 14 engineering tasks complete; 3 later tasks pending** as of 2026-09-09.
-L11 adds protected uncertainty experiments and v5 reports; human-domain qualification remains L12. See the [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
-and [latest verification record](verification/phase_three_uncertainty.json). Statistical
+**11 of 14 engineering tasks complete; L12 in progress; L13–L14 pending** as of 2026-09-09.
+L12 now adds frozen qualification protocols, classical baselines and complete
+human/failure denominators. Its empirical human-domain qualification is still
+uncompleted. See the [qualification guide](FROZEN_QUALIFICATION.md), [phase-two plan](PHASE_TWO_DEVELOPMENT.md)
+and [latest verification record](verification/phase_three_qualification.json). Statistical
 qualification and customer launch remain later gates.
 
 ## Delivery board
@@ -31,7 +33,7 @@ qualification and customer launch remain later gates.
 | L09 Model execution and elicitation | Complete engineering milestone, locally verified | Pinned v3 execution, fair SSR ties, 196 tests and two real local SSR runs/repeat/recovery; small-model direct probabilities correctly rejected; no production accuracy claim |
 | L10 Runtime calibration | Complete engineering milestone, locally verified | Signed training banks; model/evidence/panel binding; v4 prediction seals and protected comparisons; SYN-DIGITS objective parity; 215 tests and retrospective public-data comparison |
 | L11 Qualified uncertainty and abstention | Complete engineering milestone; customer qualification remains L12 | Frozen study roster; separate ridge/conformal/evaluation stages; finite-sample coverage and selective-risk gates; v5 reports; generated rehearsal; customer confidence still abstains |
-| L12 Frozen qualification | Pending | Relevant untouched public data, classical baselines, missingness and failure denominators, operational measurements |
+| L12 Frozen qualification | In progress; qualification infrastructure implemented | Frozen protocols and human rosters, protected classical/history baselines, equal-budget human sample, pre-outcome seals, missingness/failure accounting and operating gates; untouched human evidence, prospective fieldwork and any subgroup qualification remain open |
 | L13 Operator interface and reports | Pending | Complete study-to-report flow, uncertainty and unsupported-use presentation |
 | L14 Delivery rehearsal and launch | Pending | Access controls, backup/recovery, cost/turnaround measurements and bounded pilot terms |
 
@@ -225,6 +227,33 @@ booleans, strings and altered probabilities still fail.
 Verification passes 235 tests and 17 isolated installed-wheel checks. All 68
 protected files and completed v1–v4 example exports are unchanged.
 
-L12 is next: freeze a relevant untouched public-evidence qualification, compare
-strong baselines and measure error, coverage, abstention, failures, cost and time.
-L13–L14 complete the operator GUI and delivery rehearsal.
+## L12 qualification increment
+
+The [frozen qualification guide](FROZEN_QUALIFICATION.md) connects evaluation to
+protected v5 studies. A complete protocol is reserved before target execution.
+Weighted-history and regularized multinomial baselines use protected v3 training
+outcomes. The raw synthetic comparator uses the same run, and the human-only
+comparator uses a separately enumerated sample under the same budget cap.
+Their predictions are sealed before protected final outcomes can be scored.
+
+Every planned study remains in the report. Missing responses retain their
+denominators and frozen weights; missing results receive conservative penalties.
+Tests cannot silently tune thresholds, substitute outcomes, omit failures or
+replace an already finalized assessment. Best-case feasibility is shown at plan
+time because the minimum four human groups cannot by themselves establish the
+statistical gates. Missing operating measurements or requested subgroup evidence
+remain explicit gaps.
+
+The [generated example](examples/qualification/report.md) retains a helpful
+adjustment, harmful adjustment, missing responses and an unfinished study. It
+correctly returns FAIL. No new human outcome file or real LLM was used. The
+[public-source screen](PUBLIC_QUALIFICATION_EVIDENCE.md) records metadata-only
+candidates and unresolved task/version mappings; it has not admitted a fresh
+qualification dataset. L12 is therefore **not complete**. The original 11/14
+completion count remains unchanged.
+
+Next empirical work: audit and pin suitable answer-free public instruments,
+prepare separate training/uncertainty evidence, freeze a feasible final design,
+run the selected model with actual operating receipts, and obtain genuinely
+future human evidence. L13–L14 still complete the operator GUI and delivery
+rehearsal; UI development can proceed alongside evidence preparation.

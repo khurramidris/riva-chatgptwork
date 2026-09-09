@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -302,9 +303,21 @@ def main():
         (cwd / "INSTALL_ROOT").write_text(str(install), encoding="utf-8")
         result = run_checked([sys.executable, "-c", PROBE], cwd=cwd, env=environment)
         report = json.loads(result.stdout.strip().splitlines()[-1])
+        # Run the qualification rehearsal against installed imports. These
+        # driver scripts are copied outside the checkout; no source package is
+        # added to PYTHONPATH. Every HTTP response and human record is generated.
+        for name in ("run_qualification_rehearsal.py", "run_calibration_rehearsal.py"):
+            shutil.copy2(Path(__file__).resolve().parent / name, cwd / name)
+        run_checked([sys.executable, "run_qualification_rehearsal.py", "--workspace", "qualification-workspaces",
+                     "--output", "qualification-export"], cwd=cwd, env=environment)
+        qualification = json.loads((cwd / "qualification-export/rehearsal.json").read_text(encoding="utf-8"))
+        assert qualification["status"] == "FAIL" and qualification["customer_qualified"] is False
+        assert qualification["http_fixture_calls"] == 78 and qualification["real_llm_calls"] == 0
+        assert qualification["planned_qualification_groups"] == 4 and qualification["failed_qualification_groups"] == 1
+        report["checks"].append("frozen qualification, classical/human baselines, failure denominator and aggregate export")
         for command in (["--version"], ["status"], ["mega-v2", "verify-resources"],
                         ["mega-v2", "run", "--help"], ["simulate-managed", "--help"],
-                        ["study", "status", "--workspace", "workflow-study"]):
+                        ["study", "status", "--workspace", "workflow-study"], ["qualification", "schema"]):
             run_checked([sys.executable, "-m", "rival", *command], cwd=cwd, env=environment)
         report["checks"].append("installed module CLI commands")
         # ``pip --target`` intentionally installs import files without console

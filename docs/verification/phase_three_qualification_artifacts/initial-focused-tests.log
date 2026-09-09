@@ -1,0 +1,39 @@
+test_classical_model_recovers_feature_signal_and_does_not_refit_on_prediction (test_frozen_qualification.BaselineNumericsTests.test_classical_model_recovers_feature_signal_and_does_not_refit_on_prediction) ... ok
+test_constant_features_match_weighted_history (test_frozen_qualification.BaselineNumericsTests.test_constant_features_match_weighted_history) ... ok
+test_invalid_features_weights_and_nonconvergence_are_visible (test_frozen_qualification.BaselineNumericsTests.test_invalid_features_weights_and_nonconvergence_are_visible) ... ok
+test_missing_response_denominators_and_frozen_weights (test_frozen_qualification.BaselineNumericsTests.test_missing_response_denominators_and_frozen_weights) ... ok
+test_multinomial_gradient_matches_independent_finite_differences (test_frozen_qualification.BaselineNumericsTests.test_multinomial_gradient_matches_independent_finite_differences) ... ok
+test_protocol_rejects_sample_overlap_quota_changes_and_invalid_dates (test_frozen_qualification.BaselineNumericsTests.test_protocol_rejects_sample_overlap_quota_changes_and_invalid_dates) ... ok
+test_cli_failure_exit_and_export_excludes_private_rosters (test_frozen_qualification.QualificationWorkflowTests.test_cli_failure_exit_and_export_excludes_private_rosters) ... ok
+test_full_workflow_reproduces_protected_results_and_never_claims_fixture_qualification (test_frozen_qualification.QualificationWorkflowTests.test_full_workflow_reproduces_protected_results_and_never_claims_fixture_qualification) ... ok
+test_historical_data_cannot_be_relabelled_as_future_fieldwork (test_frozen_qualification.QualificationWorkflowTests.test_historical_data_cannot_be_relabelled_as_future_fieldwork) ... ok
+test_incomplete_and_omitted_studies_remain_and_assessment_is_final (test_frozen_qualification.QualificationWorkflowTests.test_incomplete_and_omitted_studies_remain_and_assessment_is_final) ... ok
+test_missing_costs_and_priority_subgroups_stay_unevaluable (test_frozen_qualification.QualificationWorkflowTests.test_missing_costs_and_priority_subgroups_stay_unevaluable) ... ok
+test_outcomes_must_match_exact_protected_distribution_and_frozen_weight (test_frozen_qualification.QualificationWorkflowTests.test_outcomes_must_match_exact_protected_distribution_and_frozen_weight) ... ok
+test_plan_is_before_execution_and_cannot_be_changed_or_reused_for_another_policy (test_frozen_qualification.QualificationWorkflowTests.test_plan_is_before_execution_and_cannot_be_changed_or_reused_for_another_policy) ... ERROR
+test_seal_rejects_late_baselines_and_changed_human_anchors (test_frozen_qualification.QualificationWorkflowTests.test_seal_rejects_late_baselines_and_changed_human_anchors) ... ok
+
+======================================================================
+ERROR: test_plan_is_before_execution_and_cannot_be_changed_or_reused_for_another_policy (test_frozen_qualification.QualificationWorkflowTests.test_plan_is_before_execution_and_cannot_be_changed_or_reused_for_another_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/a3e0fea917db/rival-l12/tests/test_frozen_qualification.py", line 184, in test_plan_is_before_execution_and_cannot_be_changed_or_reused_for_another_policy
+    QualificationCatalog(self.case.root / "another-catalog").plan(self.roots, changed, self.fit["baselines_sha256"])
+  File "/workspace/scratch/a3e0fea917db/rival-l12/rival/qualification_catalog.py", line 64, in plan
+    baselines = self._read("baselines", baselines_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a3e0fea917db/rival-l12/rival/calibration_catalog.py", line 129, in _read
+    envelope = strict_json(read_bounded(self.root / f"{kind}-{identifier}.json"))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a3e0fea917db/rival-l12/rival/evidence_catalog.py", line 56, in read_bounded
+    with Path(path).open("rb") as handle:
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp_xzinuvr/another-catalog/baselines-64d7a65aa13c982503ef624a1112a54d4a65a550de3f28567c3d983e44237c13.json'
+
+----------------------------------------------------------------------
+Ran 14 tests in 42.049s
+
+FAILED (errors=1)

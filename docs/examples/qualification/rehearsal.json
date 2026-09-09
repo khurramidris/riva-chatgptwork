@@ -1,0 +1,104 @@
+{
+  "api_cost_usd": 0.0,
+  "assessment": {
+    "assessment_sha256": "417997984ae3c77eaf19cc1da2d754d4381112ae60859dbeb04c753480d23c62"
+  },
+  "created_at": "2026-09-09T16:56:44.927602+00:00",
+  "customer_qualified": false,
+  "elapsed_seconds": 4.837190907000149,
+  "executed_studies": [
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-1"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-reference-2"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-1"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-2"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-3"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-training-4"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-calibration-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-uq-evaluation-0"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-benefit"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-harm"
+    },
+    {
+      "http_fixture_calls": 6,
+      "resume_calls": 0,
+      "study_id": "l12-missing-response"
+    }
+  ],
+  "failed_qualification_groups": 1,
+  "http_fixture_calls": 78,
+  "planned_qualification_groups": 4,
+  "qualification_plan": {
+    "design_feasibility": {
+      "interpretation": "Optimistic mathematical feasibility only. Passing requires measured evidence; this is not a power calculation.",
+      "maximum_improvement_lower": -0.6113591857326861,
+      "perfect_coverage_lower": 0.2730120862709067,
+      "possible": {
+        "absolute_error": false,
+        "acceptance_rate": true,
+        "accepted_error_risk": false,
+        "baseline_improvement": false,
+        "coverage": false,
+        "failure_rate": false
+      },
+      "statistical_gates_possible": false,
+      "zero_error_mean_upper": 0.805679592866343,
+      "zero_failure_rate_upper": 0.7269879137290935
+    },
+    "plan_sha256": "e49df49822c6a11bec1a65e8ba7048ab9f4b1a9a68129f46e68b769fab48c39d"
+  },
+  "real_llm_calls": 0,
+  "schema_version": "rival.qualification-rehearsal.v1",
+  "scope": "Generated pipeline and accounting fixtures. No human accuracy or business cost evidence.",
+  "scored_qualification_groups": 3,
+  "simulated_draws": 520,
+  "status": "FAIL"
+}

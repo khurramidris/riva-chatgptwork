@@ -75,6 +75,7 @@ def build_parser():
     commands.add_parser("study", help="prepare, run, resume and report a complete study; use study --help")
     commands.add_parser("evidence", help="import and verify pinned evidence; use evidence --help")
     commands.add_parser("uncertainty", help="plan and assess study-level error bounds; use uncertainty --help")
+    commands.add_parser("qualification", help="freeze human-evidence qualification and baseline comparisons; use qualification --help")
     commands.add_parser("calibration", help="build protected reference banks and fit calibration; use calibration --help")
     run = commands.add_parser("simulate-managed", help="research simulation with durable model request accounting")
     for name in ("input", "output", "journal", "database"):
@@ -91,6 +92,9 @@ def build_parser():
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "qualification":
+        from .qualification_commands import main as qualification_main
+        return qualification_main(argv[1:])
     if argv and argv[0] == "uncertainty":
         from .uncertainty_commands import main as uncertainty_main
         return uncertainty_main(argv[1:])
